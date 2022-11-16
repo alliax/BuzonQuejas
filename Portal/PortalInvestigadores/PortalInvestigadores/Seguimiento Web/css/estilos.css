@@ -1,0 +1,82 @@
+﻿body {
+    background-image: url("../img/bg_pattern.gif");
+    background-repeat:repeat;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+}
+
+.modal {
+    display:block!important;
+}
+
+.container{
+    margin-left:35%;
+    margin-top:5%;
+    opacity: 0.9;
+    width:800px;
+    height:500px;
+}
+
+.input{
+    width:90%;
+    padding-left:10%;
+}
+
+.form-control{
+    width:96%;
+}
+
+.btn.btn-default{
+    border-radius: 25px;
+    background-color:#568ec2;
+    color:#ffffff;
+    width:80%;
+    margin-left:10%;
+}
+
+#contenido{
+    background-color: #fff;
+    width:70%;
+    border-color: #b3b3b3;
+    border-width:4px;
+}
+
+#image{
+    margin-left:21%;
+}
+
+#warning{
+    background-color:lightpink;
+    color:darkred;
+    margin-left:5%;
+    margin-right:5%;
+}
+
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.glyphicon.glyphicon-user
+{
+    color:#808080;
+}
+
+.glyphicon.glyphicon-lock
+{
+    color:#808080;
+}

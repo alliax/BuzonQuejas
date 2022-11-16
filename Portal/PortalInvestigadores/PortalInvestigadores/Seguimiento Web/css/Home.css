@@ -1,0 +1,226 @@
+﻿.navbar-header {
+    margin-top: 5px;
+    height: 35px;
+    width: 90px;
+}
+/*
+li:hover {
+    background-color: #d9d9d9;
+}
+
+li:active {
+    background-color: #b3b3b3;
+}
+*/
+#tabla {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.table.table-hover {
+    border: none;
+}
+
+.mid.form-control {
+    width: 29%;
+    display: inline;
+}
+
+.btn {
+    width: 100%;
+    /*background-color: #5780AE;*/
+    /*color: white;*/
+    font-size: medium;
+    cursor: default;
+}
+
+.btn:hover {
+        color: white;
+    }
+
+.btn:active {
+        color: white;
+    }
+
+.btn:checked {
+        color: white;
+    }
+
+.busca {
+    width: 80%;
+    margin-left: 10%;
+}
+
+
+.boton {
+    background-color: #5780AE;
+    color: white;
+    width: 20%;
+    cursor: pointer;
+}
+
+.GridPager a, .GridPager span {
+    display: block;
+    height: 20px;
+    width: 15px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid #969696;
+    color: #5780ae;
+}
+
+.GridPager span {
+    background-color: #cccccc;
+    color: #5780ae;
+}
+
+.botonesUpdate {
+    border: none;
+    background-color: white;
+    color: orange;
+}
+
+.labelUpdate {
+    color: orange;
+    font-weight: 600;
+}
+
+.reporte {
+    border-color: #d9d9d9;
+    border-width: 2px;
+    border-style: solid;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.move {
+    margin-left: 80%;
+}
+
+.titulo {
+    background-color: #5780ae;
+    color: white;
+    font-size: 25px;
+    text-align: center;
+}
+
+.borde {
+    border-color: #d9d9d9;
+    border-width: 3px;
+    border-style: solid;
+    border-top: none;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.inside {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.contenido2 {
+    border-top: none;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+
+.contenedor{
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.filtros{
+    width:63%;
+    height:300px;
+    display:inline-block;
+    vertical-align:top;
+}
+.contadores {
+    width:35%;
+    height:300px;
+    display:inline-block;
+    vertical-align:top;
+}
+.reng{
+    width:100%;
+    height:50%;
+}
+.contPr {
+    background-color:#5780AE;
+    width:48%;
+    height:98%;
+    display:inline-block;
+    vertical-align:top;
+    color:white;
+    text-align:center;
+    padding-top:7%;
+}
+.otro{
+   width:48%;
+   height:98%;
+   display:inline-block;
+   vertical-align:top;
+   color:white;
+}
+.cont {
+    width:100%;
+    height:50%;
+    color:white;
+    text-align:center;
+}
+.colorPendiente{
+    background-color:#f1ab00;
+    height:97%;
+}
+.colorSeguimiento{
+    background-color:#708D00;
+    height:98%;
+}
+.num {
+    font-size:xx-large;
+    font-weight:700;
+}
+.num2{
+    font-size:x-large;
+    font-weight:600;
+}
+.texto {
+   font-size:x-large;
+   font-weight:600;
+}
+.texto2{
+    font-size:large;
+    font-weight:500;
+}
+
+
+.medio {
+    display: inline-block;
+    vertical-align: top;
+    width: 48%;
+}
+
+.tercio{
+display: inline-block;
+vertical-align: top;
+width: 32%;
+}
+
+.almost.form-control{
+    width:97%;
+    display:inline-block;
+}
+
+.filtros-directores {
+    width: 30.1%;
+    display: inherit;
+}
+
+/*.menubar {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    top:0;
+}*/

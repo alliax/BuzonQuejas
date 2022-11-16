@@ -1,0 +1,65 @@
+﻿body {
+ 
+    /*background-image: url('../img/fondo-test.jpeg');*/
+    background-color: white;
+}
+
+
+.nvo-login {
+    border-radius: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 40%;
+    padding-top: 3%;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 2%;
+}
+
+#image {
+    margin-left: 0px !important;
+}
+
+#contenido {
+    margin-right: auto !important;
+    margin-left: auto !important;
+    margin-top: 10%;
+    /*background-color: rgba(51, 170, 51, .1);*/ /*  10% opaque green */
+    /*rgba(51, 170, 51, .4)*/ /*  40% opaque green */
+    /*rgba(51, 170, 51, .7)*/ /*  70% opaque green */
+    /*rgba(51, 170, 51, 1);*/ /* full opaque green */
+    /*background-color: rgba(54, 25, 25, .00004);*/
+    background-color: rgba(54, 25, 25, .1);
+
+}
+
+#btnAceptar {
+    background-color: rgba(54, 25, 25, .2);
+    color: white;
+    font-size: 20px;
+    width: 40%;
+    margin-top: 5%;
+    transition: 0.3s;
+    border-radius: 7px;
+}
+
+
+#btnAceptar:hover {
+    background-color: rgba(54, 25, 25, .50);
+}
+
+.multileng {
+    margin-top: 4%;
+    float: right;
+}
+
+.btn-multLen {
+    background-color: rgba(54, 25, 25, .2);
+    color: white;
+    border-radius: 7px;
+    width: 100px;
+}
+
+.lbl-multLeng {
+    color: gray;
+}
