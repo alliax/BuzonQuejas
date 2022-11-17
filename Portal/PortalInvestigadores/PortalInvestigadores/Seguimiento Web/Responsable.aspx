@@ -1434,7 +1434,10 @@
                     </div>
 
                     <div class="form-row" style="width: 100%;">
-                        <div class="form-group col-md-4 ml-auto">
+                        <div class="form-group col-md-4">
+                            <asp:LinkButton  runat="server" ID="test" Text="Prueba" CssClass="btn btn-primary" OnClick="test_Click"/>
+                        </div>
+                        <div class="form-group col-md-4">
                             <button type="button" class="btn btn-secondary" onclick="location.href='CatalogoResponsables.aspx';" >Regresar</button>
                         </div>
                         <div class="form-group col-md-4">

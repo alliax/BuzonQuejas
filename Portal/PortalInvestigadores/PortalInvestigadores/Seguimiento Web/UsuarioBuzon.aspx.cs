@@ -12,7 +12,7 @@ using Portal_Investigadores.clases;
 
 namespace Portal_Investigadores
 {
-    public partial class CatalogoTipos : Page
+    public partial class UsuarioBuzon : Page
     {
         DBHelper DBHelper = new DBHelper();
         
@@ -21,39 +21,18 @@ namespace Portal_Investigadores
         {
             if (!Page.IsPostBack)
             {
-                bindGridTipo();
+                int id = int.Parse(Request.QueryString["id"]);
+                txtNombre.Text = Request.QueryString["nombre"];
+                txtIdUsuario.Text = id.ToString();
+                txtUsuario.Text = Request.QueryString["usuario"];
+                ddlGrupo.SelectedItem.Text = Request.QueryString["grupo"];
+                ddlEmpresa.SelectedValue = Request.QueryString["empresa"];
+
             }
         }
 
-        protected void agregarTipo(object sender, EventArgs e)
-        {
-            DataTable dttable = (DataTable)ViewState["datatable"];
-            DataRow dr = null;
-            if (txtTipo.Text != "" && txtDesc.Text != "")
-            {
-                dr = dttable.NewRow();
-                dr["tipo"] = txtTipo.Text;
-                dr["desc"] = txtDesc.Text;
-                dttable.Rows.Add(dr);
-                ViewState["datatable"] = dttable;
-                tipoGV.DataSource = dttable;
-                tipoGV.DataBind();
-            }
-        }
+ 
 
-        private void bindGridTipo()
-        {
-            //se carga el catalogo al iniciar la vista
-            DataTable dt = new DataTable();
-            DataRow dr = dt.NewRow();
-            dt.Columns.Add(new DataColumn("tipo", typeof(string)));
-            dt.Columns.Add(new DataColumn("desc", typeof(string)));
-            //dr["tipo"] = 1;
-            //dr["desc"] = "Test";
-            //dt.Rows.Add(dr);
-            ViewState["datatable"] = dt;
-            tipoGV.DataSource = dt;
-            tipoGV.DataBind();
-        }
+ 
     }
 }

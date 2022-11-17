@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 using Portal_Investigadores.clases;
+using System.Xml.Linq;
 
 
 namespace Portal_Investigadores
@@ -669,5 +670,15 @@ namespace Portal_Investigadores
 
         }
 
+        protected void test_Click(object sender, EventArgs e)
+        {
+            int id = int.Parse(Request.QueryString["id"]);
+            string usuario = txtUsuario.Text;
+            string nombre = txtNombre.Text;
+            string grupo = ddlGrupo.SelectedValue;
+            string empresa = ddlEmpresa.SelectedValue;
+            Response.Redirect(string.Format("~/UsuarioBuzon.aspx?id={0}&usuario={1}&nombre={2}&grupo={3}&empresa={4}", 
+                id, usuario, nombre, grupo, empresa));
+        }
     }
 }
