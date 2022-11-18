@@ -119,6 +119,7 @@
     <Content Include="CatalogoConducto.aspx" />
     <Content Include="CatalogoClasificaciones.aspx" />
     <Content Include="CatalogoImportancia.aspx" />
+    <Content Include="GestionBuzones.aspx" />
     <Content Include="UsuarioBuzon.aspx" />
     <Content Include="CatalogoTipos.aspx" />
     <Content Include="CatalogoTemas.aspx" />
@@ -3167,6 +3168,13 @@
     </Compile>
     <Compile Include="CatalogoImportancia.aspx.designer.cs">
       <DependentUpon>CatalogoImportancia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionBuzones.aspx.cs">
+      <DependentUpon>GestionBuzones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionBuzones.aspx.designer.cs">
+      <DependentUpon>GestionBuzones.aspx</DependentUpon>
     </Compile>
     <Compile Include="UsuarioBuzon.aspx.cs">
       <DependentUpon>UsuarioBuzon.aspx</DependentUpon>
