@@ -7,30 +7,66 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Portal_Investigadores
+namespace Seguimiento_Web
 {
 
 
-    public partial class CatalogoTemas
+    public partial class PortalQuejas
     {
 
         /// <summary>
-        /// txtTema control.
+        /// dlGrupo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTema;
+        protected global::System.Web.UI.WebControls.DropDownList dlGrupo;
 
         /// <summary>
-        /// txtDesc control.
+        /// dlEmpresa control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDesc;
+        protected global::System.Web.UI.WebControls.DropDownList dlEmpresa;
+
+        /// <summary>
+        /// dlBuzon control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dlBuzon;
+
+        /// <summary>
+        /// flLogo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload flLogo;
+
+        /// <summary>
+        /// cbCierre control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbCierre;
+
+        /// <summary>
+        /// cbComite control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbComite;
 
         /// <summary>
         /// cbActivo control.
@@ -60,129 +96,174 @@ namespace Portal_Investigadores
         protected global::System.Web.UI.WebControls.Button btnEdit;
 
         /// <summary>
-        /// btnCancel control.
+        /// gvBuzon control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancel;
+        protected global::System.Web.UI.WebControls.GridView gvBuzon;
 
         /// <summary>
-        /// panelTema control.
+        /// dlInvestigador control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelTema;
+        protected global::System.Web.UI.WebControls.DropDownList dlInvestigador;
 
         /// <summary>
-        /// lblTema control.
+        /// btnAgregarInv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTema;
+        protected global::System.Web.UI.WebControls.Button btnAgregarInv;
 
         /// <summary>
-        /// temaGV control.
+        /// btnActivarInv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView temaGV;
+        protected global::System.Web.UI.WebControls.Button btnActivarInv;
 
         /// <summary>
-        /// tbTema control.
+        /// gvInv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbTema;
+        protected global::System.Web.UI.WebControls.GridView gvInv;
 
         /// <summary>
-        /// txtSubtema control.
+        /// dlVobo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSubtema;
+        protected global::System.Web.UI.WebControls.DropDownList dlVobo;
 
         /// <summary>
-        /// txtSubTemaDesc control.
+        /// btnAgregarVobo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSubTemaDesc;
+        protected global::System.Web.UI.WebControls.Button btnAgregarVobo;
 
         /// <summary>
-        /// cbSubActivo control.
+        /// btnActivarVobo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbSubActivo;
+        protected global::System.Web.UI.WebControls.Button btnActivarVobo;
 
         /// <summary>
-        /// btnAddSb control.
+        /// gvVobo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddSb;
+        protected global::System.Web.UI.WebControls.GridView gvVobo;
 
         /// <summary>
-        /// btnEdiSb control.
+        /// cbCierreUsr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEdiSb;
+        protected global::System.Web.UI.WebControls.CheckBox cbCierreUsr;
 
         /// <summary>
-        /// btnCanSb control.
+        /// dlCierreUsr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCanSb;
+        protected global::System.Web.UI.WebControls.DropDownList dlCierreUsr;
 
         /// <summary>
-        /// panelSubtema control.
+        /// btnAgregarCierreUsr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelSubtema;
+        protected global::System.Web.UI.WebControls.Button btnAgregarCierreUsr;
 
         /// <summary>
-        /// lblSubtema control.
+        /// btnActivarCierreUsr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSubtema;
+        protected global::System.Web.UI.WebControls.Button btnActivarCierreUsr;
 
         /// <summary>
-        /// subtemaGV control.
+        /// gvCierre control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView subtemaGV;
+        protected global::System.Web.UI.WebControls.GridView gvCierre;
+
+        /// <summary>
+        /// cbComiteUsr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbComiteUsr;
+
+        /// <summary>
+        /// dlComiteUsr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dlComiteUsr;
+
+        /// <summary>
+        /// btnAgregarComiteUsr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarComiteUsr;
+
+        /// <summary>
+        /// btnActivarComiteUsr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnActivarComiteUsr;
+
+        /// <summary>
+        /// gvComite control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvComite;
     }
 }

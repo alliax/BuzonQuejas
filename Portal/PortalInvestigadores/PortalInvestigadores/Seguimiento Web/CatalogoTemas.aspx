@@ -5,11 +5,11 @@
         <link href="css/especiales.css" rel="stylesheet" />
         <div class="container">
             <div class="row">
-                <div class="table-header" style="padding-bottom: 27px; text-align: center;">Configuración de catalogo de temas y subtemas</div>
+                <div class="table-header" style="padding-bottom: 27px; text-align: center;">Configuración de catalogo de Temas y Subtemas</div>
                     <div class="col-md-6 col-lg-6">
                         <div class="card">
                             <div class="card-header bg-primary text-white">
-                                <p style="text-align: center;">TEMA</p>
+                                <p style="text-align: center;">Tema</p>
                             </div>
                             <div class="card-body">
                                 <div class="col-md-12 form-group">
@@ -19,6 +19,10 @@
                                 <div class="col-md-12 form-group">
                                     <label>Descripción</label>
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtDesc" />
+                                </div>
+                                <div  class="col-md-2 form-group">
+                                    <label>Activo:</label>
+                                    <asp:CheckBox runat="server" ID="cbActivo" CssClass="form-control"/>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -56,6 +60,8 @@
                                     <Columns>
                                         <asp:BoundField DataField="Id" HeaderText="Tema Id" />
                                         <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
+                                        <asp:BoundField DataField="Activo" HeaderText="Activo:" ItemStyle-CssClass="hidden-field" HeaderStyle-CssClass="hidden-field" />
+                                        <asp:CheckBoxField DataField="Activo" HeaderText="Activo:" />
                                     </Columns>                          
                                    </asp:GridView>
                                 </div>
@@ -65,7 +71,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header bg-primary text-white">
-                            <p style="text-align:center;">SUBTEMA</p>
+                            <p style="text-align:center;">Subtema</p>
                         </div>
                         <div class="card-body">
                             <div class="col-md-12 form-group">
@@ -80,6 +86,10 @@
                                 <label>Descripción</label>
                                 <asp:TextBox runat="server" CssClass="form-control" ID="txtSubTemaDesc" />
                             </div>
+                           <div  class="col-md-2 form-group">
+                            <label>Activo:</label>
+                               <asp:CheckBox runat="server" ID="cbSubActivo" CssClass="form-control"/>
+                           </div>
                         </div>
                         <div class="card-footer">
                             <div class="col-sm-12 row">
@@ -96,11 +106,11 @@
                         </div>
                         <div class="card-footer">
                              <asp:Panel ID="panelSubtema" runat="server" Visible="false">
-                                  <div class="container">
-                                      <div id="msgSubtema" class="alert alert-danger " >
-                                        <asp:Label ID="lblSubtema" runat="server"></asp:Label>
-                                      </div>
-                                 </div>
+                              <div class="container">
+                              <div id="msgSubtema" class="alert alert-danger " >
+                               <asp:Label ID="lblSubtema" runat="server"></asp:Label>
+                              </div>
+                             </div>
                              </asp:Panel>
                         </div>
                     </div>
@@ -117,6 +127,8 @@
                                     <asp:BoundField DataField="IdTema" HeaderText="Tema Id" />
                                     <asp:BoundField DataField="Id" HeaderText="SubTema Id" />
                                     <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
+                                    <asp:BoundField DataField="Activo" HeaderText="Activo:" ItemStyle-CssClass="hidden-field" HeaderStyle-CssClass="hidden-field" />
+                                    <asp:CheckBoxField DataField="Activo" HeaderText="Activo:" />
                                 </Columns>                          
                                 </asp:GridView>
                             </div>
