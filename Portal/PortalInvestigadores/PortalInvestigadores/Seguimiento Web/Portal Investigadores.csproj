@@ -119,10 +119,10 @@
     <Content Include="CatalogoConducto.aspx" />
     <Content Include="CatalogoClasificaciones.aspx" />
     <Content Include="CatalogoImportancia.aspx" />
+    <Content Include="CatalogoTemas.aspx" />
+    <Content Include="CatalogoTipos.aspx" />
     <Content Include="GestionBuzones.aspx" />
     <Content Include="UsuarioBuzon.aspx" />
-    <Content Include="CatalogoTipos.aspx" />
-    <Content Include="CatalogoTemas.aspx" />
     <Content Include="AltaMensaje.aspx" />
     <Content Include="CambiarContrasena.aspx" />
     <Content Include="CargarArchivo.asmx" />
@@ -3169,6 +3169,20 @@
     <Compile Include="CatalogoImportancia.aspx.designer.cs">
       <DependentUpon>CatalogoImportancia.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CatalogoTemas.aspx.cs">
+      <DependentUpon>CatalogoTemas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CatalogoTemas.aspx.designer.cs">
+      <DependentUpon>CatalogoTemas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CatalogoTipos.aspx.cs">
+      <DependentUpon>CatalogoTipos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CatalogoTipos.aspx.designer.cs">
+      <DependentUpon>CatalogoTipos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="GestionBuzones.aspx.cs">
       <DependentUpon>GestionBuzones.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3182,20 +3196,6 @@
     </Compile>
     <Compile Include="UsuarioBuzon.aspx.designer.cs">
       <DependentUpon>UsuarioBuzon.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CatalogoTipos.aspx.cs">
-      <DependentUpon>CatalogoTipos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CatalogoTipos.aspx.designer.cs">
-      <DependentUpon>CatalogoTipos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CatalogoTemas.aspx.cs">
-      <DependentUpon>CatalogoTemas.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CatalogoTemas.aspx.designer.cs">
-      <DependentUpon>CatalogoTemas.aspx</DependentUpon>
     </Compile>
     <Compile Include="AltaMensaje.aspx.cs">
       <DependentUpon>AltaMensaje.aspx</DependentUpon>
