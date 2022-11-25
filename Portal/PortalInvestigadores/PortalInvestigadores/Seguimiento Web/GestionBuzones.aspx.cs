@@ -1,11 +1,16 @@
-﻿using Portal_Investigadores.clases;
+﻿using Newtonsoft.Json;
+using Portal_Investigadores.clases;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Script.Services;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -26,7 +31,6 @@ namespace Seguimiento_Web
                 dlGrupo.DataValueField = "Id";
                 dlGrupo.DataTextField = "Descripcion";
                 dlGrupo.DataBind();
-
             }
         }
         protected void agregarBuzon(object sender, EventArgs e)
@@ -124,6 +128,54 @@ namespace Seguimiento_Web
             }
         }
 
+        protected void eliminarUsrInv(object sender, EventArgs e)
+        {
+            foreach (GridViewRow gvRow in gvInv.Rows)
+            {
+                var chk = gvRow.FindControl("Chk1") as CheckBox;
+                if (chk.Checked == true)
+                {
+                    int iUsrId = Convert.ToInt32(gvRow.Cells[1].Text);
+                    int iIdBQ = Convert.ToInt32(dlBuzon.SelectedValue.ToString());
+                    string sOutput = DBHelper.postBQUser("CAN", "Investigador", iUsrId, Session["idUsuario"].ToString());
+                    DataTable dtUsr = DBHelper.getBQUser("SEL", "Investigador", iIdBQ);
+                    gvInv.DataSource = dtUsr;
+                    gvInv.DataBind();
+
+                }
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string addUsrInv(int iIdBQ, int iBQUsr, string sUsr)
+        {
+            DBHelper DBHelper = new DBHelper();
+            string sOutput = DBHelper.postBQUser("NEW", "Investigador", iBQUsr, sUsr);
+            DataTable dtUsr = DBHelper.getBQUser("SEL", "Investigador", iIdBQ);
+            ; string str = JsonConvert.SerializeObject(dtUsr);
+            return (str);
+
+        }
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static void delUsrInv(int iBQUsr, string sUsr)
+        {
+            DBHelper DBHelper = new DBHelper();
+            string sOutput = DBHelper.postBQUser("CAN", "Investigador", iBQUsr, sUsr);
+        }
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string selUsrInv(int iIdBQ)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dtUsr = DBHelper.getBQUser("SEL", "Investigador", iIdBQ);
+            ; string str = JsonConvert.SerializeObject(dtUsr);
+            return (str);
+
+        }
+
+
         protected void agregarUsrVobo(object sender, EventArgs e)
         {
 
@@ -136,6 +188,24 @@ namespace Seguimiento_Web
                 DataTable dtUsr = DBHelper.getBQUser("SEL", "Vobo", iIdBQ);
                 gvVobo.DataSource = dtUsr;
                 gvVobo.DataBind();
+            }
+        }
+
+        protected void eliminarUsrVobo(object sender, EventArgs e)
+        {
+            foreach (GridViewRow gvRow in gvVobo.Rows)
+            {
+                var chk = gvRow.FindControl("Chk2") as CheckBox;
+                if (chk.Checked == true)
+                {
+                    int iUsrId = Convert.ToInt32(gvRow.Cells[1].Text);
+                    int iIdBQ = Convert.ToInt32(dlBuzon.SelectedValue.ToString());
+                    string sOutput = DBHelper.postBQUser("CAN", "Vobo", iUsrId, Session["idUsuario"].ToString());
+                    DataTable dtUsr = DBHelper.getBQUser("SEL", "Vobo", iIdBQ);
+                    gvVobo.DataSource = dtUsr;
+                    gvVobo.DataBind();
+
+                }
             }
         }
 
@@ -153,6 +223,23 @@ namespace Seguimiento_Web
                 gvCierre.DataBind();
             }
         }
+        protected void eliminarUsrCierre(object sender, EventArgs e)
+        {
+            foreach (GridViewRow gvRow in gvCierre.Rows)
+            {
+                var chk = gvRow.FindControl("Chk3") as CheckBox;
+                if (chk.Checked == true)
+                {
+                    int iUsrId = Convert.ToInt32(gvRow.Cells[1].Text);
+                    int iIdBQ = Convert.ToInt32(dlBuzon.SelectedValue.ToString());
+                    string sOutput = DBHelper.postBQUser("CAN", "Cierre", iUsrId, Session["idUsuario"].ToString());
+                    DataTable dtUsr = DBHelper.getBQUser("SEL", "Cierre", iIdBQ);
+                    gvCierre.DataSource = dtUsr;
+                    gvCierre.DataBind();
+
+                }
+            }
+        }
         protected void agregarUsrComite(object sender, EventArgs e)
         {
 
@@ -167,20 +254,63 @@ namespace Seguimiento_Web
                 gvComite.DataBind();
             }
         }
+        protected void eliminarUsrComite(object sender, EventArgs e)
+        {
+            foreach (GridViewRow gvRow in gvComite.Rows)
+            {
+                var chk = gvRow.FindControl("Chk4") as CheckBox;
+                if (chk.Checked == true)
+                {
+                    int iUsrId = Convert.ToInt32(gvRow.Cells[1].Text);
+                    int iIdBQ = Convert.ToInt32(dlBuzon.SelectedValue.ToString());
+                    string sOutput = DBHelper.postBQUser("CAN", "Comite", iUsrId, Session["idUsuario"].ToString());
+                    DataTable dtUsr = DBHelper.getBQUser("SEL", "Comite", iIdBQ);
+                    gvComite.DataSource = dtUsr;
+                    gvComite.DataBind();
+
+                }
+            }
+        }
 
         protected void ChkChangedComite(object sender, EventArgs e)
         {
-            dlComiteUsr.Enabled = true;
-            btnAgregarComiteUsr.Enabled = true;
-            btnActivarComiteUsr.Enabled=true;
+
+            if (cbComiteUsr.Checked == true)
+            {
+                dlComiteUsr.Enabled = true;
+                btnAgregarComiteUsr.Enabled = true;
+                btnEliminarComiteUsr.Enabled = true;
+                btnSubirComiteUsr.Enabled= true;
+                btnBajarComiteUsr.Enabled= true;
+            }
+            else
+            {
+                dlComiteUsr.Enabled = false;
+                btnAgregarComiteUsr.Enabled = false;
+                btnEliminarComiteUsr.Enabled = false;
+                btnSubirComiteUsr.Enabled = false;
+                btnBajarComiteUsr.Enabled = false;
+            }
         }
         protected void ChkChangedCierre(object sender, EventArgs e)
         {
-            dlCierreUsr.Enabled = true;
-            btnAgregarCierreUsr.Enabled = true;
-            btnActivarCierreUsr.Enabled=true;
+            if (cbCierreUsr.Checked == true)
+            {
+                dlCierreUsr.Enabled = true;
+                btnAgregarCierreUsr.Enabled = true;
+                btnEliminarCierreUsr.Enabled = true;
+                btnSubirCierreUsr.Enabled = true;
+                btnBajarCierreUsr.Enabled = true;
+            }
+            else
+            {
+                dlCierreUsr.Enabled = false;
+                btnAgregarCierreUsr.Enabled = false;
+                btnEliminarCierreUsr.Enabled = false;
+                btnSubirCierreUsr.Enabled = false;
+                btnBajarCierreUsr.Enabled = false;
+            }
         }
-
         protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -246,43 +376,186 @@ namespace Seguimiento_Web
         {
             DataTable dt = DBHelper.getBQ("SELMNT", iIdBQ);
 
-            if (dt.Rows[0]["ProcesoCierre"].ToString() == "True")
+            if (dt.Rows.Count > 0)
             {
-                cbCierreUsr.Enabled = true;
-                cbCierreUsr.Checked = false;
-                dlCierreUsr.Enabled = false;
-                btnAgregarCierreUsr.Enabled=false;
-                btnActivarCierreUsr.Enabled = false;
-            }
-            else
-            {
-                cbCierreUsr.Enabled = false;
-                cbCierreUsr.Checked = false;
-                dlCierreUsr.Enabled = false;
-                btnAgregarCierreUsr.Enabled=false;
-                btnActivarCierreUsr.Enabled = false;
-            }
-            if (dt.Rows[0]["ProcesoComite"].ToString() == "True")
-            {
-                cbComiteUsr.Enabled = true;
-                cbComiteUsr.Checked = false;
-                dlComiteUsr.Enabled = false;
-                btnAgregarComiteUsr.Enabled = false;
-                btnActivarComiteUsr.Enabled = false;
 
+                if (dt.Rows[0]["ProcesoCierre"].ToString() == "True")
+                {
+                    cbCierreUsr.Enabled = true;
+                    cbCierreUsr.Checked = false;
+                    dlCierreUsr.Enabled = false;
+                    btnAgregarCierreUsr.Enabled = false;
+                    btnEliminarCierreUsr.Enabled = false;
+                    btnSubirCierreUsr.Enabled = false;
+                    btnBajarCierreUsr.Enabled = false;
+                }
+                else
+                {
+                    cbCierreUsr.Enabled = false;
+                    cbCierreUsr.Checked = false;
+                    dlCierreUsr.Enabled = false;
+                    btnAgregarCierreUsr.Enabled = false;
+                    btnEliminarCierreUsr.Enabled = false;
+                    btnSubirCierreUsr.Enabled = false;
+                    btnBajarCierreUsr.Enabled = false;
+                }
+                if (dt.Rows[0]["ProcesoComite"].ToString() == "True")
+                {
+                    cbComiteUsr.Enabled = true;
+                    cbComiteUsr.Checked = false;
+                    dlComiteUsr.Enabled = false;
+                    btnAgregarComiteUsr.Enabled = false;
+                    btnEliminarComiteUsr.Enabled = false;
+                    btnSubirComiteUsr.Enabled = false;
+                    btnBajarComiteUsr.Enabled = false;
+
+                }
+                else
+                {
+                    cbComiteUsr.Enabled = false;
+                    cbComiteUsr.Checked = false;
+                    dlComiteUsr.Enabled = false;
+                    btnAgregarComiteUsr.Enabled = false;
+                    btnEliminarComiteUsr.Enabled = false;
+                    btnSubirComiteUsr.Enabled = false;
+                    btnBajarComiteUsr.Enabled = false;
+                }
+
+                ViewState["datatable"] = dt;
+                gvBuzon.DataSource = dt;
+                gvBuzon.DataBind();
             }
-            else
+        }
+
+
+        protected void SubirSecCierre(object sender, EventArgs e)
+        {
+
+            int iCont = 0;
+            foreach (GridViewRow gvRow in gvCierre.Rows)
             {
-                cbComiteUsr.Enabled = false;
-                cbComiteUsr.Checked = false;
-                dlComiteUsr.Enabled = false;
-                btnAgregarComiteUsr.Enabled = false;
-                btnActivarComiteUsr.Enabled = false;
+                var chk = gvRow.FindControl("Chk3") as CheckBox;
+                if (chk.Checked == true)
+                {
+                    iCont = iCont + 1;
+                }
             }
 
-            ViewState["datatable"] = dt;
-            gvBuzon.DataSource = dt;
-            gvBuzon.DataBind();
+            if (iCont == 1)
+            {
+                foreach (GridViewRow gvRow in gvCierre.Rows)
+                {
+                    var chk = gvRow.FindControl("Chk3") as CheckBox;
+                    if (chk.Checked == true)
+                    {
+                        int iUsrId = Convert.ToInt32(gvRow.Cells[1].Text);
+                        int iIdBQ = Convert.ToInt32(dlBuzon.SelectedValue.ToString());
+                        string sOutput = DBHelper.postBQUser("UP", "Cierre", iUsrId, Session["idUsuario"].ToString());
+                        DataTable dtUsr = DBHelper.getBQUser("SEL", "Cierre", iIdBQ);
+                        gvCierre.DataSource = dtUsr;
+                        gvCierre.DataBind();
+
+                    }
+                }
+            }
+
+        }
+        protected void BajarSecCierre(object sender, EventArgs e)
+        {
+            int iCont = 0;
+            foreach (GridViewRow gvRow in gvCierre.Rows)
+            {
+                var chk = gvRow.FindControl("Chk3") as CheckBox;
+                if (chk.Checked == true)
+                {
+                    iCont = iCont + 1;
+                }
+            }
+
+            if (iCont == 1)
+            {
+                foreach (GridViewRow gvRow in gvCierre.Rows)
+                {
+                    var chk = gvRow.FindControl("Chk3") as CheckBox;
+                    if (chk.Checked == true)
+                    {
+                        int iUsrId = Convert.ToInt32(gvRow.Cells[1].Text);
+                        int iIdBQ = Convert.ToInt32(dlBuzon.SelectedValue.ToString());
+                        string sOutput = DBHelper.postBQUser("DOWN", "Cierre", iUsrId, Session["idUsuario"].ToString());
+                        DataTable dtUsr = DBHelper.getBQUser("SEL", "Cierre", iIdBQ);
+                        gvCierre.DataSource = dtUsr;
+                        gvCierre.DataBind();
+
+                    }
+                }
+            }
+        }
+
+
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+      protected void SubirSecCom(object sender, EventArgs e)
+        {
+
+            int iCont = 0;
+            foreach (GridViewRow gvRow in gvComite.Rows)
+            {
+                var chk = gvRow.FindControl("Chk4") as CheckBox;
+                if (chk.Checked == true)
+                { 
+                   iCont=iCont+1;
+                }
+            }
+
+            if (iCont == 1)
+            {
+                foreach (GridViewRow gvRow in gvComite.Rows)
+                {
+                    var chk = gvRow.FindControl("Chk4") as CheckBox;
+                    if (chk.Checked == true)
+                    {
+                        int iUsrId = Convert.ToInt32(gvRow.Cells[1].Text);
+                        int iIdBQ = Convert.ToInt32(dlBuzon.SelectedValue.ToString());
+                        string sOutput = DBHelper.postBQUser("UP", "Comite", iUsrId, Session["idUsuario"].ToString());
+                        DataTable dtUsr = DBHelper.getBQUser("SEL", "Comite", iIdBQ);
+                        gvComite.DataSource = dtUsr;
+                        gvComite.DataBind();
+
+                    }
+                }
+            }
+
+        }
+        protected void BajarSecCom(object sender, EventArgs e)
+        {
+            int iCont = 0;
+            foreach (GridViewRow gvRow in gvComite.Rows)
+            {
+                var chk = gvRow.FindControl("Chk4") as CheckBox;
+                if (chk.Checked == true)
+                {
+                    iCont = iCont + 1;
+                }
+            }
+
+            if (iCont == 1)
+            {
+                foreach (GridViewRow gvRow in gvComite.Rows)
+                {
+                    var chk = gvRow.FindControl("Chk4") as CheckBox;
+                    if (chk.Checked == true)
+                    {
+                        int iUsrId = Convert.ToInt32(gvRow.Cells[1].Text);
+                        int iIdBQ = Convert.ToInt32(dlBuzon.SelectedValue.ToString());
+                        string sOutput = DBHelper.postBQUser("DOWN", "Comite", iUsrId, Session["idUsuario"].ToString());
+                        DataTable dtUsr = DBHelper.getBQUser("SEL", "Comite", iIdBQ);
+                        gvComite.DataSource = dtUsr;
+                        gvComite.DataBind();
+
+                    }
+                }
+            }
         }
 
     }

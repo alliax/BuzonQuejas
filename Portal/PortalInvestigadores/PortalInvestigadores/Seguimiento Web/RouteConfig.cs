@@ -13,7 +13,9 @@ namespace Seguimiento_Web.App_Code
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.EnableFriendlyUrls();
+            var settings = new FriendlyUrlSettings();
+            settings.AutoRedirectMode = RedirectMode.Off;
+            routes.EnableFriendlyUrls(settings);
         }
 
     }

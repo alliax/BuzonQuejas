@@ -123,13 +123,13 @@ namespace Seguimiento_Web
         protected global::System.Web.UI.WebControls.Button btnAgregarInv;
 
         /// <summary>
-        /// btnActivarInv control.
+        /// btnEliminarInv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnActivarInv;
+        protected global::System.Web.UI.WebControls.Button btnEliminarInv;
 
         /// <summary>
         /// gvInv control.
@@ -159,13 +159,13 @@ namespace Seguimiento_Web
         protected global::System.Web.UI.WebControls.Button btnAgregarVobo;
 
         /// <summary>
-        /// btnActivarVobo control.
+        /// btnEliminarVobo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnActivarVobo;
+        protected global::System.Web.UI.WebControls.Button btnEliminarVobo;
 
         /// <summary>
         /// gvVobo control.
@@ -204,13 +204,31 @@ namespace Seguimiento_Web
         protected global::System.Web.UI.WebControls.Button btnAgregarCierreUsr;
 
         /// <summary>
-        /// btnActivarCierreUsr control.
+        /// btnEliminarCierreUsr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnActivarCierreUsr;
+        protected global::System.Web.UI.WebControls.Button btnEliminarCierreUsr;
+
+        /// <summary>
+        /// btnSubirCierreUsr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSubirCierreUsr;
+
+        /// <summary>
+        /// btnBajarCierreUsr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBajarCierreUsr;
 
         /// <summary>
         /// gvCierre control.
@@ -249,13 +267,31 @@ namespace Seguimiento_Web
         protected global::System.Web.UI.WebControls.Button btnAgregarComiteUsr;
 
         /// <summary>
-        /// btnActivarComiteUsr control.
+        /// btnEliminarComiteUsr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnActivarComiteUsr;
+        protected global::System.Web.UI.WebControls.Button btnEliminarComiteUsr;
+
+        /// <summary>
+        /// btnSubirComiteUsr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSubirComiteUsr;
+
+        /// <summary>
+        /// btnBajarComiteUsr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBajarComiteUsr;
 
         /// <summary>
         /// gvComite control.
