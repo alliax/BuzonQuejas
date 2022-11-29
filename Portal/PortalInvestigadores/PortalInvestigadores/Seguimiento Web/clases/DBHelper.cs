@@ -3408,6 +3408,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
+
         public DataTable getTemas(string sParam, int iIdBQ, int iId) //Saul Sanchez
         {
             try
@@ -3420,6 +3421,7 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sParam;
                         cmd.Parameters.Add("@P_Id", SqlDbType.Int).Value = iId;
                         cmd.Parameters.Add("@P_Descripcion", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Activo", SqlDbType.Bit).Value = false;
                         cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = "";
                         cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
                         con.Open();
@@ -3439,7 +3441,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public string postTemas(string sOpt, int iId, string sDesc, string sUsr, int iIdBQ)  //Saul Sanchez
+        public string postTemas(string sOpt, int iId, string sDesc, bool bAct, string sUsr, int iIdBQ)  //Saul Sanchez
         {
             try
             {
@@ -3451,6 +3453,7 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sOpt;
                         cmd.Parameters.Add("@P_Id", SqlDbType.Int).Value = iId;
                         cmd.Parameters.Add("@P_Descripcion", SqlDbType.VarChar).Value = sDesc;
+                        cmd.Parameters.Add("@P_Activo", SqlDbType.Bit).Value = bAct;
                         cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = sUsr;
                         cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
                         con.Open();
@@ -3468,7 +3471,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public DataTable getSubtemas(string sParam, int iIdBQ, int iId) //Saul Sanchez
+        public DataTable getSubtemas(string sParam, int iId) //Saul Sanchez
         {
             try
             {
@@ -3481,6 +3484,100 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@P_IdTema", SqlDbType.Int).Value = 0;
                         cmd.Parameters.Add("@P_Id", SqlDbType.Int).Value = iId;
                         cmd.Parameters.Add("@P_Descripcion", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Activo", SqlDbType.Bit).Value = false;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = "";
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public string postSubtemas(string sOpt, int iIdTema, int iId, string sDesc, bool bAct, string sUsr)  //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Cat_Subtema", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sOpt;
+                        cmd.Parameters.Add("@P_IdTema", SqlDbType.Int).Value = iIdTema;
+                        cmd.Parameters.Add("@P_Id", SqlDbType.Int).Value = iId;
+                        cmd.Parameters.Add("@P_Descripcion", SqlDbType.VarChar).Value = sDesc;
+                        cmd.Parameters.Add("@P_Activo", SqlDbType.Bit).Value = bAct;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = sUsr;
+
+                        con.Open();
+
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+                        return "Ok";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public string postTipo(string sOpt, int iId, string sDesc, bool bAct, string sUsr, int iIdBQ)  //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Cat_Tipo", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sOpt;
+                        cmd.Parameters.Add("@P_Id", SqlDbType.Int).Value = iId;
+                        cmd.Parameters.Add("@P_Descripcion", SqlDbType.VarChar).Value = sDesc;
+                        cmd.Parameters.Add("@P_Activo", SqlDbType.Bit).Value = bAct;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = sUsr;
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
+                        con.Open();
+
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+                        return "Ok";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public DataTable getTipo(string sParam, int iIdBQ, int iId) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Cat_Tipo", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sParam;
+                        cmd.Parameters.Add("@P_Id", SqlDbType.Int).Value = iId;
+                        cmd.Parameters.Add("@P_Descripcion", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Activo", SqlDbType.Bit).Value = false;
                         cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = "";
                         cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
                         con.Open();
@@ -3500,21 +3597,30 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public string postSubtemas(string sOpt, int iIdTema, int iId, string sDesc, string sUsr, int iIdBQ)  //Saul Sanchez
+
+        public string postBQ(string sOpt, int iIdBQ, Boolean bCierre, Boolean bComite, byte[] bPhoto, Boolean bActivo, string sUsr)  //Saul Sanchez
         {
             try
             {
                 using (SqlConnection con = new SqlConnection(connStr))
                 {
-                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Cat_Subtema", con))
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_PortalQuejas", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sOpt;
-                        cmd.Parameters.Add("@P_IdTema", SqlDbType.Int).Value = iIdTema;
-                        cmd.Parameters.Add("@P_Id", SqlDbType.Int).Value = iId;
-                        cmd.Parameters.Add("@P_Descripcion", SqlDbType.VarChar).Value = sDesc;
-                        cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = sUsr;
                         cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
+                        cmd.Parameters.Add("@P_ProcesoCierre", SqlDbType.Bit).Value = bCierre;
+                        cmd.Parameters.Add("@P_ProcesoComite", SqlDbType.Bit).Value = bComite;
+                        if (bPhoto != null)
+                        {
+                            cmd.Parameters.Add("@P_Logo", SqlDbType.VarBinary).Value = bPhoto;
+                        }
+                        else
+                        {
+                            cmd.Parameters.Add("@P_Logo", SqlDbType.VarBinary).Value = System.Data.SqlTypes.SqlBinary.Null;
+                        }
+                        cmd.Parameters.Add("@P_Activo", SqlDbType.Bit).Value = bActivo;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = sUsr;
                         con.Open();
 
                         cmd.ExecuteNonQuery();
@@ -3529,6 +3635,129 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
+
+        public DataTable getBQ(string sOpt, int iIdBQ) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_PortalQuejas", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sOpt;
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
+                        cmd.Parameters.Add("@P_ProcesoCierre", SqlDbType.Bit).Value = false;
+                        cmd.Parameters.Add("@P_ProcesoComite", SqlDbType.Bit).Value = false;
+                        cmd.Parameters.Add("@P_Logo", SqlDbType.VarBinary).Value = System.Data.SqlTypes.SqlBinary.Null;
+                        cmd.Parameters.Add("@P_Activo", SqlDbType.Bit).Value = false;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = "";
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public DataTable getBQUser(string sOpt, string sCat, int iIdBQ) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_User", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sOpt;
+                        cmd.Parameters.Add("@P_Cat", SqlDbType.VarChar).Value = sCat;
+                        cmd.Parameters.Add("@P_Id_Usr", SqlDbType.Int).Value = 0;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public string postBQUser(string sOpt, string sCat, int iCatUsr, string sUsr)  //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_User", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sOpt;
+                        cmd.Parameters.Add("@P_Cat", SqlDbType.VarChar).Value = sCat;
+                        cmd.Parameters.Add("@P_Id_Usr", SqlDbType.Int).Value = iCatUsr;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = sUsr;
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = 0;
+                        con.Open();
+
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+                        return "Ok";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+        public DataTable getBQId(string sOpt, string sCat) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_SelId", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sOpt;
+                        cmd.Parameters.Add("@P_Str1", SqlDbType.VarChar).Value = sCat;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public string saveForma(int idConducto, string forma, string descripcion, bool activo, string usuarioCreacion, int idBQ)
         {
             try

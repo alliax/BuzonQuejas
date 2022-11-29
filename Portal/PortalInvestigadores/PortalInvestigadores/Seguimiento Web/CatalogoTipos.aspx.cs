@@ -12,48 +12,142 @@ using Portal_Investigadores.clases;
 
 namespace Portal_Investigadores
 {
+  
     public partial class CatalogoTipos : Page
     {
         DBHelper DBHelper = new DBHelper();
-        
+        DataTable dtTipo ;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
-                bindGridTipo();
+                // 1 Grupo (Alliax)
+                cargarTipo(1);
             }
+        }
+
+        private void cargarTipo(int iIdBQ)
+        {
+            //cargar temas por id de catalogo
+            DataTable dt = DBHelper.getTipo("SEL", iIdBQ, 0);
+            dtTipo = DBHelper.getTipo("SEL", iIdBQ, 0);
+            ViewState["datatable"] = dt;
+            gvTipo.DataSource = dt;
+            gvTipo.DataBind();
         }
 
         protected void agregarTipo(object sender, EventArgs e)
         {
-            DataTable dttable = (DataTable)ViewState["datatable"];
-            DataRow dr = null;
+            string sOutput = "";
             if (txtTipo.Text != "" && txtDesc.Text != "")
             {
-                dr = dttable.NewRow();
-                dr["tipo"] = txtTipo.Text;
-                dr["desc"] = txtDesc.Text;
-                dttable.Rows.Add(dr);
-                ViewState["datatable"] = dttable;
-                tipoGV.DataSource = dttable;
-                tipoGV.DataBind();
+                double dbRetNum;
+                bool bIsNum = Double.TryParse(Convert.ToString(txtTipo.Text), System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo, out dbRetNum);
+                if (bIsNum)
+                {
+                    // 1 Grupo (Alliax)
+                    DataTable dt = DBHelper.getTipo("VAL_ID", 1, Convert.ToInt32(txtTipo.Text));
+
+                    if (dt.Rows.Count == 0)
+                    {
+                        //Post
+                        sOutput = DBHelper.postTipo("NEW", Convert.ToInt32(txtTipo.Text), txtDesc.Text, true,Session["idUsuario"].ToString(), 1);
+                        if (sOutput == "Ok")
+                        {
+                            // 1 Grupo (Alliax)
+                            cargarTipo(1);
+                            txtTipo.Text = string.Empty;
+                            txtDesc.Text = string.Empty;
+                        }
+                        //Post
+                        panelTipo.Visible = false;
+                    }
+                    else
+                    {
+                        panelTipo.Visible = true;
+                        lblTipo.Text = "Tipo Id ya existe ,agrega uno diferente";
+                    }
+
+                }
+                else
+                {
+                    panelTipo.Visible = true;
+                    lblTipo.Text = "Tipo Id debe ser numerico";
+                }
+
+            }
+            else
+            {
+                panelTipo.Visible = true;
+                lblTipo.Text = "Favor de Ingresar todos los campos";
+            }
+
+
+        }
+
+        protected void editarTipo(object sender, EventArgs e)
+        {
+            string sOutput = "";
+            if (txtTipo.Text != "" && txtDesc.Text != "")
+            {
+                // 1 Grupo (Alliax)
+                sOutput = DBHelper.postTipo("UPD", Convert.ToInt32(txtTipo.Text), txtDesc.Text, cbActive.Checked,Session["idUsuario"].ToString(), 1);
+            }
+            else
+            {
+                panelTipo.Visible = true;
+                lblTipo.Text = "Favor de Ingresar todos los campos";
+            }
+            if (sOutput == "Ok")
+            {
+                // 1 Grupo (Alliax)
+                cargarTipo(1);
+                txtTipo.Text = string.Empty;
+                txtDesc.Text = string.Empty;
+                btnAdd.Enabled = true;
+                btnCancel.Enabled = false;
+                btnEdit.Enabled = false;
+                txtTipo.Enabled = true;
+                cbActive.Checked = false;
             }
         }
 
-        private void bindGridTipo()
+        protected void cancelTipo(object sender, EventArgs e)
         {
-            //se carga el catalogo al iniciar la vista
-            DataTable dt = new DataTable();
-            DataRow dr = dt.NewRow();
-            dt.Columns.Add(new DataColumn("tipo", typeof(string)));
-            dt.Columns.Add(new DataColumn("desc", typeof(string)));
-            //dr["tipo"] = 1;
-            //dr["desc"] = "Test";
-            //dt.Rows.Add(dr);
-            ViewState["datatable"] = dt;
-            tipoGV.DataSource = dt;
-            tipoGV.DataBind();
+            txtTipo.Text = string.Empty;;
+            txtTipo.Enabled = true;
+            txtDesc.Text = string.Empty;
+            btnAdd.Enabled = true;
+            btnCancel.Enabled = false;
+            btnEdit.Enabled = false;
         }
+
+        protected void gvTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtTipo.Text = gvTipo.SelectedRow.Cells[1].Text;
+            txtDesc.Text = gvTipo.SelectedRow.Cells[2].Text;
+            string sActivo = gvTipo.SelectedRow.Cells[3].Text;
+            int iIdx = gvTipo.SelectedRow.RowIndex;
+
+
+            if (sActivo == "True")
+            {
+                cbActive.Checked = true;
+            }
+            else
+            {
+                cbActive.Checked = false;
+            }
+
+            ViewState["index"] = gvTipo.SelectedIndex;
+
+            btnEdit.Enabled = true;
+            btnCancel.Enabled = true;
+            btnAdd.Enabled = false;
+            txtTipo.Enabled = false;
+
+        }
+
     }
 }
