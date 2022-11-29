@@ -33,6 +33,15 @@ namespace Portal_Investigadores
         protected global::System.Web.UI.WebControls.TextBox txtDesc;
 
         /// <summary>
+        /// cbActivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbActivo;
+
+        /// <summary>
         /// btnAdd control.
         /// </summary>
         /// <remarks>
@@ -112,6 +121,15 @@ namespace Portal_Investigadores
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSubTemaDesc;
+
+        /// <summary>
+        /// cbSubActivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbSubActivo;
 
         /// <summary>
         /// btnAddSb control.

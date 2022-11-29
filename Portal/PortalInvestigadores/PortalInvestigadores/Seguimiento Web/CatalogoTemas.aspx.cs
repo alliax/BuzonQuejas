@@ -26,7 +26,9 @@ namespace Portal_Investigadores
         {
             if(!Page.IsPostBack)
             {
+                // 1 Grupo (Alliax)
                 cargarTemas(1);
+                // 1 Grupo (Alliax)
                 cargarSubtemas(1);
             }
         }
@@ -43,7 +45,7 @@ namespace Portal_Investigadores
         {
             //cargar subtemas por id de tema en bd
             //DataTable dtSub = DBHelper.cargarSubtema();
-            DataTable dt = DBHelper.getSubtemas("SEL",iIdBQ,0);
+            DataTable dt = DBHelper.getSubtemas("SEL",0);
             ViewState["datatable"] = dt;
             subtemaGV.DataSource = dt;
             subtemaGV.DataBind();
@@ -59,15 +61,16 @@ namespace Portal_Investigadores
                 bool bIsNum = Double.TryParse(Convert.ToString(txtTema.Text), System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo, out  dbRetNum);
                 if (bIsNum)
                 {
-
+                    // 1 Grupo (Alliax)
                     DataTable dt = DBHelper.getTemas("VAL_ID", 1, Convert.ToInt32(txtTema.Text));
 
                     if (dt.Rows.Count == 0)
                     {
                         //Post
-                        sOutput = DBHelper.postTemas("NEW", Convert.ToInt32(txtTema.Text), txtDesc.Text, Session["idUsuario"].ToString(), 1);
+                        sOutput = DBHelper.postTemas("NEW", Convert.ToInt32(txtTema.Text), txtDesc.Text,true,Session["idUsuario"].ToString(), 1);
                         if (sOutput == "Ok")
                         {
+                            // 1 Grupo (Alliax)
                             cargarTemas(1);
                             txtTema.Text = string.Empty;
                             txtDesc.Text = string.Empty;
@@ -102,7 +105,8 @@ namespace Portal_Investigadores
             string sOutput = "";
             if (txtTema.Text != "" && txtDesc.Text != "")
             {
-                sOutput = DBHelper.postTemas("UPD", Convert.ToInt32(txtTema.Text), txtDesc.Text, Session["idUsuario"].ToString(), 1);
+                // 1 Grupo (Alliax)
+                sOutput = DBHelper.postTemas("UPD", Convert.ToInt32(txtTema.Text), txtDesc.Text,cbActivo.Checked,Session["idUsuario"].ToString(), 1);
             }
             else
             {
@@ -111,6 +115,7 @@ namespace Portal_Investigadores
             }
             if (sOutput == "Ok")
             {
+                // 1 Grupo (Alliax)
                 cargarTemas(1);
                 txtTema.Text = string.Empty;
                 txtDesc.Text = string.Empty;
@@ -118,6 +123,7 @@ namespace Portal_Investigadores
                 btnCancel.Enabled = false;
                 btnEdit.Enabled = false;
                 txtTema.Enabled = true;
+                cbActivo.Checked = false;
             }
         }
 
@@ -127,6 +133,19 @@ namespace Portal_Investigadores
             txtTema.Text = temaGV.SelectedRow.Cells[1].Text;
             tbTema.Text = temaGV.SelectedRow.Cells[1].Text;
             txtDesc.Text = temaGV.SelectedRow.Cells[2].Text;
+
+
+            string sActivo = temaGV.SelectedRow.Cells[3].Text;
+            int iIdx = temaGV.SelectedRow.RowIndex;
+            if (sActivo == "True")
+            {
+                cbActivo.Checked = true;
+            }
+            else
+            {
+                cbActivo.Checked = false;
+            }
+
             ViewState["index"] = temaGV.SelectedIndex;
             //lbTxt.Text =  temaGV.SelectedIndex.ToString();
             btnEdit.Enabled = true;
@@ -148,6 +167,20 @@ namespace Portal_Investigadores
             tbTema.Text = subtemaGV.SelectedRow.Cells[1].Text;
             txtSubtema.Text = subtemaGV.SelectedRow.Cells[2].Text;
             txtSubTemaDesc.Text = subtemaGV.SelectedRow.Cells[3].Text;
+
+            string sActivo = subtemaGV.SelectedRow.Cells[4].Text;
+            int iIdx = subtemaGV.SelectedRow.RowIndex;
+
+
+            if (sActivo == "True")
+            {
+                cbSubActivo.Checked = true;
+            }
+            else
+            {
+                cbSubActivo.Checked = false;
+            }
+
             ViewState["index"] = subtemaGV.SelectedIndex;
     
             btnEdiSb.Enabled = true;
@@ -178,15 +211,17 @@ namespace Portal_Investigadores
                 bool bIsNum = Double.TryParse(Convert.ToString(txtSubtema.Text), System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo, out dbRetNum);
                 if (bIsNum)
                 {
-
-                    DataTable dt = DBHelper.getSubtemas("VAL_ID", 1, Convert.ToInt32(txtSubtema.Text));
+                    // 1 Grupo (Alliax)
+                    DataTable dt = DBHelper.getSubtemas("VAL_ID",Convert.ToInt32(txtSubtema.Text));
 
                     if (dt.Rows.Count == 0)
                     {
                         //Post
-                        sOutput = DBHelper.postSubtemas("NEW", Convert.ToInt32(tbTema.Text), Convert.ToInt32(txtSubtema.Text), txtSubTemaDesc.Text, Session["idUsuario"].ToString(), 1);
+                        // 1 Grupo (Alliax)
+                        sOutput = DBHelper.postSubtemas("NEW", Convert.ToInt32(tbTema.Text), Convert.ToInt32(txtSubtema.Text), txtSubTemaDesc.Text,true ,Session["idUsuario"].ToString());
                         if (sOutput == "Ok")
                         {
+                            // 1 Grupo (Alliax)
                             cargarSubtemas(1);
                             txtSubtema.Text = string.Empty;
                             txtSubTemaDesc.Text = string.Empty;
@@ -219,7 +254,8 @@ namespace Portal_Investigadores
             string sOutput = "";
             if (txtSubtema.Text != "" && txtSubTemaDesc.Text != "" && tbTema.Text != "")
             {
-                sOutput = DBHelper.postSubtemas("UPD",Convert.ToInt32(tbTema.Text), Convert.ToInt32(txtSubtema.Text), txtSubTemaDesc.Text, Session["idUsuario"].ToString(), 1);
+                // 1 Grupo (Alliax)
+                sOutput = DBHelper.postSubtemas("UPD",Convert.ToInt32(tbTema.Text), Convert.ToInt32(txtSubtema.Text), txtSubTemaDesc.Text, cbSubActivo.Checked,Session["idUsuario"].ToString());
             }
             else
             {
@@ -228,6 +264,7 @@ namespace Portal_Investigadores
             }
             if (sOutput == "Ok")
             {
+                // 1 Grupo (Alliax)
                 cargarSubtemas(1);
                 txtSubtema.Text = string.Empty;
                 txtSubTemaDesc.Text = string.Empty;
@@ -235,6 +272,7 @@ namespace Portal_Investigadores
                 btnCanSb.Enabled = false;
                 btnEdiSb.Enabled = false;
                 txtTema.Enabled = true;
+                cbSubActivo.Checked = false;
             }
 
         }
