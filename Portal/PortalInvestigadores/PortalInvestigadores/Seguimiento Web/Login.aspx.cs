@@ -67,6 +67,9 @@ namespace Portal_Investigadores
                         //int perfil = DBHelper.getPerfil(usuario);
                         //Session["rol"] = perfil.ToString();
                         Session["idioma"] = ddlIdioma.SelectedValue;
+                        Session["empresa"] = "CANCUN";
+                        Session["grupo"] = "SIGMA";
+                        Session["idBQ"] = "1";
 
                         Response.Redirect("Dashboard.aspx", true);
                     }

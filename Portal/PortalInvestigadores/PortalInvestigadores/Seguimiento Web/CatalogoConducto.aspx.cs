@@ -12,6 +12,7 @@ using System.Web.Http;
 using System.Net;
 using System.Text.RegularExpressions;
 using Seguimiento_Web;
+using System.Security.Cryptography;
 
 namespace Portal_Investigadores
 {
@@ -36,6 +37,13 @@ namespace Portal_Investigadores
             conductoGV.DataSource = dt;
             conductoGV.DataBind();
         }
+        protected void bindGridFormasByConducto(int idConducto, int idBQ)
+        {
+            DataTable formas = DBHelper.getFormasBQ(idConducto, idBQ);
+            ViewState["formas"] = formas;
+            formaGV.DataSource = formas;
+            formaGV.DataBind(); 
+        }
 
         protected void agregarConducto(object sender, EventArgs e)
         {
@@ -58,7 +66,7 @@ namespace Portal_Investigadores
         {
             //GridViewRow row = conductoGV.SelectedRow;
             DataTable dttable = (DataTable)ViewState["datatable"];
-            //DataRow dr = dttable.Rows[conductoGV.SelectedIndex];
+            bindGridFormasByConducto(int.Parse(dttable.Rows[conductoGV.SelectedIndex]["id"].ToString()),1);
             ViewState["index"] = conductoGV.SelectedIndex;
             ViewState["idConducto"] = int.Parse(dttable.Rows[conductoGV.SelectedIndex]["id"].ToString());
             btnAdd.Enabled = false;
@@ -82,7 +90,8 @@ namespace Portal_Investigadores
             divActive.Visible = false; 
             btnAdd.Enabled = true;
             btnCancel.Enabled = false;
-            btnEdit.Enabled = false;       
+            btnEdit.Enabled = false;
+           
         }
 
         protected void btnEdit_Click(object sender, EventArgs e)
@@ -133,6 +142,54 @@ namespace Portal_Investigadores
                 lblSubtema.Text = output;
             }
             
+        }
+
+        protected void formaGV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnAddForma.Enabled = false;
+            btnEditForma.Enabled = true;
+            btnCancelForma.Enabled = true;
+            divFormaActivo.Visible = true;
+            txtForma.Text = formaGV.SelectedRow.Cells[1].Text;
+            desc.Text = formaGV.SelectedRow.Cells[2].Text;
+            chActive.Checked = (formaGV.SelectedRow.Cells[3].Controls[0] as CheckBox).Checked;
+            ViewState["indexForma"] = formaGV.SelectedIndex;
+
+        }
+
+        protected void btnCancelForma_Click(object sender, EventArgs e)
+        {
+            cancelBtns();
+        }
+
+        protected void cancelBtns()
+        {
+            btnAddForma.Enabled = true;
+            btnEditForma.Enabled = false;
+            btnCancelForma.Enabled = false;
+            divFormaActivo.Visible = false;
+            txtForma.Text = string.Empty;
+            desc.Text = string.Empty;
+            chActive.Checked = false;
+        }
+
+        protected void btnEditForma_Click(object sender, EventArgs e)
+        {
+            DataTable dtt = (DataTable)ViewState["formas"];
+            string usuario = Session["username"].ToString();
+            string output = "";
+            int id = (int)ViewState["indexForma"];
+            int idConducto = (int)ViewState["idConducto"];
+            if (txtForma.Text != "" && desc.Text != "")
+            {
+               output =  DBHelper.updateForma(int.Parse(dtt.Rows[id]["id"].ToString()), idConducto, 1,txtForma.Text, desc.Text, chActive.Checked, usuario);
+
+                if (output == "OK")
+                {
+                    cancelBtns();
+                    bindGridFormasByConducto(idConducto, 1);
+                }
+            }
         }
     }
 }

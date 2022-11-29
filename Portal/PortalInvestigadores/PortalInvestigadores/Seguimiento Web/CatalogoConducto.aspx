@@ -49,7 +49,7 @@
                     </div>
                     <div class="card-body">
                         <div style="overflow-y:scroll; height:200px">
-                            <asp:GridView AutoGenerateSelectButton="true" OnSelectedIndexChanged="conductoGV_SelectedIndexChanged" CssClass="table-responsive strip table-dashboard table-hover table-bordered table" runat="server" ID="conductoGV" AutoGenerateColumns="false">
+                            <asp:GridView AutoGenerateSelectButton="true" OnSelectedIndexChanged="conductoGV_SelectedIndexChanged" CssClass="strip table-dashboard table-hover table-bordered table" runat="server" ID="conductoGV" AutoGenerateColumns="false">
                             <Columns>
                                 <asp:BoundField DataField="conducto" HeaderText="Conducto" />
                                 <asp:BoundField DataField="descripcion" HeaderText="Descripcion" />
@@ -78,6 +78,10 @@
                             <label>Descripcion</label>
                             <asp:TextBox runat="server" ID="desc" CssClass="form-control" />
                         </div>
+                        <div runat="server" visible="false" id="divFormaActivo" class="col-md-12 form-group">
+                            <label>Activo:</label>
+                            <asp:CheckBox runat="server" ID="chActive" CssClass="form-control"/>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <div class="col-sm-12 row">
@@ -85,10 +89,10 @@
                                 <asp:Button runat="server" ID="btnAddForma" OnClick="addForma" CssClass="btn btn-primary" Text="Agregar"/>
                             </div>
                             <div class="form-group col-sm-4">
-                                <asp:Button runat="server" ID="btnEditForma" CssClass="btn btn-success" Text="Editar" Enabled="false" />
+                                <asp:Button runat="server" OnClick="btnEditForma_Click" ID="btnEditForma" CssClass="btn btn-success" Text="Editar" Enabled="false" />
                             </div>
                             <div class="form-group col-sm-4">
-                                <asp:Button runat="server" ID="btnCancelForma" CssClass="btn btn-danger" Text="Cancelar" Enabled="false" />
+                                <asp:Button runat="server" OnClick="btnCancelForma_Click" ID="btnCancelForma" CssClass="btn btn-danger" Text="Cancelar" Enabled="false" />
                             </div>
                         </div>
                     </div>
@@ -110,9 +114,9 @@
                     </div>
                      <div class="card-body">
                         <div style="overflow-y:scroll; height:200px">
-                            <asp:GridView AutoGenerateSelectButton="true" CssClass="table-responsive strip table-dashboard table-hover table-bordered table" runat="server" ID="formaGV" AutoGenerateColumns="false">
+                            <asp:GridView OnSelectedIndexChanged="formaGV_SelectedIndexChanged" ShowHeaderWhenEmpty="true" AutoGenerateSelectButton="true" CssClass="strip table-dashboard table-hover table-bordered table" runat="server" ID="formaGV" AutoGenerateColumns="false">
                             <Columns>
-                                <asp:BoundField DataField="forma" HeaderText="Conducto" />
+                                <asp:BoundField DataField="forma" HeaderText="Forma" />
                                 <asp:BoundField DataField="descripcion" HeaderText="Descripcion" />
                                 <asp:CheckBoxField DataField="activo" HeaderText="Activo:" />
                             </Columns>                          
