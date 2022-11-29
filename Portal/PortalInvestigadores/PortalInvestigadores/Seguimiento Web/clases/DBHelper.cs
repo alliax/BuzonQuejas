@@ -3050,28 +3050,6 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public DataTable getBuzones()
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connStr))
-                {
-
-                    List<string> usuarios = new List<string>();
-                    String query = "SELECT * FROM BQ_Cat_Buzones";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-                    sda.Fill(dt);
-                    return dt;
-                }
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
         public string saveImportancia(string importancia, string descripcion,int RecordatorioAtencion, int RecordatorioAteEscala, int RecordatorioResponsable, int RecordatorioEscalar, string EscalacionUsuario, int idBQ, bool activo, string usuarioCreacion)
         {
             try
@@ -3281,6 +3259,64 @@ namespace Portal_Investigadores.clases
             }
             catch
             {
+                throw;
+            }
+        }
+        public DataTable getFormasBQ(int idConducto, int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_GetFormas", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idConducto", SqlDbType.Int).Value = idConducto;
+                        cmd.Parameters.Add("@FK_idBQ", SqlDbType.Int).Value = idBQ;
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string updateForma(int idForma, int idConducto, int idBuzon, string forma, string descripcion, bool activo, string usuario)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_Update_Forma", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@idForma", SqlDbType.Int).Value = idForma;
+                        cmd.Parameters.Add("@idConducto", SqlDbType.Int).Value = idConducto;
+                        cmd.Parameters.Add("@idBuzon", SqlDbType.Int).Value = idBuzon;
+                        cmd.Parameters.Add("@forma", SqlDbType.VarChar).Value = forma;
+                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = descripcion;
+                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
+                        cmd.Parameters.Add("@usuarioModificacion", SqlDbType.VarChar).Value = usuario;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "OK";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
                 throw;
             }
         }
@@ -3524,7 +3560,360 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
+        public DataTable getBuzonesByGrupoEmpresa(string empresa, string grupo)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_Get_BuzonesPorGrupoEmpresa", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@empresa", SqlDbType.VarChar).Value = empresa;
+                        cmd.Parameters.Add("@grupo", SqlDbType.VarChar).Value = grupo;
+                        con.Open();
 
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string saveUsuariosBuzones(int idUsuario, int idBQ, string usuarioAlta, bool esVobo, bool esInvestigador, bool esDelegado, bool esRevisor, bool esEnterado, bool adminQuejas, bool activo)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_SaveUsuariosBuzones", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.Parameters.Add("@FK_idBQ", SqlDbType.Int).Value = idBQ;
+                        cmd.Parameters.Add("@usuarioAlta", SqlDbType.VarChar).Value = usuarioAlta;
+                        cmd.Parameters.Add("@BQEsVobo", SqlDbType.Bit).Value = esVobo;
+                        cmd.Parameters.Add("@BQEsInvestigador", SqlDbType.Bit).Value = esInvestigador;
+                        cmd.Parameters.Add("@BQEsDelegado", SqlDbType.Bit).Value = esDelegado;
+                        cmd.Parameters.Add("@BQEsRevisor", SqlDbType.Bit).Value = esRevisor;
+                        cmd.Parameters.Add("@BQEsEnterado", SqlDbType.Bit).Value = esEnterado;
+                        cmd.Parameters.Add("@BQAdminQuejas", SqlDbType.Bit).Value = adminQuejas;
+                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
+
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "OK";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
+                throw;
+            }
+        }
+        public DataTable checarRegistroUsuariosBuzones(int idUsuario, int idBuzon)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_ChecarRegistroBuzonesUsuarios", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.Parameters.Add("@FK_idBQ", SqlDbType.Int).Value = idBuzon;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getUsuariosBuzon(int idUsuario)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_Get_UsuariosBuzon", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;                        
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string updateUsuarioBuzon(int idUsuario, int idBQ, bool esVobo, bool esInvestigador, bool esDelegado, bool esRevisor, bool esEnterado, bool adminQuejas, bool activo)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_Update_UsuariosBuzon", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.Parameters.Add("@idBuzon", SqlDbType.Int).Value = idBQ;                    
+                        cmd.Parameters.Add("@esVobo", SqlDbType.Bit).Value = esVobo;
+                        cmd.Parameters.Add("@esInvestigador", SqlDbType.Bit).Value = esInvestigador;
+                        cmd.Parameters.Add("@esDelegado", SqlDbType.Bit).Value = esDelegado;
+                        cmd.Parameters.Add("@esRevisor", SqlDbType.Bit).Value = esRevisor;
+                        cmd.Parameters.Add("@esEnterado", SqlDbType.Bit).Value = esEnterado;
+                        cmd.Parameters.Add("@adminQuejas", SqlDbType.Bit).Value = adminQuejas;
+                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
+
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "OK";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
+                throw;
+            }
+        }
+        public string saveBuzon(string grupo, string empresa, string nombreBuzon, string descripcion, bool activo, string usuarioCreacion)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_GuardarBuzon", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@grupo", SqlDbType.VarChar).Value = grupo;
+                        cmd.Parameters.Add("@empresa", SqlDbType.VarChar).Value = empresa;
+                        cmd.Parameters.Add("@nombreBuzon", SqlDbType.VarChar).Value = nombreBuzon;
+                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = descripcion;
+                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
+                        cmd.Parameters.Add("@usuarioCreacion", SqlDbType.VarChar).Value = usuarioCreacion;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "OK";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
+                throw;
+            }
+        }
+        public DataTable getBuzones()
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+
+                    List<string> usuarios = new List<string>();
+                    String query = "SELECT idBQ, grupo, empresa, nombreBQ, descripcion, activo FROM BQ_Cat_Buzones";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string updateBuzon(int idBQ, string nombreBuzon, string descripcion, bool activo, string usuario)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_Update_Buzon", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+                        cmd.Parameters.Add("@nombreBuzon", SqlDbType.VarChar).Value = nombreBuzon;
+                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = descripcion;
+                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
+                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = usuario;
+
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "OK";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar actualizar";
+                throw;
+            }
+        }
+        public DataTable getClasificacionesByFKIdBQ(int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+
+                    List<string> usuarios = new List<string>();
+                    String query = "SELECT id, clasificacion, descripcion FROM BQ_Cat_Clasificaciones WHERE activo = 1 and FK_idBQ = " + idBQ;
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getImportanciasByFKIdBQ(int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    
+                    String query = "SELECT idImportancia, FK_idBQ, importancia FROM BQ_Cat_Importancia WHERE activo = 1 and FK_idBQ = " + idBQ;
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getConductoByFKIdBq(int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+
+                    String query = "SELECT id, FK_idBQ, conducto FROM BQ_Cat_Conducto WHERE activo = 1 and FK_idBQ = " + idBQ;
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getFormasByFKIdBq(int idBQ, int idConducto)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+
+                    String query = "SELECT id, forma, idConducto FROM BQ_Cat_Forma WHERE activo = 1 and FK_idBQ = " + idBQ + " and idConducto = " + idConducto + ";";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getTemasByIdBQ(int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+
+                    String query = "SELECT Id, IdTema, Descripcion FROM BQ_Cat_Tema WHERE Activo = 1 and IdBQ = " + idBQ;
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getSubtemaByIdBQ(int idBQ, int idTema)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+
+                    String query = "SELECT Id, IdSubtema, Descripcion FROM BQ_Cat_Subtema WHERE Activo = 1 and IdBQ = " + idBQ + " and IdTema = " + idTema;
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
     }
 }
