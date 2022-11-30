@@ -117,8 +117,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CatalogoBuzones.aspx" />
-    <Content Include="CatalogoConducto.aspx" />
     <Content Include="CatalogoClasificaciones.aspx" />
+    <Content Include="CatalogoConducto.aspx" />
     <Content Include="CatalogoImportancia.aspx" />
     <Content Include="CatalogoTemas.aspx" />
     <Content Include="CatalogoTipos.aspx" />
@@ -3156,19 +3156,19 @@
     <Compile Include="CatalogoBuzones.aspx.designer.cs">
       <DependentUpon>CatalogoBuzones.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CatalogoConducto.aspx.cs">
-      <DependentUpon>CatalogoConducto.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CatalogoConducto.aspx.designer.cs">
-      <DependentUpon>CatalogoConducto.aspx</DependentUpon>
-    </Compile>
     <Compile Include="CatalogoClasificaciones.aspx.cs">
       <DependentUpon>CatalogoClasificaciones.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CatalogoClasificaciones.aspx.designer.cs">
       <DependentUpon>CatalogoClasificaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CatalogoConducto.aspx.cs">
+      <DependentUpon>CatalogoConducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CatalogoConducto.aspx.designer.cs">
+      <DependentUpon>CatalogoConducto.aspx</DependentUpon>
     </Compile>
     <Compile Include="CatalogoImportancia.aspx.cs">
       <DependentUpon>CatalogoImportancia.aspx</DependentUpon>
@@ -3191,6 +3191,7 @@
     <Compile Include="CatalogoTipos.aspx.designer.cs">
       <DependentUpon>CatalogoTipos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="clases\DBHelper.cs" />
     <Compile Include="GestionBuzones.aspx.cs">
       <DependentUpon>GestionBuzones.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3342,7 +3343,6 @@
     </Compile>
     <Content Include="RouteConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="clases\DBHelper.cs" />
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

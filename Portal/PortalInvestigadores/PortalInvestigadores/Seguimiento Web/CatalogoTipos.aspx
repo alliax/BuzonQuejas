@@ -2,27 +2,75 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="contenido" runat="server">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+
+  var Idioma = '<%=HttpContext.Current.Session["idioma"]%>'
+            $.ajax({
+                type: "GET",
+                url: "CatalogoTipos.aspx/BQ_Etiquetas",
+                data: $.param({ iId: 5, iIdioma: Idioma }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+
+                Json = createJson(r);
+                for (i = 0; i <= Json.length - 1; i++) {
+                    if (Json[i].Id == 136) { $("#lbl1").html(Json[i].Texto) }
+                    if (Json[i].Id == 137) { $("#lbl2").html(Json[i].Texto) }
+                    if (Json[i].Id == 140) { $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 139) { $("#lblHeader").html(Json[i].Texto) }
+                    if (Json[i].Id == 132) { $("#<%=btnAdd.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 133) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 134) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 136) { $("#lblAdd").html(Json[i].Texto) }
+                    if (Json[i].Id == 138) { $("#lblList").html(Json[i].Texto) }
+                    
+                }
+
+
+                },
+                error: function (r) {
+                    alert(r.d);
+                }
+            });
+
+ }); // Document Ready
+           
+function createJson(strJson) {
+        var strJson = JSON.stringify(strJson);
+        var iJsonLenght = strJson.length
+        strJson = strJson.substr(5, iJsonLenght);
+        strJson = strJson.slice(0, -1)
+        var Json = JSON.parse(strJson);
+        Json = JSON.parse(Json);
+
+        return Json;
+}
+</script>
  <form runat="server">
     <link href="css/especiales.css" rel="stylesheet" />
         <div class="container">
             <div class="row">
-                <div class="table-header" style="padding-bottom: 27px; text-align: center;">Configuración de catalogo de Tipos</div>
+                <div class="table-header" style="padding-bottom: 27px; text-align: center;" id="lblHeader"></div>
                     <div class="col-md-6 col-lg-6">
                         <div class="card">
                             <div class="card-header bg-primary text-white">
-                                <p style="text-align: center;">Tipo</p>
+                                <p id="lblAdd" style="text-align: center;">Tipo</p>
                             </div>
                             <div class="card-body">
                                 <div class="col-md-12 form-group">
-                                    <label>Tipo Id</label>
+                                    <label id ="lbl1">Tipo Id</label>
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtTipo" />
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label>Descripción</label>
+                                    <label id ="lbl2">Descripción</label>
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtDesc" />
                                 </div>
                                 <div  class="col-md-2 form-group">
-                                    <label>Activo:</label>
+                                    <label id ="lbl3">Activo:</label>
                                     <asp:CheckBox runat="server" ID="cbActive" CssClass="form-control"/>
                                 </div>
                             </div>
@@ -55,7 +103,7 @@
                    <div class="col-md-6 col-lg-6">
                          <div class="card">
                             <div class="card-header bg-primary text-white">
-                                <p style="text-align: center;">Lista de Tipos</p>
+                                <p id="lblList" style="text-align: center;">Lista de Tipos</p>
                             </div>
                             <div class="card-body">
                                <div style="overflow-y:scroll; height:200px">

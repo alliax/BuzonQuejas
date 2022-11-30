@@ -28,7 +28,7 @@ namespace Portal_Investigadores.clases
 
         public int verifyUser(string usuario, string password, string clientIp)
         {
-         
+
             try
             {
                 using (SqlConnection con = new SqlConnection(connStr))
@@ -50,7 +50,8 @@ namespace Portal_Investigadores.clases
                         {
                             return 2;
                         }
-                        else {
+                        else
+                        {
                             return 0;
                         }
                     }
@@ -348,7 +349,7 @@ namespace Portal_Investigadores.clases
         public int changePassword(string usuario, string passwordAnt, string nuevaPassword)
         {
             string ip = GetIPAddress();
-            
+
             try
             {
                 using (SqlConnection con = new SqlConnection(connStr))
@@ -400,7 +401,7 @@ namespace Portal_Investigadores.clases
                             break;
                     }
 
-                    String query = "select id, case when "+ idioma + " IS NULL THEN español else " + idioma + " end as tag from PR_CatalogoEtiquetas where idPagina = " + pagina;
+                    String query = "select id, case when " + idioma + " IS NULL THEN español else " + idioma + " end as tag from PR_CatalogoEtiquetas where idPagina = " + pagina;
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable("tags");
@@ -417,7 +418,8 @@ namespace Portal_Investigadores.clases
 
         #endregion
 
-        public int getAcceso(int idDenuncia, int idUsuario) {
+        public int getAcceso(int idDenuncia, int idUsuario)
+        {
             try
             {
                 using (SqlConnection con = new SqlConnection(connStr))
@@ -732,7 +734,7 @@ namespace Portal_Investigadores.clases
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@idDenuncia", SqlDbType.Int).Value = idDenuncia;
-                       
+
                         con.Open();
 
                         DataTable dt = new DataTable();
@@ -808,7 +810,7 @@ namespace Portal_Investigadores.clases
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@denuncia", SqlDbType.Int).Value = idDenuncia;
-                        
+
                         con.Open();
 
                         DataTable dt = new DataTable();
@@ -825,7 +827,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public DataTable getDenuncia(Int64 idDenuncia,int idioma)
+        public DataTable getDenuncia(Int64 idDenuncia, int idioma)
         {
             try
             {
@@ -853,7 +855,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public DataTable getDetalleAntecendes(Int64 idDenuncia, int tipo,  int idioma)
+        public DataTable getDetalleAntecendes(Int64 idDenuncia, int tipo, int idioma)
         {
             try
             {
@@ -1031,10 +1033,11 @@ namespace Portal_Investigadores.clases
                     {
                         tagIdioma = "nombre";
                     }
-                    else {
+                    else
+                    {
                         tagIdioma = "ingles as nombre";
                     }
-                    String query = "SELECT idResultado, "+tagIdioma+" FROM PR_CatalogoResultados Where activo = 1 order by nombre desc";
+                    String query = "SELECT idResultado, " + tagIdioma + " FROM PR_CatalogoResultados Where activo = 1 order by nombre desc";
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable("Resultados");
@@ -1064,7 +1067,7 @@ namespace Portal_Investigadores.clases
                     {
                         tagIdioma = "ingles as nombre";
                     }
-                    String query = "SELECT idBeneficio, "+ tagIdioma + " FROM CatalogoBeneficios Where activo = 1 and idBeneficio not in (1,2,3,4,5,6,7) order by nombre";
+                    String query = "SELECT idBeneficio, " + tagIdioma + " FROM CatalogoBeneficios Where activo = 1 and idBeneficio not in (1,2,3,4,5,6,7) order by nombre";
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable("Beneficios");
@@ -1108,7 +1111,7 @@ namespace Portal_Investigadores.clases
                 {
 
                     List<string> usuarios = new List<string>();
-                    String query = "SELECT rtrim(ltrim(Empresa)) as Empresa, rtrim(ltrim(Descripcion)) as Descripcion FROM Empresas where grupo = '"+grupo+"'";
+                    String query = "SELECT rtrim(ltrim(Empresa)) as Empresa, rtrim(ltrim(Descripcion)) as Descripcion FROM Empresas where grupo = '" + grupo + "'";
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable("Empresas");
@@ -1152,7 +1155,7 @@ namespace Portal_Investigadores.clases
                 {
 
                     List<string> usuarios = new List<string>();
-                    String query = "SELECT rtrim(ltrim(Sitio)) as Sitio, rtrim(ltrim(Descripcion)) as Descripcion FROM Sitios where grupo = '" + grupo + "' and empresa = '"+empresa+ "' order by Descripcion ";
+                    String query = "SELECT rtrim(ltrim(Sitio)) as Sitio, rtrim(ltrim(Descripcion)) as Descripcion FROM Sitios where grupo = '" + grupo + "' and empresa = '" + empresa + "' order by Descripcion ";
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable("Sitios");
@@ -1201,7 +1204,7 @@ namespace Portal_Investigadores.clases
                 {
 
                     List<string> usuarios = new List<string>();
-                    String query = "SELECT rtrim(ltrim(Sitio)) as Sitio, rtrim(ltrim(Descripcion)) as Descripcion FROM Sitios A INNER JOIN PR_ConfAdminDen B on A.Sitio = B.valor and B.tipo = 2 and B.Activo = 1 and B.idUsuario = "+idUsuario+ " order by Descripcion "; 
+                    String query = "SELECT rtrim(ltrim(Sitio)) as Sitio, rtrim(ltrim(Descripcion)) as Descripcion FROM Sitios A INNER JOIN PR_ConfAdminDen B on A.Sitio = B.valor and B.tipo = 2 and B.Activo = 1 and B.idUsuario = " + idUsuario + " order by Descripcion ";
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable("Sitios");
@@ -1282,7 +1285,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public DataTable getDelegadosCatalogo(string grupo,string empresa, int idUsuario)
+        public DataTable getDelegadosCatalogo(string grupo, string empresa, int idUsuario)
         {
             try
             {
@@ -1463,7 +1466,7 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@idResponsable", SqlDbType.Int).Value = idResponsable;
                         cmd.Parameters.Add("@idDelegado", SqlDbType.Int).Value = idDelegado;
                         cmd.Parameters.Add("@usuarioAlta", SqlDbType.VarChar).Value = usuarioAlta;
-                       
+
                         con.Open();
                         cmd.ExecuteNonQuery();
 
@@ -1571,7 +1574,7 @@ namespace Portal_Investigadores.clases
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@denuncia", SqlDbType.Int).Value = idDenuncia;
-                     
+
                         con.Open();
 
                         cmd.ExecuteReader();
@@ -1650,7 +1653,7 @@ namespace Portal_Investigadores.clases
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@denuncia", SqlDbType.Int).Value = idDenuncia;
-                     
+
 
                         con.Open();
 
@@ -1761,7 +1764,7 @@ namespace Portal_Investigadores.clases
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@denuncia", SqlDbType.Int).Value = idDenuncia;
-                        
+
                         con.Open();
 
                         DataTable dt = new DataTable();
@@ -1876,7 +1879,7 @@ namespace Portal_Investigadores.clases
                     {
                         tagIdioma = "ingles as nombre";
                     }
-                    String query = "SELECT idAccion, "+tagIdioma +" FROM CatalogoAcciones Where activo = 1";
+                    String query = "SELECT idAccion, " + tagIdioma + " FROM CatalogoAcciones Where activo = 1";
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable("Accion");
@@ -1906,7 +1909,7 @@ namespace Portal_Investigadores.clases
                     {
                         tagIdioma = "ingles as nombre";
                     }
-                    String query = "SELECT id, "+tagIdioma+" FROM CatalogoTipo where estatus = 1";
+                    String query = "SELECT id, " + tagIdioma + " FROM CatalogoTipo where estatus = 1";
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable("Tipo");
@@ -1974,7 +1977,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public string saveEntrevistado(int idDenuncia, int idEntrevistado, string nombre, string puesto, string entrevistador,int usuarioAlta)
+        public string saveEntrevistado(int idDenuncia, int idEntrevistado, string nombre, string puesto, string entrevistador, int usuarioAlta)
         {
             try
             {
@@ -2154,7 +2157,7 @@ namespace Portal_Investigadores.clases
                         cmd.CommandType = CommandType.StoredProcedure;
                         // cmd.Parameters.Add("@idIssue", SqlDbType.Int).Value = null;
                         cmd.Parameters.Add("@idResponsable", SqlDbType.Int).Value = idResponsable;
-                        
+
                         con.Open();
                         cmd.ExecuteNonQuery();
 
@@ -2858,7 +2861,7 @@ namespace Portal_Investigadores.clases
             return IPAddress;
         }
 
-        public int saveUsuario(int idUsuario, string usuario, string nombre, string correo, string grupo, string empresa, string sitio, string departamento, Int16 investigador, Int16 delegado, Int16 revisor , Int16 enterado, Int16 activo, int usuarioAlta, Int16 adminDen)
+        public int saveUsuario(int idUsuario, string usuario, string nombre, string correo, string grupo, string empresa, string sitio, string departamento, Int16 investigador, Int16 delegado, Int16 revisor, Int16 enterado, Int16 activo, int usuarioAlta, Int16 adminDen)
         {
             try
             {
@@ -2978,14 +2981,18 @@ namespace Portal_Investigadores.clases
         {
             string filtro = "";
 
-            if (tipo == 1) {
+            if (tipo == 1)
+            {
                 filtro = " where EsInvestigador = 1 ";
-            } else {
+            }
+            else
+            {
                 filtro = " where EsRevisor = 1 ";
             }
 
 
-            if (grupo != "") {
+            if (grupo != "")
+            {
 
                 filtro = filtro + " and grupo = '" + grupo + "' ";
             }
@@ -3008,7 +3015,7 @@ namespace Portal_Investigadores.clases
                 {
 
                     List<string> usuarios = new List<string>();
-                    String query = "SELECT [idusuario],[Nombre] FROM [dbo].[PR_CatalogoUsuarioPortal] "+ " " + filtro ;
+                    String query = "SELECT [idusuario],[Nombre] FROM [dbo].[PR_CatalogoUsuarioPortal] " + " " + filtro;
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable("responsable");
@@ -3022,7 +3029,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-         public int reasignarDenuncias(int responsableOriginal,int responsableAReasginar, string denuncias)
+        public int reasignarDenuncias(int responsableOriginal, int responsableAReasginar, string denuncias)
         {
             try
             {
@@ -3050,7 +3057,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public string saveImportancia(string importancia, string descripcion,int RecordatorioAtencion, int RecordatorioAteEscala, int RecordatorioResponsable, int RecordatorioEscalar, string EscalacionUsuario, int idBQ, bool activo, string usuarioCreacion)
+        public string saveImportancia(string importancia, string descripcion, int RecordatorioAtencion, int RecordatorioAteEscala, int RecordatorioResponsable, int RecordatorioEscalar, string EscalacionUsuario, int idBQ, bool activo, string usuarioCreacion)
         {
             try
             {
@@ -3059,8 +3066,8 @@ namespace Portal_Investigadores.clases
                     using (SqlCommand cmd = new SqlCommand("sp_BQ_GuardarImportancia", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        
-                        
+
+
                         cmd.Parameters.Add("@importancia", SqlDbType.VarChar).Value = importancia;
                         cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = descripcion;
                         cmd.Parameters.Add("@RecordatorioAtencion", SqlDbType.Int).Value = RecordatorioAtencion;
@@ -3112,7 +3119,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
-        public string updateImportancia(int idImportancia,string importancia, string descripcion, int RecordatorioAtencion, int RecordatorioAteEscala, int RecordatorioResponsable, int RecordatorioEscalar, string EscalacionUsuario, int idBQ, bool activo, string usuarioModificacion)
+        public string updateImportancia(int idImportancia, string importancia, string descripcion, int RecordatorioAtencion, int RecordatorioAteEscala, int RecordatorioResponsable, int RecordatorioEscalar, string EscalacionUsuario, int idBQ, bool activo, string usuarioModificacion)
         {
             try
             {
@@ -3190,7 +3197,7 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@queja", SqlDbType.Bit).Value = queja;
                         cmd.Parameters.Add("@enviaCorreo", SqlDbType.Bit).Value = enviaCorreo;
                         cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
-                        cmd.Parameters.Add("@FK_idBQ", SqlDbType.VarChar).Value = idBQ;                        
+                        cmd.Parameters.Add("@FK_idBQ", SqlDbType.VarChar).Value = idBQ;
                         cmd.Parameters.Add("@usuarioCreacion", SqlDbType.VarChar).Value = usuarioCreacion;
 
                         con.Open();
@@ -3392,7 +3399,7 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@queja", SqlDbType.Bit).Value = queja;
                         cmd.Parameters.Add("@enviaCorreo", SqlDbType.Bit).Value = enviaCorreo;
                         cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
-                        cmd.Parameters.Add("@FK_idBQ", SqlDbType.VarChar).Value = idBQ;                        
+                        cmd.Parameters.Add("@FK_idBQ", SqlDbType.VarChar).Value = idBQ;
                         cmd.Parameters.Add("@usuarioModificacion", SqlDbType.VarChar).Value = usuarioModificacion;
 
                         con.Open();
@@ -3757,6 +3764,33 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
+        public DataTable getBQEtiquetas(int iId, int iIdioma) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Etiquetas", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Id", SqlDbType.Int).Value = iId;
+                        cmd.Parameters.Add("@P_Idioma", SqlDbType.Int).Value = iIdioma;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         public string saveForma(int idConducto, string forma, string descripcion, bool activo, string usuarioCreacion, int idBQ)
         {
@@ -3772,7 +3806,7 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@idConducto", SqlDbType.Int).Value = idConducto;
                         cmd.Parameters.Add("@forma", SqlDbType.VarChar).Value = forma;
                         cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = descripcion;
-                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;                        
+                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
                         cmd.Parameters.Add("@usuarioCreacion", SqlDbType.VarChar).Value = usuarioCreacion;
                         cmd.Parameters.Add("@FK_idBQ", SqlDbType.Int).Value = idBQ;
 
@@ -3888,7 +3922,7 @@ namespace Portal_Investigadores.clases
                     using (SqlCommand cmd = new SqlCommand("sp_BQ_Get_UsuariosBuzon", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;                        
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
                         con.Open();
 
                         DataTable dt = new DataTable();
@@ -3917,7 +3951,7 @@ namespace Portal_Investigadores.clases
 
 
                         cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
-                        cmd.Parameters.Add("@idBuzon", SqlDbType.Int).Value = idBQ;                    
+                        cmd.Parameters.Add("@idBuzon", SqlDbType.Int).Value = idBQ;
                         cmd.Parameters.Add("@esVobo", SqlDbType.Bit).Value = esVobo;
                         cmd.Parameters.Add("@esInvestigador", SqlDbType.Bit).Value = esInvestigador;
                         cmd.Parameters.Add("@esDelegado", SqlDbType.Bit).Value = esDelegado;
@@ -4049,7 +4083,7 @@ namespace Portal_Investigadores.clases
             {
                 using (SqlConnection con = new SqlConnection(connStr))
                 {
-                    
+
                     String query = "SELECT idImportancia, FK_idBQ, importancia FROM BQ_Cat_Importancia WHERE activo = 1 and FK_idBQ = " + idBQ;
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);

@@ -9,7 +9,8 @@ using System.Web.Script.Serialization;
 using System.Web.Services;
 using Portal_Investigadores.clases;
 using Seguimiento_Web;
-
+using System.Web.Script.Services;
+using Newtonsoft.Json;
 
 namespace Portal_Investigadores
 {
@@ -25,6 +26,18 @@ namespace Portal_Investigadores
             {
                 bindGridImportancia();
                 bindUsuariosEscalacion();
+                string sIdioma = Session["idioma"].ToString();
+                if (sIdioma == "2")
+                {
+                    this.importanciaGV.HeaderRow.Cells[1].Text = "Importance";
+                    this.importanciaGV.HeaderRow.Cells[2].Text = "Description";
+                    this.importanciaGV.HeaderRow.Cells[3].Text = "Atention Reminder";
+                    this.importanciaGV.HeaderRow.Cells[4].Text = "Atention Scale Reminder";
+                    this.importanciaGV.HeaderRow.Cells[5].Text = "Owner Reminder";
+                    this.importanciaGV.HeaderRow.Cells[6].Text = "Scalar Reminder";
+                    this.importanciaGV.HeaderRow.Cells[7].Text = "Scale User";
+                    this.importanciaGV.HeaderRow.Cells[8].Text = "Active";
+                }
             }
         }
 
@@ -160,5 +173,17 @@ namespace Portal_Investigadores
             usuarioDDL.SelectedValue = usuarioDDL.Items.FindByValue("0").Value;            
             cbAct.Checked = false;
         }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_Etiquetas(int iId, int iIdioma)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dtEtiquetas = DBHelper.getBQEtiquetas(iId, iIdioma);
+            string str = JsonConvert.SerializeObject(dtEtiquetas);
+            return (str);
+
+        }
+
     }
 }
