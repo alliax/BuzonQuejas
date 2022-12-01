@@ -13,6 +13,8 @@ using System.Net;
 using System.Text.RegularExpressions;
 using Seguimiento_Web;
 using System.Security.Cryptography;
+using Newtonsoft.Json;
+using System.Web.Script.Services;
 
 namespace Portal_Investigadores
 {
@@ -27,6 +29,13 @@ namespace Portal_Investigadores
             if (!Page.IsPostBack)
             {
                 bindGridConducto();
+                string sIdioma = Session["idioma"].ToString();
+                if (sIdioma == "2")
+                {
+                    this.conductoGV.HeaderRow.Cells[1].Text = "Conducto";
+                    this.conductoGV.HeaderRow.Cells[2].Text = "Description";
+                    this.conductoGV.HeaderRow.Cells[3].Text = "Active";
+                }
             }
         }
 
@@ -42,7 +51,15 @@ namespace Portal_Investigadores
             DataTable formas = DBHelper.getFormasBQ(idConducto, idBQ);
             ViewState["formas"] = formas;
             formaGV.DataSource = formas;
-            formaGV.DataBind(); 
+            formaGV.DataBind();
+
+            string sIdioma = Session["idioma"].ToString();
+            if (sIdioma == "2")
+            {
+                this.formaGV.HeaderRow.Cells[1].Text = "Form";
+                this.formaGV.HeaderRow.Cells[2].Text = "Description";
+                this.formaGV.HeaderRow.Cells[3].Text = "Active";
+            }
         }
 
         protected void agregarConducto(object sender, EventArgs e)
@@ -191,5 +208,19 @@ namespace Portal_Investigadores
                 }
             }
         }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_Etiquetas(int iId, int iIdioma)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dtEtiquetas = DBHelper.getBQEtiquetas(iId, iIdioma);
+            string str = JsonConvert.SerializeObject(dtEtiquetas);
+            return (str);
+
+        }
+
+
+
     }
 }

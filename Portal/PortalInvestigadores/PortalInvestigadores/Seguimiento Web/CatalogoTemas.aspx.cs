@@ -14,6 +14,8 @@ using System.Text.RegularExpressions;
 using Seguimiento_Web;
 using System.Security.Policy;
 using System.Linq.Expressions;
+using Newtonsoft.Json;
+using System.Web.Script.Services;
 
 namespace Portal_Investigadores
 {
@@ -30,6 +32,19 @@ namespace Portal_Investigadores
                 cargarTemas(1);
                 // 1 Grupo (Alliax)
                 cargarSubtemas(1);
+                string sIdioma = Session["idioma"].ToString();
+                if (sIdioma == "2")
+                {
+                    this.temaGV.HeaderRow.Cells[1].Text = "Topic Id";
+                    this.temaGV.HeaderRow.Cells[2].Text = "Description";
+                    this.temaGV.HeaderRow.Cells[3].Text = "Active";
+                    this.temaGV.HeaderRow.Cells[4].Text = "Active";
+                    this.subtemaGV.HeaderRow.Cells[1].Text = "Topic Id";
+                    this.subtemaGV.HeaderRow.Cells[2].Text = "Subtopic Id";
+                    this.subtemaGV.HeaderRow.Cells[3].Text = "Description";
+                    this.subtemaGV.HeaderRow.Cells[4].Text = "Active";
+                    this.subtemaGV.HeaderRow.Cells[5].Text = "Active";
+                }
             }
         }
 
@@ -287,6 +302,18 @@ namespace Portal_Investigadores
             btnCanSb.Enabled = false;
             btnEdiSb.Enabled = false;
         }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_Etiquetas(int iId, int iIdioma)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dtEtiquetas = DBHelper.getBQEtiquetas(iId, iIdioma);
+            string str = JsonConvert.SerializeObject(dtEtiquetas);
+            return (str);
+
+        }
+
 
 
     }

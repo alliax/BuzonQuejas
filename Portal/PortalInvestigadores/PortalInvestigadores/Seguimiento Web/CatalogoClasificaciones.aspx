@@ -2,35 +2,87 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="contenido" runat="server">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+        var Idioma = '<%=HttpContext.Current.Session["idioma"]%>'
+        $.ajax({
+            type: "GET",
+            url: "CatalogoImportancia.aspx/BQ_Etiquetas",
+            data: $.param({ iId: 5, iIdioma: Idioma }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+
+                Json = createJson(r);
+                for (i = 0; i <= Json.length - 1; i++) {
+                    if (Json[i].Id == 184) { $("#lbl1").html(Json[i].Texto) }
+                    if (Json[i].Id == 185) { $("#lbl2").html(Json[i].Texto); $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 186) { $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 187) { $("#lbl4").html(Json[i].Texto); $("#lbl11").html(Json[i].Texto); }
+                    if (Json[i].Id == 188) { $("#lbl5").html(Json[i].Texto) }
+                    if (Json[i].Id == 189) { $("#lbl6").html(Json[i].Texto) }
+                    if (Json[i].Id == 140) { $("#lbl7").html(Json[i].Texto) }
+                    if (Json[i].Id == 190) { $("#lbl8").html(Json[i].Texto) }
+        
+
+                    if (Json[i].Id == 132) { $("#<%=btnAgregarClas.ClientID%>").val(Json[i].Texto);  }
+                    if (Json[i].Id == 133) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 134) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); }
+
+                 }
+
+
+                },
+                error: function (r) {
+                    alert(r.d);
+                }
+            });
+ });
+
+function createJson(strJson) {
+    var strJson = JSON.stringify(strJson);
+    var iJsonLenght = strJson.length
+    strJson = strJson.substr(5, iJsonLenght);
+    strJson = strJson.slice(0, -1)
+    var Json = JSON.parse(strJson);
+    Json = JSON.parse(Json);
+
+    return Json;
+}
+</script>
+
     <form id="form" runat="server">
         <link href="css/especiales.css" rel="stylesheet" />
         <div class="container">
             <div class="row">
-                <div class="table-header" style="padding-bottom: 27px; text-align: center;">Catalogo de clasificaciones</div>           
+                <div id="lbl1" class="table-header" style="padding-bottom: 27px; text-align: center;">Catalogo de clasificaciones</div>           
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header bg-primary text-white">
-                                <p style="text-align: center;">Agregar clasificacion</p>
+                                <p id="lbl2" style="text-align: center;">Agregar clasificacion</p>
                             </div>
                             <div class="card-body">
                                 <div class="col-md-12 form-group">
-                                    <label>Clasificación</label>
+                                    <label id="lbl3">Clasificación</label>
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtClas" />
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label>Descripción</label>
+                                    <label id="lbl4">Descripción</label>
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtDesc" />
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label>Queja</label>
+                                    <label id="lbl5">Queja</label>
                                     <asp:CheckBox runat="server" CssClass="form-control" ID="cbQueja" />
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label>Envia correo</label>
+                                    <label id="lbl6">Envia correo</label>
                                     <asp:CheckBox runat="server" CssClass="form-control" ID="cbCorreo" />
                                 </div>
                                 <div runat="server" id="divActive" class="col-md-12 form-group">
-                                    <label>Activo:</label>
+                                    <label id="lbl7" >Activo:</label>
                                     <asp:CheckBox runat="server" ID="cbActive" CssClass="form-control"/>
                                 </div>
                             </div>
@@ -58,7 +110,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header bg-primary text-white">
-                                <p style="text-align: center;">Lista de clasificaciones</p>
+                                <p id="lbl8" style="text-align: center;">Lista de clasificaciones</p>
                             </div>
                             <div class="card-body" style="text-align: center;">
                                 <div style="overflow-y:scroll; height:200px">

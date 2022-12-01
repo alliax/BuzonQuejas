@@ -24,13 +24,46 @@ namespace Seguimiento_Web
         {
             if (!Page.IsPostBack)
             {
-                // 1 Alliax
-                //cargarBuzon(1);
-                DataTable dtGrupo = DBHelper.getBQId("Grupo", "");
-                dlGrupo.DataSource = dtGrupo;
-                dlGrupo.DataValueField = "Id";
-                dlGrupo.DataTextField = "Descripcion";
-                dlGrupo.DataBind();
+
+                string sIdioma = Session["idioma"].ToString();
+                if (sIdioma == "2")
+                {
+                    this.gvBuzon.Columns[0].HeaderText = "Logo";
+                    this.gvBuzon.Columns[1].HeaderText = "Close Process";
+                    this.gvBuzon.Columns[2].HeaderText = "Committee Process";
+                    this.gvBuzon.Columns[3].HeaderText = "Active";
+
+                    this.gvInv.Columns[2].HeaderText = "Sequence";
+                    this.gvInv.Columns[3].HeaderText = "Name";
+                    this.gvVobo.Columns[2].HeaderText = "Sequence";
+                    this.gvVobo.Columns[3].HeaderText = "Name";
+                    this.gvCierre.Columns[2].HeaderText = "Sequence";
+                    this.gvCierre.Columns[3].HeaderText= "Name";
+                    this.gvComite.Columns[2].HeaderText = "Sequence";
+                    this.gvComite.Columns[3].HeaderText= "Name";
+
+                    // 1 Alliax
+                    //cargarBuzon(1);
+                    DataTable dtGrupo = DBHelper.getBQId("Grupo", "");
+                    foreach (DataColumn col in dtGrupo.Columns){col.ReadOnly = false;}
+                    dtGrupo.Rows[0][1] = "Select...";
+                    dlGrupo.DataSource = dtGrupo;
+                    dlGrupo.DataValueField = "Id";
+                    dlGrupo.DataTextField = "Descripcion";
+                    dlGrupo.DataBind();
+                }
+                else
+                {
+                    // 1 Alliax
+                    //cargarBuzon(1);
+                    DataTable dtGrupo = DBHelper.getBQId("Grupo", "");
+                    dlGrupo.DataSource = dtGrupo;
+                    dlGrupo.DataValueField = "Id";
+                    dlGrupo.DataTextField = "Descripcion";
+                    dlGrupo.DataBind();
+                }
+
+
             }
         }
         protected void agregarBuzon(object sender, EventArgs e)
@@ -85,25 +118,55 @@ namespace Seguimiento_Web
         }
         protected void Sel_Change_Grupo(Object sender, EventArgs e)
         {
+
+            string sIdioma = Session["idioma"].ToString();
             string sGrupo = dlGrupo.SelectedValue.ToString();
 
-            DataTable dt = DBHelper.getBQId("Empresa", sGrupo);
-            dlEmpresa.DataSource = dt;
-            dlEmpresa.DataValueField = "Id";
-            dlEmpresa.DataTextField = "Descripcion";
-            dlEmpresa.DataBind();
+            if (sIdioma == "2")
+            {
+                DataTable dt = DBHelper.getBQId("Empresa", sGrupo);
+                foreach (DataColumn col in dt.Columns) { col.ReadOnly = false; }
+                dt.Rows[0][1] = "Select...";
+                dlEmpresa.DataSource = dt;
+                dlEmpresa.DataValueField = "Id";
+                dlEmpresa.DataTextField = "Descripcion";
+                dlEmpresa.DataBind();
+            }
+            else
+            {
+                DataTable dt = DBHelper.getBQId("Empresa", sGrupo);
+                dlEmpresa.DataSource = dt;
+                dlEmpresa.DataValueField = "Id";
+                dlEmpresa.DataTextField = "Descripcion";
+                dlEmpresa.DataBind();
+            }
 
         }
         protected void Sel_Change_Empresa(Object sender, EventArgs e)
         {
             string sEmpresa = dlEmpresa.SelectedValue.ToString();
 
-            DataTable dt = DBHelper.getBQId("Buzon",sEmpresa );
-            dlBuzon.DataSource = dt;
-            dlBuzon.DataValueField = "Id";
-            dlBuzon.DataTextField = "Descripcion";
-            dlBuzon.DataBind();
-
+            string sIdioma = Session["idioma"].ToString();
+            if (sIdioma == "2")
+            {
+                DataTable dt = DBHelper.getBQId("Buzon", sEmpresa);
+                foreach (DataColumn col in dt.Columns) { col.ReadOnly = false; }
+                dt.Rows[0][1] = "Select...";
+                dlBuzon.DataSource = dt;
+                dlBuzon.DataValueField = "Id";
+                dlBuzon.DataTextField = "Descripcion";
+                dlBuzon.DataBind();
+            }
+            else
+            {
+                DataTable dt = DBHelper.getBQId("Buzon", sEmpresa);
+                foreach (DataColumn col in dt.Columns) { col.ReadOnly = false; }
+                dt.Rows[0][1] = "Select...";
+                dlBuzon.DataSource = dt;
+                dlBuzon.DataValueField = "Id";
+                dlBuzon.DataTextField = "Descripcion";
+                dlBuzon.DataBind();
+            }
         }
 
         protected void Sel_Change_Buzon(Object sender, EventArgs e)
@@ -329,31 +392,67 @@ namespace Seguimiento_Web
 
         private void cargarUsr(int iIdBQ)
         {
+            string sIdioma = Session["idioma"].ToString();
+            if (sIdioma == "2")
+            {
+                DataTable dtInv = DBHelper.getBQUser("CATSEL", "Investigador", iIdBQ);
+                foreach (DataColumn col in dtInv.Columns) { col.ReadOnly = false; }
+                dtInv.Rows[0][1] = "Select...";
+                dlInvestigador.DataSource = dtInv;
+                dlInvestigador.DataValueField = "IdUsuariobq";
+                dlInvestigador.DataTextField = "Nombre";
+                dlInvestigador.DataBind();
 
-            DataTable dtInv = DBHelper.getBQUser("CATSEL", "Investigador",iIdBQ);
-            dlInvestigador.DataSource = dtInv;
-            dlInvestigador.DataValueField = "IdUsuariobq";
-            dlInvestigador.DataTextField = "Nombre";
-            dlInvestigador.DataBind();
+                DataTable dtVobo = DBHelper.getBQUser("CATSEL", "Vobo", iIdBQ);
+                foreach (DataColumn col in dtVobo.Columns) { col.ReadOnly = false; }
+                dtVobo.Rows[0][1] = "Select...";
+                dlVobo.DataSource = dtVobo;
+                dlVobo.DataValueField = "IdUsuariobq";
+                dlVobo.DataTextField = "Nombre";
+                dlVobo.DataBind();
 
-            DataTable dtVobo = DBHelper.getBQUser("CATSEL", "Vobo", iIdBQ);
-            dlVobo.DataSource = dtVobo;
-            dlVobo.DataValueField = "IdUsuariobq";
-            dlVobo.DataTextField = "Nombre";
-            dlVobo.DataBind();
+                DataTable dtCierre = DBHelper.getBQUser("CATSEL", "Activo", iIdBQ);
+                foreach (DataColumn col in dtCierre.Columns) { col.ReadOnly = false; }
+                dtCierre.Rows[0][1] = "Select...";
+                dlCierreUsr.DataSource = dtCierre;
+                dlCierreUsr.DataValueField = "IdUsuariobq";
+                dlCierreUsr.DataTextField = "Nombre";
+                dlCierreUsr.DataBind();
 
-            DataTable dtCierre = DBHelper.getBQUser("CATSEL", "Activo", iIdBQ);
-            dlCierreUsr.DataSource = dtCierre;
-            dlCierreUsr.DataValueField = "IdUsuariobq";
-            dlCierreUsr.DataTextField = "Nombre";
-            dlCierreUsr.DataBind();
+                DataTable dtComite = DBHelper.getBQUser("CATSEL", "Activo", iIdBQ);
+                foreach (DataColumn col in dtComite.Columns) { col.ReadOnly = false; }
+                dtComite.Rows[0][1] = "Select...";
+                dlComiteUsr.DataSource = dtComite;
+                dlComiteUsr.DataValueField = "IdUsuariobq";
+                dlComiteUsr.DataTextField = "Nombre";
+                dlComiteUsr.DataBind();
+            }
+            else
+            {
+                DataTable dtInv = DBHelper.getBQUser("CATSEL", "Investigador", iIdBQ);
+                dlInvestigador.DataSource = dtInv;
+                dlInvestigador.DataValueField = "IdUsuariobq";
+                dlInvestigador.DataTextField = "Nombre";
+                dlInvestigador.DataBind();
 
-            DataTable dtComite = DBHelper.getBQUser("CATSEL", "Activo", iIdBQ);
-            dlComiteUsr.DataSource = dtComite;
-            dlComiteUsr.DataValueField = "IdUsuariobq";
-            dlComiteUsr.DataTextField = "Nombre";
-            dlComiteUsr.DataBind();
+                DataTable dtVobo = DBHelper.getBQUser("CATSEL", "Vobo", iIdBQ);
+                dlVobo.DataSource = dtVobo;
+                dlVobo.DataValueField = "IdUsuariobq";
+                dlVobo.DataTextField = "Nombre";
+                dlVobo.DataBind();
 
+                DataTable dtCierre = DBHelper.getBQUser("CATSEL", "Activo", iIdBQ);
+                dlCierreUsr.DataSource = dtCierre;
+                dlCierreUsr.DataValueField = "IdUsuariobq";
+                dlCierreUsr.DataTextField = "Nombre";
+                dlCierreUsr.DataBind();
+
+                DataTable dtComite = DBHelper.getBQUser("CATSEL", "Activo", iIdBQ);
+                dlComiteUsr.DataSource = dtComite;
+                dlComiteUsr.DataValueField = "IdUsuariobq";
+                dlComiteUsr.DataTextField = "Nombre";
+                dlComiteUsr.DataBind();
+            }
             DataTable dtInvUsr= DBHelper.getBQUser("SEL", "Investigador", iIdBQ);
             gvInv.DataSource = dtInvUsr;
             gvInv.DataBind();
@@ -558,5 +657,15 @@ namespace Seguimiento_Web
             }
         }
 
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_Etiquetas(int iId, int iIdioma)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dtEtiquetas = DBHelper.getBQEtiquetas(iId, iIdioma);
+            string str = JsonConvert.SerializeObject(dtEtiquetas);
+            return (str);
+
+        }
     }
 }

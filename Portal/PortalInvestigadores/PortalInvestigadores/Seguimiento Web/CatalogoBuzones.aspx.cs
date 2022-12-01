@@ -11,6 +11,8 @@ using Portal_Investigadores.clases;
 using System.Web.Http;
 using System.Net;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using System.Web.Script.Services;
 
 namespace Portal_Investigadores
 {
@@ -27,6 +29,15 @@ namespace Portal_Investigadores
             {
                 bindGrupos("");
                 cargarbuzones();
+                string sIdioma = Session["idioma"].ToString();
+                if (sIdioma == "2")
+                {
+                    this.buzonesGV.HeaderRow.Cells[1].Text = "Group";
+                    this.buzonesGV.HeaderRow.Cells[2].Text = "Company";
+                    this.buzonesGV.HeaderRow.Cells[3].Text = "Box Name";
+                    this.buzonesGV.HeaderRow.Cells[4].Text = "Description";
+                    this.buzonesGV.HeaderRow.Cells[5].Text = "Active";
+                }
             }
         }
 
@@ -172,5 +183,16 @@ namespace Portal_Investigadores
         {
             clearForm();
         }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_Etiquetas(int iId, int iIdioma)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dtEtiquetas = DBHelper.getBQEtiquetas(iId, iIdioma);
+            string str = JsonConvert.SerializeObject(dtEtiquetas);
+            return (str);
+
+        } 
     }
 }
