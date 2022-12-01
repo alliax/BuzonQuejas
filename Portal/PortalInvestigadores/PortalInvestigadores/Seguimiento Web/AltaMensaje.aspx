@@ -245,12 +245,10 @@
                                 <asp:TextBox runat="server" CssClass="form-control" ID="invPuesto" placeholder="Puesto" />
                             </div>
                             <div class="form-group col-md-12">
-                                <asp:DropDownList runat="server" CssClass="form-control" ID="ddlPosicion">
-                                    <asp:ListItem>Escoge Uno</asp:ListItem>
-                                </asp:DropDownList>
+                                <asp:DropDownList runat="server" CssClass="form-control" ID="ddlPosicion" />                                
                             </div>
                             <div class="form-group col-md-4">
-                                <asp:Button runat="server" OnClick="Page_Load" CssClass="btn btn-primary" ID="btnAddInv" Text="Guardar" />
+                                <asp:Button runat="server" CssClass="btn btn-primary" ID="btnAddInv" Text="Guardar" />
                             </div>    
                             <div class="col-md-12" id="divInvolucrados">
                                 <asp:GridView ID="gvResponsables" runat="server" OnRowDataBound="gvResponsables_RowDataBound" CssClass="strip table table-hover table-dashboard">
@@ -315,9 +313,7 @@
                                         <span class="input-group-addon" aria-hidden="true" style="max-width: 100%;">
                                             <i class="glyphicon glyphicon-list"></i>
                                         </span>
-                                        <asp:DropDownList runat="server" CssClass="form-control">
-                                            <asp:ListItem>Área Asignada</asp:ListItem>
-                                        </asp:DropDownList>
+                                        <asp:DropDownList ID="ddlArea" runat="server" CssClass="form-control" />                                         
                                     </div>
                                 </div>
                             </div>
@@ -328,9 +324,7 @@
                                 <div class="form-row form-group">
                                     <label class="col-sm-4 ">Grupo</label>
                                     <div class="col-sm-8">
-                                        <asp:DropDownList runat="server" CssClass="form-control" ID="ddlGrupo2">
-                                            <asp:ListItem>Grupo</asp:ListItem>
-                                        </asp:DropDownList>
+                                        <asp:DropDownList Enabled="false" runat="server" CssClass="form-control" ID="ddlGrupo2" />                                        
                                     </div>
                                 </div>
                             </div>
@@ -338,19 +332,16 @@
                                 <div class="form-row form-group">
                                     <label class="col-sm-4">Responsable</label>
                                     <div class="col-sm-8">
-                                        <asp:DropDownList runat="server" CssClass="form-control form-control-sm" ID="ddlResponsable2">
-                                            <asp:ListItem>Responsable</asp:ListItem>
-                                        </asp:DropDownList>
+                                        <asp:DropDownList OnSelectedIndexChanged="ddlResponsable2_SelectedIndexChanged" AutoPostBack="true" runat="server" CssClass="form-control form-control-sm" ID="ddlResponsable2" />                                            
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
-                                <div class="col-md-2">
-                                    <label class="sr-only"></label>
-                                </div>
-                                <div class="input-group col-md-10">
-                                    <span class="input-group-addon" id="basic-addon1">@</span>
-                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtEmail" Enabled="false"/>
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">@</span>
+                                  </div>
+                                  <asp:TextBox runat="server" CssClass="form-control" ID="txtEmail" Enabled="false"/>
                                 </div>
                             </div>                            
                             <div class="form-group form-row col-md-12">
