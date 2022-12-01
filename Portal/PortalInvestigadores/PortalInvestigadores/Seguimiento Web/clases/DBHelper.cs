@@ -3823,7 +3823,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
-        public DataTable getBuzonesByGrupoEmpresa(string empresa, string grupo)
+        public DataTable getBuzonesByGrupoEmpresa(string empresa, string grupo) //Rodolfo Godina
         {
             try
             {
@@ -3850,7 +3850,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
-        public string saveUsuariosBuzones(int idUsuario, int idBQ, string usuarioAlta, bool esVobo, bool esInvestigador, bool esDelegado, bool esRevisor, bool esEnterado, bool adminQuejas, bool activo)
+        public string saveUsuariosBuzones(int idUsuario, int idBQ, string usuarioAlta, bool esVobo, bool esInvestigador, bool esDelegado, bool esRevisor, bool esEnterado, bool adminQuejas, bool activo) //Rodolfo Godina
         {
             try
             {
@@ -4165,6 +4165,46 @@ namespace Portal_Investigadores.clases
                 {
 
                     String query = "SELECT Id, IdSubtema, Descripcion FROM BQ_Cat_Subtema WHERE Activo = 1 and IdBQ = " + idBQ + " and IdTema = " + idTema;
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getTiposBuzon()
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+
+                    String query = "SELECT * FROM Tipos;";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getResponsablesMensaje(string grupo)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+
+                    String query = "SELECT Id, Nombre, CorreoResponsable,EnteradosEmails FROM ComboResponsables WHERE Grupo = " + "'"+grupo+"'";
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();

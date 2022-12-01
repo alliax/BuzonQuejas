@@ -36,6 +36,9 @@ namespace Portal_Investigadores
                 cargarDepartamentos(grupo);
                 cargarImportancias(idBQ); cargarConducto(idBQ);
                 cargarTemas(idBQ);
+                cargarAreaAsig();
+                cargarTipos();
+                cargarResponsablesArea(grupo);
             }
 
         }
@@ -52,8 +55,7 @@ namespace Portal_Investigadores
         }
         protected void cargarGrupos (string grupo)
         {
-            DataTable grupos = DBHelper.getGrupos();
-           
+            DataTable grupos = DBHelper.getGrupos();            
 
             ddlGrupo.DataSource = grupos;
             ddlGrupo.DataTextField = grupos.Columns["Descripcion"].ToString();
@@ -61,6 +63,13 @@ namespace Portal_Investigadores
             ddlGrupo.DataBind();
 
             ddlGrupo.SelectedValue = grupo;
+
+            ddlGrupo2.DataSource = grupos;
+            ddlGrupo2.DataTextField = grupos.Columns["Descripcion"].ToString();
+            ddlGrupo2.DataValueField = grupos.Columns["Grupo"].ToString();
+            ddlGrupo2.DataBind();
+
+            ddlGrupo2.SelectedValue = grupo;
         }
         protected void cargarEmpresas(string grupo, string empresa)
         {
@@ -157,6 +166,38 @@ namespace Portal_Investigadores
             ddlSubtema.DataValueField = subtemas.Columns["IdSubtema"].ToString(); ;
             ddlSubtema.DataBind();
         }
+        protected void cargarAreaAsig()
+        {
+            DataTable areasAsig = DBHelper.getAreasAdmDen("");
+
+            ddlArea.DataSource = areasAsig;
+            ddlArea.DataTextField = areasAsig.Columns["Descripcion"].ToString();
+            ddlArea.DataValueField = areasAsig.Columns["ClasificacionT"].ToString();
+            ddlArea.DataBind();
+        }
+        protected void cargarTipos()
+        {
+            DataTable tipos = DBHelper.getTiposBuzon();
+            DataRow dr = tipos.NewRow();
+            dr["Descripcion"] = "Selecciona un Valor";
+            dr["Tipo"] = "0";
+            tipos.Rows.Add(dr);
+
+            ddlPosicion.DataSource = tipos;
+            ddlPosicion.DataTextField = tipos.Columns["Descripcion"].ToString();
+            ddlPosicion.DataValueField = tipos.Columns["Tipo"].ToString();
+            ddlPosicion.DataBind();
+            ddlPosicion.SelectedValue = 0.ToString();
+        }
+        protected void cargarResponsablesArea(string grupo)
+        {
+            DataTable responsables = DBHelper.getResponsablesMensaje(grupo);
+            ViewState["responsables"] = responsables;
+            ddlResponsable2.DataSource = responsables;
+            ddlResponsable2.DataTextField = responsables.Columns["Nombre"].ToString();
+            ddlResponsable2.DataValueField = responsables.Columns["Id"].ToString();
+            ddlResponsable2.DataBind();
+        }
 
         protected void cargarResponsables()
         {
@@ -183,6 +224,19 @@ namespace Portal_Investigadores
         protected void gvResponsables_RowDataBound(object sender, GridViewRowEventArgs e)
         {
 
+        }
+
+        protected void ddlResponsable2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataTable responsables = (DataTable)ViewState["responsables"];
+            foreach (DataRow responsable in responsables.Rows)
+            {
+                if (responsable["Id"].ToString() == ddlResponsable2.SelectedValue)
+                {
+                    txtEmail.Text = responsable["CorreoResponsable"].ToString();
+                    enterados.Text = responsable["EnteradosEmails"].ToString();
+                }
+            }            
         }
     }
 }
