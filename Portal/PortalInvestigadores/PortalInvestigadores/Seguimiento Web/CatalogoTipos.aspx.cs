@@ -8,7 +8,9 @@ using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 using Portal_Investigadores.clases;
-
+using System.Web.Script.Services;
+using Newtonsoft.Json;
+using System.Reflection;
 
 namespace Portal_Investigadores
 {
@@ -24,6 +26,14 @@ namespace Portal_Investigadores
             {
                 // 1 Grupo (Alliax)
                 cargarTipo(1);
+                string sIdioma = Session["idioma"].ToString();
+                if (sIdioma == "2")
+                {
+                    this.gvTipo.HeaderRow.Cells[1].Text = "Type Id";
+                    this.gvTipo.HeaderRow.Cells[2].Text = "Description";
+                    this.gvTipo.HeaderRow.Cells[3].Text = "Active";
+                    this.gvTipo.HeaderRow.Cells[4].Text = "Active";
+                }
             }
         }
 
@@ -146,6 +156,16 @@ namespace Portal_Investigadores
             btnCancel.Enabled = true;
             btnAdd.Enabled = false;
             txtTipo.Enabled = false;
+
+        }
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_Etiquetas(int iId,int iIdioma)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dtEtiquetas = DBHelper.getBQEtiquetas(iId,iIdioma);
+            string str = JsonConvert.SerializeObject(dtEtiquetas);
+            return (str);
 
         }
 

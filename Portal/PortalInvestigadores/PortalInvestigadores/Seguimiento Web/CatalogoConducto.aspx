@@ -2,27 +2,82 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="contenido" runat="server">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+        var Idioma = '<%=HttpContext.Current.Session["idioma"]%>'
+        $.ajax({
+            type: "GET",
+            url: "CatalogoImportancia.aspx/BQ_Etiquetas",
+            data: $.param({ iId: 5, iIdioma: Idioma }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+
+                Json = createJson(r);
+                for (i = 0; i <= Json.length - 1; i++) {
+                    if (Json[i].Id == 177) { $("#lbl1").html(Json[i].Texto) }
+                    if (Json[i].Id == 178) { $("#lbl2").html(Json[i].Texto); $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 179) { $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 137) { $("#lbl4").html(Json[i].Texto); $("#lbl11").html(Json[i].Texto); }
+                    if (Json[i].Id == 140) { $("#lbl5").html(Json[i].Texto) }
+                    if (Json[i].Id == 182) { $("#lbl6").html(Json[i].Texto) }
+                    if (Json[i].Id == 181) { $("#lbl7").html(Json[i].Texto) }
+                    if (Json[i].Id == 179) { $("#lbl8").html(Json[i].Texto) }
+                    if (Json[i].Id == 180) { $("#lbl9").html(Json[i].Texto) }
+                    if (Json[i].Id == 176) { $("#lbl10").html(Json[i].Texto) }
+                    if (Json[i].Id == 183) { $("#lbl12").html(Json[i].Texto) }
+
+                    if (Json[i].Id == 132) { $("#<%=btnAdd.ClientID%>").val(Json[i].Texto); $("#<%=btnAddForma.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 133) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); $("#<%=btnEditForma.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 134) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); $("#<%=btnCancelForma.ClientID%>").val(Json[i].Texto); }
+
+                 }
+
+
+                },
+                error: function (r) {
+                    alert(r.d);
+                }
+            });
+ });
+
+function createJson(strJson) {
+    var strJson = JSON.stringify(strJson);
+    var iJsonLenght = strJson.length
+    strJson = strJson.substr(5, iJsonLenght);
+    strJson = strJson.slice(0, -1)
+    var Json = JSON.parse(strJson);
+    Json = JSON.parse(Json);
+
+    return Json;
+}
+</script>
+
+
     <form runat="server">
         <link href="css/especiales.css" rel="stylesheet" />
         <div class="container">
          <div class="row">
-            <div class="table-header" style="padding-bottom: 27px; text-align: center;">Catalogo de conductos y casos</div>
+            <div id="lbl1" class="table-header" style="padding-bottom: 27px; text-align: center;">Catalogo de conductos y casos</div>
             <div class="col-md-6 col-xs-12">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        <p style="text-align: center;">Agregar Conducto</p>
+                        <p id="lbl2" style="text-align: center;">Agregar Conducto</p>
                     </div>
                     <div class="card-body">
                         <div class="form-group col-md-12 col-xs-12">
-                            <label>Conducto</label>
+                            <label id="lbl3">Conducto</label>
                             <asp:TextBox runat="server" ID="txtConducto" CssClass="form-control" />
                         </div>
                         <div class="form-group col-md-12 col-xs-12">
-                            <label>Descripcion</label>
+                            <label id="lbl4">Descripcion</label>
                             <asp:TextBox runat="server" ID="txtDescr" CssClass="form-control" />
                         </div>
                         <div runat="server" id="divActive" class="col-md-12 form-group">
-                            <label>Activo:</label>
+                            <label id="lbl5">Activo:</label>
                             <asp:CheckBox runat="server" ID="cbActive" CssClass="form-control"/>
                         </div>
                     </div>
@@ -45,7 +100,7 @@
             <div class="col-md-6 col-xs-12">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        <p style="text-align: center;">Lista de conducto</p>
+                        <p id="lbl6" style="text-align: center;">Lista de conducto</p>
                     </div>
                     <div class="card-body">
                         <div style="overflow-y:scroll; height:200px">
@@ -63,23 +118,23 @@
             <div class="col-md-6 col-xs-12" >
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        <p style="text-align:center;">Agregar Forma</p>
+                        <p id="lbl7" style="text-align:center;">Agregar Forma</p>
                     </div>
                     <div class="card-body">
                         <div class="form-group col-md-12 col-xs-12">
-                            <label>Conducto</label>
+                            <label id="lbl8">Conducto</label>
                             <asp:TextBox runat="server" ID="txtCond" Enabled="false" CssClass="form-control" />
                         </div>
                         <div class="form-group col-md-12 col-xs-12">
-                            <label>Forma</label>
+                            <label id="lbl9">Forma</label>
                             <asp:TextBox runat="server" ID="txtForma" CssClass="form-control" />
                         </div>
                         <div class="form-group col-md-12 col-xs-12">
-                            <label>Descripcion</label>
+                            <label id="lbl10">Descripcion</label>
                             <asp:TextBox runat="server" ID="desc" CssClass="form-control" />
                         </div>
                         <div runat="server" visible="false" id="divFormaActivo" class="col-md-12 form-group">
-                            <label>Activo:</label>
+                            <label id="lbl11">Activo:</label>
                             <asp:CheckBox runat="server" ID="chActive" CssClass="form-control"/>
                         </div>
                     </div>
@@ -110,7 +165,7 @@
              <div class="col-md-6 col-xs-12">
                  <div class="card">
                      <div class="card-header bg-primary text-white">
-                        <p style="text-align:center;">Formas</p>
+                        <p id="lbl12" style="text-align:center;">Formas</p>
                     </div>
                      <div class="card-body">
                         <div style="overflow-y:scroll; height:200px">

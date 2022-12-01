@@ -1,27 +1,83 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="CatalogoTemas.aspx.cs" Inherits="Portal_Investigadores.CatalogoTemas" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="contenido" runat="server">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+
+  var Idioma = '<%=HttpContext.Current.Session["idioma"]%>'
+            $.ajax({
+                type: "GET",
+                url: "CatalogoTemas.aspx/BQ_Etiquetas",
+                data: $.param({ iId: 5, iIdioma: Idioma }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+
+                Json = createJson(r);
+                for (i = 0; i <= Json.length - 1; i++) {
+                    if (Json[i].Id == 141) { $("#lbl1").html(Json[i].Texto) }
+                    if (Json[i].Id == 142) { $("#lbl2").html(Json[i].Texto) }
+                    if (Json[i].Id == 143) { $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 137) { $("#lbl4").html(Json[i].Texto) }
+                    if (Json[i].Id == 140) { $("#lbl5").html(Json[i].Texto) }
+                    if (Json[i].Id == 146) { $("#lbl12").html(Json[i].Texto) }
+                    if (Json[i].Id == 144) { $("#lbl6").html(Json[i].Texto) }
+                    if (Json[i].Id == 143) { $("#lbl7").html(Json[i].Texto) }
+                    if (Json[i].Id == 145) { $("#lbl8").html(Json[i].Texto) }
+                    if (Json[i].Id == 137) { $("#lbl9").html(Json[i].Texto) }
+                    if (Json[i].Id == 140) { $("#lbl10").html(Json[i].Texto) }
+                    if (Json[i].Id == 147) { $("#lbl11").html(Json[i].Texto) }
+                        
+                    if (Json[i].Id == 132) { $("#<%=btnAdd.ClientID%>").val(Json[i].Texto); $("#<%=btnAddSb.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 133) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); $("#<%=btnEdiSb.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 134) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); $("#<%=btnCanSb.ClientID%>").val(Json[i].Texto); }
+     
+                    
+                }
+
+
+                },
+                error: function (r) {
+                    alert(r.d);
+                }
+            });
+
+ }); // Document Ready
+           
+function createJson(strJson) {
+        var strJson = JSON.stringify(strJson);
+        var iJsonLenght = strJson.length
+        strJson = strJson.substr(5, iJsonLenght);
+        strJson = strJson.slice(0, -1)
+        var Json = JSON.parse(strJson);
+        Json = JSON.parse(Json);
+
+        return Json;
+}
+</script>
     <form runat="server">
         <link href="css/especiales.css" rel="stylesheet" />
         <div class="container">
             <div class="row">
-                <div class="table-header" style="padding-bottom: 27px; text-align: center;">Configuración de catalogo de Temas y Subtemas</div>
+                <div id="lbl1" class="table-header" style="padding-bottom: 27px; text-align: center;">Configuración de catalogo de Temas y Subtemas</div>
                     <div class="col-md-6 col-lg-6">
                         <div class="card">
                             <div class="card-header bg-primary text-white">
-                                <p style="text-align: center;">Tema</p>
+                                <p id="lbl2" style="text-align: center;">Tema</p>
                             </div>
                             <div class="card-body">
                                 <div class="col-md-12 form-group">
-                                    <label>Tema Id</label>
+                                    <label id="lbl3">Tema Id</label>
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtTema" />
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label>Descripción</label>
+                                    <label id="lbl4">>Descripción</label>
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtDesc" />
                                 </div>
                                 <div  class="col-md-2 form-group">
-                                    <label>Activo:</label>
+                                    <label id="lbl5">>Activo:</label>
                                     <asp:CheckBox runat="server" ID="cbActivo" CssClass="form-control"/>
                                 </div>
                             </div>
@@ -52,7 +108,7 @@
                     <div class="col-md-6 col-lg-6">
                          <div class="card">
                             <div class="card-header bg-primary text-white">
-                                <p style="text-align: center;">Lista de Temas</p>
+                                <p  id="lbl12" style="text-align: center;">Lista de Temas</p>
                             </div>
                             <div class="card-body">
                                <div style="overflow-y:scroll; height:200px">
@@ -71,23 +127,23 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header bg-primary text-white">
-                            <p style="text-align:center;">Subtema</p>
+                            <p id="lbl6" style="text-align:center;">Subtema</p>
                         </div>
                         <div class="card-body">
                             <div class="col-md-12 form-group">
-                                <label>Tema Id</label>
+                                <label id="lbl7">Tema Id</label>
                                 <asp:TextBox runat="server" CssClass="form-control" Enabled="false" ID="tbTema" />
                             </div>
                             <div class="col-md-12 form-group">
-                                <label>Subtema Id</label>
+                                <label id="lbl8">Subtema Id</label>
                                 <asp:TextBox runat="server" CssClass="form-control" ID="txtSubtema" />
                             </div>
                             <div class="col-md-12 form-group">
-                                <label>Descripción</label>
+                                <label id="lbl9">Descripción</label>
                                 <asp:TextBox runat="server" CssClass="form-control" ID="txtSubTemaDesc" />
                             </div>
                            <div  class="col-md-2 form-group">
-                            <label>Activo:</label>
+                            <label id="lbl10">Activo:</label>
                                <asp:CheckBox runat="server" ID="cbSubActivo" CssClass="form-control"/>
                            </div>
                         </div>
@@ -118,7 +174,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header bg-primary text-white">
-                            <p style="text-align: center;">Lista de Subtemas</p>
+                            <p id="lbl11" style="text-align: center;">Lista de Subtemas</p>
                         </div>
                         <div class="card-body">
                             <div style="overflow-y:scroll; height:200px">

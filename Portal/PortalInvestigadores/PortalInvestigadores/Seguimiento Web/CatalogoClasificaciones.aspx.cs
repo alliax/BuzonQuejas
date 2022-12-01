@@ -11,6 +11,8 @@ using Portal_Investigadores.clases;
 using System.Web.Http;
 using System.Net;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using System.Web.Script.Services;
 
 namespace Portal_Investigadores
 {
@@ -26,6 +28,16 @@ namespace Portal_Investigadores
             if (!Page.IsPostBack)
             {
                 bindGridClasificacion();
+                string sIdioma = Session["idioma"].ToString();
+                if (sIdioma == "2")
+                {
+                    this.clasificacionGV.HeaderRow.Cells[1].Text = "Clasification";
+                    this.clasificacionGV.HeaderRow.Cells[2].Text = "Description";
+                    this.clasificacionGV.HeaderRow.Cells[3].Text = "Complain";
+                    this.clasificacionGV.HeaderRow.Cells[4].Text = "Send Email";
+                    this.clasificacionGV.HeaderRow.Cells[5].Text = "Active";
+
+                }
             }
         }
 
@@ -117,6 +129,17 @@ namespace Portal_Investigadores
                 cbActive.Checked = false;
                 divActive.Visible = false;
             }
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_Etiquetas(int iId, int iIdioma)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dtEtiquetas = DBHelper.getBQEtiquetas(iId, iIdioma);
+            string str = JsonConvert.SerializeObject(dtEtiquetas);
+            return (str);
+
         }
     }
 }
