@@ -35,15 +35,14 @@ namespace Portal_Investigadores
                 string sIdioma = Session["idioma"].ToString();
                 if (sIdioma == "2")
                 {
-                    this.temaGV.HeaderRow.Cells[1].Text = "Topic Id";
-                    this.temaGV.HeaderRow.Cells[2].Text = "Description";
-                    this.temaGV.HeaderRow.Cells[3].Text = "Active";
-                    this.temaGV.HeaderRow.Cells[4].Text = "Active";
-                    this.subtemaGV.HeaderRow.Cells[1].Text = "Topic Id";
-                    this.subtemaGV.HeaderRow.Cells[2].Text = "Subtopic Id";
-                    this.subtemaGV.HeaderRow.Cells[3].Text = "Description";
-                    this.subtemaGV.HeaderRow.Cells[4].Text = "Active";
-                    this.subtemaGV.HeaderRow.Cells[5].Text = "Active";
+                    this.temaGV.Columns[0].HeaderText = "Topic Id";
+                    this.temaGV.Columns[1].HeaderText = "Description";
+                    this.temaGV.Columns[2].HeaderText = "Active";
+                    this.subtemaGV.Columns[0].HeaderText = "Topic Id";
+                    this.subtemaGV.Columns[1].HeaderText = "Subtopic Id";
+                    this.subtemaGV.Columns[2].HeaderText = "Description";
+                    this.subtemaGV.Columns[3].HeaderText = "Active";
+                    this.subtemaGV.Columns[4].HeaderText = "Active";
                 }
             }
         }

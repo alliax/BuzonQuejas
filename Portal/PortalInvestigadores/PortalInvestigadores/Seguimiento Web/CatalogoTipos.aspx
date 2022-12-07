@@ -3,6 +3,12 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="contenido" runat="server">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<style>
+.bg-primary {
+    background-color: #8064A2;
+}
+
+</style>
 <script type="text/javascript">
 
 $(document).ready(function () {
@@ -11,22 +17,23 @@ $(document).ready(function () {
             $.ajax({
                 type: "GET",
                 url: "CatalogoTipos.aspx/BQ_Etiquetas",
-                data: $.param({ iId: 5, iIdioma: Idioma }),
+                data: $.param({ iId: 1, iIdioma: Idioma }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (r) {
 
                 Json = createJson(r);
                 for (i = 0; i <= Json.length - 1; i++) {
-                    if (Json[i].Id == 136) { $("#lbl1").html(Json[i].Texto) }
-                    if (Json[i].Id == 137) { $("#lbl2").html(Json[i].Texto) }
-                    if (Json[i].Id == 140) { $("#lbl3").html(Json[i].Texto) }
-                    if (Json[i].Id == 139) { $("#lblHeader").html(Json[i].Texto) }
-                    if (Json[i].Id == 132) { $("#<%=btnAdd.ClientID%>").val(Json[i].Texto); }
-                    if (Json[i].Id == 133) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); }
-                    if (Json[i].Id == 134) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); }
-                    if (Json[i].Id == 136) { $("#lblAdd").html(Json[i].Texto) }
-                    if (Json[i].Id == 138) { $("#lblList").html(Json[i].Texto) }
+
+                    if (Json[i].Id == 8) { $("#lblHeader").html(Json[i].Texto); }
+                    if (Json[i].Id == 5) { $("#lbl1").html(Json[i].Texto) }
+                    if (Json[i].Id == 6) { $("#lbl2").html(Json[i].Texto) }
+                    if (Json[i].Id == 10) { $("#lbl3").html(Json[i].Texto) }                  
+                    if (Json[i].Id == 1) { $("#<%=btnAdd.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 2) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 3) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 5) { $("#lblAdd").html(Json[i].Texto) }
+                    if (Json[i].Id == 7) { $("#lblList").html(Json[i].Texto) }
                     
                 }
 
@@ -54,10 +61,10 @@ function createJson(strJson) {
     <link href="css/especiales.css" rel="stylesheet" />
         <div class="container">
             <div class="row">
-                <div class="table-header" style="padding-bottom: 27px; text-align: center;" id="lblHeader"></div>
+                <div class="table-header" style="padding-bottom: 27px; text-align: center;" id="lblHeader" ></div>
                     <div class="col-md-6 col-lg-6">
-                        <div class="card">
-                            <div class="card-header bg-primary text-white">
+                        <div class="card" >
+                            <div class="card-header text-white" style="background:#4E8ABE">
                                 <p id="lblAdd" style="text-align: center;">Tipo</p>
                             </div>
                             <div class="card-body">
@@ -102,7 +109,7 @@ function createJson(strJson) {
 
                    <div class="col-md-6 col-lg-6">
                          <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header text-white" style="background:#4E8ABE">
                                 <p id="lblList" style="text-align: center;">Lista de Tipos</p>
                             </div>
                             <div class="card-body">
@@ -111,7 +118,6 @@ function createJson(strJson) {
                                     <Columns>
                                         <asp:BoundField DataField="Id" HeaderText="Tipo Id" />
                                         <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
-                                        <asp:BoundField DataField="Activo" HeaderText="Activo:" ItemStyle-CssClass="hidden-field" HeaderStyle-CssClass="hidden-field" />
                                         <asp:CheckBoxField DataField="Activo" HeaderText="Activo:" />
                                     </Columns>                          
                                    </asp:GridView>

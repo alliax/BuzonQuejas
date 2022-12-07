@@ -3792,6 +3792,137 @@ namespace Portal_Investigadores.clases
             }
         }
 
+        public DataTable getInvolucrados(int iIdMensaje) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Involucrados", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = "SEL";
+                        cmd.Parameters.Add("@P_IdInv", SqlDbType.Int).Value = 0;
+                        cmd.Parameters.Add("@P_IdMensaje", SqlDbType.Int).Value = iIdMensaje;
+                        cmd.Parameters.Add("@P_Nombre", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Apellido", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Puesto", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = "";
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string postInvolucrados(string sOpt, int iIdInv, int iIdMensaje,string sNombre,string sApellido,string sPuesto,string sPosicion,string sUsr) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Involucrados", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sOpt;
+                        cmd.Parameters.Add("@P_IdInv", SqlDbType.Int).Value = iIdInv;
+                        cmd.Parameters.Add("@P_IdMensaje", SqlDbType.Int).Value = iIdMensaje;
+                        cmd.Parameters.Add("@P_Nombre", SqlDbType.VarChar).Value = sNombre;
+                        cmd.Parameters.Add("@P_Apellido", SqlDbType.VarChar).Value = sApellido;
+                        cmd.Parameters.Add("@P_Posicion", SqlDbType.VarChar).Value = sPosicion;
+                        cmd.Parameters.Add("@P_Puesto", SqlDbType.VarChar).Value = sPuesto;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = sUsr;
+                        con.Open();
+
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+                        return "Ok";
+                    }
+
+
+                }
+                
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getMensajesInt(int iIdMensaje) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_MensajesInt", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = "SEL";
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = 0;
+                        cmd.Parameters.Add("@P_IdMensaje", SqlDbType.Int).Value = iIdMensaje;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.Int).Value =0;
+                        cmd.Parameters.Add("@P_Com", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_IP", SqlDbType.VarChar).Value = "";
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string postMensajesInt(string sOpt, int iIdBQ, int iIdMensaje, string sUsr, string sCom, string sIP) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("[SP_BQ_MensajesInt]", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Option", SqlDbType.VarChar).Value = sOpt;
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
+                        cmd.Parameters.Add("@P_IdMensaje", SqlDbType.Int).Value = iIdMensaje;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = sUsr;
+                        cmd.Parameters.Add("@P_Com", SqlDbType.VarChar).Value = sCom;
+                        cmd.Parameters.Add("@P_IP", SqlDbType.VarChar).Value = sIP;
+
+                        con.Open();
+
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+                        return "Ok";
+                    }
+
+
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public string saveForma(int idConducto, string forma, string descripcion, bool activo, string usuarioCreacion, int idBQ)
         {
             try

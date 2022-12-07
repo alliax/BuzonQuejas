@@ -91,34 +91,34 @@ $(document).ready(function () {
     $.ajax({
         type: "GET",
         url: "CatalogoTipos.aspx/BQ_Etiquetas",
-        data: $.param({ iId: 5, iIdioma: Idioma }),
+        data: $.param({ iId: 1, iIdioma: Idioma }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (r) {
 
             Json = createJson(r);
             for (i = 0; i <= Json.length - 1; i++) {
-                if (Json[i].Id == 148) { $("#lbl1").html(Json[i].Texto) }
-                if (Json[i].Id == 149) { $("#lbl2").html(Json[i].Texto) }
-                if (Json[i].Id == 150) { $("#lbl3").html(Json[i].Texto) }
-                if (Json[i].Id == 151) { $("#lbl4").html(Json[i].Texto) }
-                if (Json[i].Id == 152) { $("#lbl5").html(Json[i].Texto) }
-                if (Json[i].Id == 153) { $("#lbl6").html(Json[i].Texto); $("#lbl14").html(Json[i].Texto); $("#lbl15").html(Json[i].Texto);}
-                if (Json[i].Id == 161) { $("#lbl7").html(Json[i].Texto); $("#lbl17").html(Json[i].Texto); }     
-                if (Json[i].Id == 140) { $("#lbl8").html(Json[i].Texto) }  
-                if (Json[i].Id == 155) { $("#lbl9").html(Json[i].Texto) }
-                if (Json[i].Id == 154) { $("#lbl10").html(Json[i].Texto); $("#lbl12").html(Json[i].Texto); $("#lbl15").html(Json[i].Texto); $("#lbl18").html(Json[i].Texto); }
-                if (Json[i].Id == 156) { $("#lbl11").html(Json[i].Texto) }
-                if (Json[i].Id == 157) { $("#lbl13").html(Json[i].Texto) }
-                if (Json[i].Id == 158) { $("#lbl16").html(Json[i].Texto); }
+                if (Json[i].Id == 29) { $("#lbl1").html(Json[i].Texto) }
+                if (Json[i].Id == 30) { $("#lbl2").html(Json[i].Texto) }
+                if (Json[i].Id == 31) { $("#lbl3").html(Json[i].Texto) }
+                if (Json[i].Id == 32) { $("#lbl4").html(Json[i].Texto) }
+                if (Json[i].Id == 33) { $("#lbl5").html(Json[i].Texto) }
+                if (Json[i].Id == 34) { $("#lbl6").html(Json[i].Texto); $("#lbl14").html(Json[i].Texto); $("#lbl15").html(Json[i].Texto);}
+                if (Json[i].Id == 42) { $("#lbl7").html(Json[i].Texto); $("#lbl17").html(Json[i].Texto); }     
+                if (Json[i].Id == 10) { $("#lbl8").html(Json[i].Texto) }  
+                if (Json[i].Id == 36) { $("#lbl9").html(Json[i].Texto) }
+                if (Json[i].Id == 35) { $("#lbl10").html(Json[i].Texto); $("#lbl12").html(Json[i].Texto); $("#lbl15").html(Json[i].Texto); $("#lbl18").html(Json[i].Texto); }
+                if (Json[i].Id == 37) { $("#lbl11").html(Json[i].Texto) }
+                if (Json[i].Id == 38) { $("#lbl13").html(Json[i].Texto) }
+                if (Json[i].Id == 39) { $("#lbl16").html(Json[i].Texto); }
                 
 
 
-                if (Json[i].Id == 132) { $("#<%=btnAdd.ClientID%>").val(Json[i].Texto); $("#<%=btnAgregarInv.ClientID%>").val(Json[i].Texto); $("#<%=btnAgregarVobo.ClientID%>").val(Json[i].Texto); $("#<%=btnAgregarCierreUsr.ClientID%>").val(Json[i].Texto); $("#<%=btnAgregarComiteUsr.ClientID%>").val(Json[i].Texto); }
-                if (Json[i].Id == 133) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto);  }
-                if (Json[i].Id == 134) { $("#<%=btnEliminarInv.ClientID%>").val(Json[i].Texto); $("#<%=btnEliminarVobo.ClientID%>").val(Json[i].Texto); $("#<%=btnEliminarCierreUsr.ClientID%>").val(Json[i].Texto); $("#<%=btnEliminarComiteUsr.ClientID%>").val(Json[i].Texto); }
-                if (Json[i].Id == 159) { $("#<%=btnSubirCierreUsr.ClientID%>").val(Json[i].Texto); $("#<%=btnSubirComiteUsr.ClientID%>").val(Json[i].Texto); }
-                if (Json[i].Id == 160) { $("#<%=btnBajarCierreUsr.ClientID%>").val(Json[i].Texto); $("#<%=btnBajarComiteUsr.ClientID%>").val(Json[i].Texto); }
+                if (Json[i].Id == 1) { $("#<%=btnAdd.ClientID%>").val(Json[i].Texto); $("#<%=btnAgregarInv.ClientID%>").val(Json[i].Texto); $("#<%=btnAgregarVobo.ClientID%>").val(Json[i].Texto); $("#<%=btnAgregarCierreUsr.ClientID%>").val(Json[i].Texto); $("#<%=btnAgregarComiteUsr.ClientID%>").val(Json[i].Texto); }
+                if (Json[i].Id == 2) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto);  }
+                if (Json[i].Id == 3) { $("#<%=btnEliminarInv.ClientID%>").val(Json[i].Texto); $("#<%=btnEliminarVobo.ClientID%>").val(Json[i].Texto); $("#<%=btnEliminarCierreUsr.ClientID%>").val(Json[i].Texto); $("#<%=btnEliminarComiteUsr.ClientID%>").val(Json[i].Texto); }
+                if (Json[i].Id == 40) { $("#<%=btnSubirCierreUsr.ClientID%>").val(Json[i].Texto); $("#<%=btnSubirComiteUsr.ClientID%>").val(Json[i].Texto); }
+                if (Json[i].Id == 41) { $("#<%=btnBajarCierreUsr.ClientID%>").val(Json[i].Texto); $("#<%=btnBajarComiteUsr.ClientID%>").val(Json[i].Texto); }
             }
 
 
@@ -196,7 +196,7 @@ function createJson(strJson) {
             <div class="row" style="padding-bottom:5%">
                       <div class="col-md-12 col-lg-12">
                          <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header text-white" style="background:#4E8ABE">
                                 <p style="text-align: center;"></p>
                             </div>
                             <div class="card-body">
@@ -240,7 +240,7 @@ function createJson(strJson) {
             <div class="row" style="padding-bottom:5%">
                       <div class="col-md-12 col-lg-12">
                          <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header text-white" style="background:#4E8ABE">
                                 <p style="text-align: center;"></p>
                             </div>
                             <div class="card-body">
@@ -288,7 +288,7 @@ function createJson(strJson) {
                       <div class="row" style="padding-bottom:5%">
                       <div class="col-md-12 col-lg-12">
                          <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header text-white" style="background:#4E8ABE">
                                 <p style="text-align: center;"></p>
                             </div>
                             <div class="card-body">
@@ -349,7 +349,7 @@ function createJson(strJson) {
                       <div class="row" style="padding-bottom:5%">
                       <div class="col-md-12 col-lg-12">
                          <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header text-white" style="background:#4E8ABE">
                                 <p style="text-align: center;"></p>
                             </div>
                             <div class="card-body">
@@ -409,7 +409,7 @@ function createJson(strJson) {
                  <div class="row">
                       <div class="col-md-12 col-lg-12">
                          <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header text-white" style="background:#4E8ABE">
                                 <p style="text-align: center;"></p>
                             </div>
                             <div class="card-body">

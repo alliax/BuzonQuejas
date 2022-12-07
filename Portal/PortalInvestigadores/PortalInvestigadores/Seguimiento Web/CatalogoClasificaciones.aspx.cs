@@ -27,17 +27,17 @@ namespace Portal_Investigadores
             divError.Visible = false;
             if (!Page.IsPostBack)
             {
-                bindGridClasificacion();
                 string sIdioma = Session["idioma"].ToString();
                 if (sIdioma == "2")
                 {
-                    this.clasificacionGV.HeaderRow.Cells[1].Text = "Clasification";
-                    this.clasificacionGV.HeaderRow.Cells[2].Text = "Description";
-                    this.clasificacionGV.HeaderRow.Cells[3].Text = "Complain";
-                    this.clasificacionGV.HeaderRow.Cells[4].Text = "Send Email";
-                    this.clasificacionGV.HeaderRow.Cells[5].Text = "Active";
+                    this.clasificacionGV.Columns[0].HeaderText = "Clasification";
+                    this.clasificacionGV.Columns[1].HeaderText = "Description";
+                    this.clasificacionGV.Columns[2].HeaderText = "Complain";
+                    this.clasificacionGV.Columns[3].HeaderText = "Send Email";
+                    this.clasificacionGV.Columns[4].HeaderText = "Active";
 
                 }
+                bindGridClasificacion();
             }
         }
 

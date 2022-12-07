@@ -11,26 +11,26 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: "CatalogoImportancia.aspx/BQ_Etiquetas",
-            data: $.param({ iId: 5, iIdioma: Idioma }),
+            data: $.param({ iId: 1, iIdioma: Idioma }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (r) {
 
                 Json = createJson(r);
                 for (i = 0; i <= Json.length - 1; i++) {
-                    if (Json[i].Id == 184) { $("#lbl1").html(Json[i].Texto) }
-                    if (Json[i].Id == 185) { $("#lbl2").html(Json[i].Texto); $("#lbl3").html(Json[i].Texto) }
-                    if (Json[i].Id == 186) { $("#lbl3").html(Json[i].Texto) }
-                    if (Json[i].Id == 187) { $("#lbl4").html(Json[i].Texto); $("#lbl11").html(Json[i].Texto); }
-                    if (Json[i].Id == 188) { $("#lbl5").html(Json[i].Texto) }
-                    if (Json[i].Id == 189) { $("#lbl6").html(Json[i].Texto) }
-                    if (Json[i].Id == 140) { $("#lbl7").html(Json[i].Texto) }
-                    if (Json[i].Id == 190) { $("#lbl8").html(Json[i].Texto) }
+                    if (Json[i].Id == 50) { $("#lbl1").html(Json[i].Texto) }
+                    if (Json[i].Id == 51) { $("#lbl2").html(Json[i].Texto); $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 52) { $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 6) { $("#lbl4").html(Json[i].Texto); $("#lbl11").html(Json[i].Texto); }
+                    if (Json[i].Id == 54) { $("#lbl5").html(Json[i].Texto) }
+                    if (Json[i].Id == 55) { $("#lbl6").html(Json[i].Texto) }
+                    if (Json[i].Id == 10) { $("#lbl7").html(Json[i].Texto) }
+                    if (Json[i].Id == 56) { $("#lbl8").html(Json[i].Texto) }
         
 
-                    if (Json[i].Id == 132) { $("#<%=btnAgregarClas.ClientID%>").val(Json[i].Texto);  }
-                    if (Json[i].Id == 133) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); }
-                    if (Json[i].Id == 134) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 1) { $("#<%=btnAgregarClas.ClientID%>").val(Json[i].Texto);  }
+                    if (Json[i].Id == 2) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 3) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); }
 
                  }
 
@@ -61,7 +61,7 @@ function createJson(strJson) {
                 <div id="lbl1" class="table-header" style="padding-bottom: 27px; text-align: center;">Catalogo de clasificaciones</div>           
                     <div class="col-md-6">
                         <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header  text-white" style="background:#4E8ABE">
                                 <p id="lbl2" style="text-align: center;">Agregar clasificacion</p>
                             </div>
                             <div class="card-body">
@@ -109,7 +109,7 @@ function createJson(strJson) {
                     </div>                     
                     <div class="col-md-6">
                         <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header  text-white" style="background:#4E8ABE">
                                 <p id="lbl8" style="text-align: center;">Lista de clasificaciones</p>
                             </div>
                             <div class="card-body" style="text-align: center;">

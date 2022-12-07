@@ -24,15 +24,6 @@ namespace Portal_Investigadores
         protected global::System.Web.UI.HtmlControls.HtmlForm form;
 
         /// <summary>
-        /// msgId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl msgId;
-
-        /// <summary>
         /// txtTitulo control.
         /// </summary>
         /// <remarks>
@@ -312,13 +303,22 @@ namespace Portal_Investigadores
         protected global::System.Web.UI.WebControls.Button btnAddInv;
 
         /// <summary>
-        /// gvResponsables control.
+        /// gvInv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvResponsables;
+        protected global::System.Web.UI.WebControls.GridView gvInv;
+
+        /// <summary>
+        /// gvCom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvCom;
 
         /// <summary>
         /// txtMsg control.
@@ -328,6 +328,15 @@ namespace Portal_Investigadores
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMsg;
+
+        /// <summary>
+        /// btnMensajesInt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnMensajesInt;
 
         /// <summary>
         /// ddlArea control.
