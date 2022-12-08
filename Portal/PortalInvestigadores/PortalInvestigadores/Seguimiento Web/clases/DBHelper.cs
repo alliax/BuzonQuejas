@@ -4204,7 +4204,187 @@ namespace Portal_Investigadores.clases
                 using (SqlConnection con = new SqlConnection(connStr))
                 {
 
-                    String query = "SELECT Id, Nombre, CorreoResponsable,EnteradosEmails FROM ComboResponsables WHERE Grupo = " + "'"+grupo+"'";
+                    String query = "SELECT Id, Nombre, CorreoResponsable,EnteradosEmails,idRevisor, NombreRevisor, CorreoRevisor FROM ComboResponsables WHERE Grupo = " + "'"+grupo+"'";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public int guardarMensaje(int idBQ, string titulo, string importancia, string conducto, string forma, string clasificacion
+            ,string descripcion, string nombre, string apellidoP, string apellidoM, string telefono, string correo,
+            bool anonimo, string usuarioResp, string usuario, string sitio, int tema, int subtema, int idDep,
+            string areaAsig, string mensaje, string resumen, string tipo, int responsable, int revisor, bool revisorActivo,
+            string enterados)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_CrearMensaje", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        //int id = 0;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+                        cmd.Parameters.Add("@titulo", SqlDbType.VarChar).Value = titulo;
+                        cmd.Parameters.Add("@importancia", SqlDbType.VarChar).Value = importancia;
+                        cmd.Parameters.Add("@conducto", SqlDbType.VarChar).Value = conducto;
+                        cmd.Parameters.Add("@forma", SqlDbType.VarChar).Value = forma;
+                        cmd.Parameters.Add("@clasificacion", SqlDbType.VarChar).Value = clasificacion;
+                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = descripcion;
+                        cmd.Parameters.Add("@nombre", SqlDbType.VarChar).Value = nombre;
+                        cmd.Parameters.Add("@apellidoP", SqlDbType.VarChar).Value = apellidoP;
+                        cmd.Parameters.Add("@apellidoM", SqlDbType.VarChar).Value = apellidoM;
+                        cmd.Parameters.Add("@telefono", SqlDbType.VarChar).Value = telefono;
+                        cmd.Parameters.Add("@correo", SqlDbType.VarChar).Value = correo;
+                        cmd.Parameters.Add("@anonimo", SqlDbType.Bit).Value = anonimo;
+                        cmd.Parameters.Add("@usuarioResponsable", SqlDbType.VarChar).Value = usuarioResp;
+                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = usuario;
+                        cmd.Parameters.Add("@sitio", SqlDbType.VarChar).Value = sitio;
+                        cmd.Parameters.Add("@tema", SqlDbType.Int).Value = tema;
+                        cmd.Parameters.Add("@subtema", SqlDbType.Int).Value = subtema;
+                        cmd.Parameters.Add("@idDepartamento", SqlDbType.Int).Value = idDep;
+                        cmd.Parameters.Add("@areaAsig", SqlDbType.VarChar).Value = areaAsig;
+                        cmd.Parameters.Add("@mensaje", SqlDbType.VarChar).Value = mensaje;
+                        cmd.Parameters.Add("@resumen", SqlDbType.VarChar).Value = resumen;
+                        cmd.Parameters.Add("@tipo", SqlDbType.VarChar).Value = tipo;
+                        cmd.Parameters.Add("@responsable", SqlDbType.Int).Value = responsable;
+                        cmd.Parameters.Add("@revisor", SqlDbType.Int).Value = revisor;
+                        cmd.Parameters.Add("@revisorActivo", SqlDbType.Bit).Value = revisorActivo;
+                        cmd.Parameters.Add("@enterados", SqlDbType.VarChar).Value = enterados;
+
+
+                        con.Open();
+                        int id = int.Parse(cmd.ExecuteScalar().ToString());
+                        return id;
+                       
+                    }
+                }
+            }
+            catch
+            {
+                return 0;
+                throw;
+            }
+        }
+        public DataTable getUsuariosResponsables()
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+
+                    String query = "SELECT Usuario, Nombre FROM v_UsuariosI;";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getTiposMensaje(int idBQ) //Rodolfo Godina
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+
+                    String query = "SELECT IdTipo, Descripcion FROM BQ_Cat_Tipo WHERE Activo = 1 and IdBQ = " +idBQ;
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string saveClasificacionTarea(string opt, int id, int idBQ, string clasificacionT, string descripcion, bool activo, string usuario)  //Rodolfo Godina
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Cat_ClasificacionTarea", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@option", SqlDbType.VarChar).Value = opt;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+                        cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                        cmd.Parameters.Add("@clasificacionTarea", SqlDbType.VarChar).Value = clasificacionT;
+                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = descripcion;
+                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
+                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = usuario; 
+                        con.Open();
+
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+                        return "OK";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getClasificacionTarea(string opt, int IdBQ) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Cat_ClasificacionTarea", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        
+                        cmd.Parameters.Add("@option", SqlDbType.VarChar).Value = opt;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = IdBQ;
+                        cmd.Parameters.Add("@id", SqlDbType.Int).Value = 0;
+                        cmd.Parameters.Add("@clasificacionTarea", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = false;
+                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = "";
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getClasificacionesTareaByIdBQ(int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+
+                    List<string> usuarios = new List<string>();
+                    String query = "SELECT id,ClasificacionTarea, Descripcion FROM BQ_Cat_ClasificacionTarea WHERE IdBQ = " + idBQ;
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();

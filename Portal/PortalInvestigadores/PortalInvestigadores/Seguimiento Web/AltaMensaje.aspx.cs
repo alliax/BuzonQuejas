@@ -12,21 +12,28 @@ using System.Web.Http;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.Web.Services.Description;
 
 namespace Portal_Investigadores
 {
     public partial class AltaMensaje : System.Web.UI.Page
     {
         DBHelper DBHelper = new DBHelper();
-
+        int idMensaje;
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            fechaRegistro.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            error.Visible = false;
             string empresa = Session["empresa"].ToString();
             string grupo = Session["grupo"].ToString();
             int idBQ = int.Parse(Session["idBq"].ToString());
-            fechaClasificacion.Text = DateTime.Now.ToString("yyyy-MM-dd hh:mm tt");
+           
+            if (Request.QueryString["idMensaje"] != null)
+            {
+                idMensaje = int.Parse(Request.QueryString["idMensaje"]);
+            }
+
             if (!Page.IsPostBack)
             {
                 cargarClasificacciones();
@@ -37,8 +44,10 @@ namespace Portal_Investigadores
                 cargarImportancias(idBQ); cargarConducto(idBQ);
                 cargarTemas(idBQ);
                 cargarAreaAsig();
-                cargarTipos();
+                cargarTipos(idBQ);
                 cargarResponsablesArea(grupo);
+                cargarResponsables();
+                cargarPosiciones();
             }
 
         }
@@ -141,6 +150,7 @@ namespace Portal_Investigadores
             ddlConducto.DataValueField = conductos.Columns["id"].ToString();
             ddlConducto.DataBind();
             ddlConducto.SelectedValue = 0.ToString();
+            
         }
         protected void cargarFormas(int idBQ, int idConducto)
         {
@@ -168,26 +178,42 @@ namespace Portal_Investigadores
         }
         protected void cargarAreaAsig()
         {
-            DataTable areasAsig = DBHelper.getAreasAdmDen("");
+            DataTable areasAsig = DBHelper.getClasificacionesTareaByIdBQ(1);
 
             ddlArea.DataSource = areasAsig;
             ddlArea.DataTextField = areasAsig.Columns["Descripcion"].ToString();
-            ddlArea.DataValueField = areasAsig.Columns["ClasificacionT"].ToString();
+            ddlArea.DataValueField = areasAsig.Columns["ClasificacionTarea"].ToString();
             ddlArea.DataBind();
         }
-        protected void cargarTipos()
+        protected void cargarTipos(int idBQ)
         {
-            DataTable tipos = DBHelper.getTiposBuzon();
+            DataTable tipos = DBHelper.getTiposMensaje(idBQ);
             DataRow dr = tipos.NewRow();
             dr["Descripcion"] = "Selecciona un Valor";
-            dr["Tipo"] = "0";
+            dr["IdTipo"] = "0";
             tipos.Rows.Add(dr);
 
-            ddlPosicion.DataSource = tipos;
-            ddlPosicion.DataTextField = tipos.Columns["Descripcion"].ToString();
-            ddlPosicion.DataValueField = tipos.Columns["Tipo"].ToString();
+            ddlTipo.DataSource = tipos;
+            ddlTipo.DataTextField = tipos.Columns["Descripcion"].ToString();
+            ddlTipo.DataValueField = tipos.Columns["IdTipo"].ToString();
+            ddlTipo.DataBind();
+            ddlTipo.SelectedValue = 0.ToString();
+        }
+        protected void cargarPosiciones()
+        {
+            DataTable posiciones = DBHelper.getTiposBuzon();
+            DataRow dr = posiciones.NewRow();
+            dr["Descripcion"] = "Escoge uno";
+            dr["Tipo"] = "0";
+            posiciones.Rows.Add(dr);
+
+            ddlPosicion.DataSource = posiciones;
+            ddlPosicion.DataTextField = posiciones.Columns["Descripcion"].ToString();
+            ddlPosicion.DataValueField = posiciones.Columns["Tipo"].ToString();
             ddlPosicion.DataBind();
             ddlPosicion.SelectedValue = 0.ToString();
+
+            
         }
         protected void cargarResponsablesArea(string grupo)
         {
@@ -201,7 +227,11 @@ namespace Portal_Investigadores
 
         protected void cargarResponsables()
         {
-            DBHelper DBHelper = new DBHelper();
+            DataTable usuarios = DBHelper.getUsuariosResponsables();
+            ddlResponsable.DataSource = usuarios;
+            ddlResponsable.DataTextField = usuarios.Columns["Nombre"].ToString();
+            ddlResponsable.DataValueField = usuarios.Columns["Usuario"].ToString();
+            ddlResponsable.DataBind();
         }
 
         protected void btnAddInv_Click(object sender, EventArgs e)
@@ -213,6 +243,7 @@ namespace Portal_Investigadores
         {
             int idBQ = int.Parse(Session["idBq"].ToString());          
             cargarFormas(idBQ, int.Parse(ddlConducto.SelectedValue.ToString()));
+            
         }
 
         protected void ddlTema_SelectedIndexChanged(object sender, EventArgs e)
@@ -235,8 +266,115 @@ namespace Portal_Investigadores
                 {
                     txtEmail.Text = responsable["CorreoResponsable"].ToString();
                     enterados.Text = responsable["EnteradosEmails"].ToString();
+                    if (responsable["NombreRevisor"].ToString() != "")
+                    {
+                        txtRevisor.Text = responsable["NombreRevisor"].ToString();
+                        revisorEmail.Text = responsable["CorreoRevisor"].ToString();
+                        idRevisor.Text = responsable["idRevisor"].ToString();
+                    }
+                    else
+                    {
+                        idRevisor.Text = "0";
+                        txtRevisor.Text = string.Empty;
+                        revisorEmail.Text = string.Empty;
+                    }
                 }
             }            
+        }
+
+        protected void btnGuardar_Click(object sender, EventArgs e)
+        {
+            int id = 0;
+            string usuario = Session["username"].ToString();
+            string titulo = txtTitulo.Text;
+            string nuevo = txtMensaje2.Text;
+            string nombre = ""; string correo = ""; string apellidoP = ""; string apellidoM = "";string telefono = "";string tipo = "";
+            string importancia = ddlImportancia.SelectedValue.ToString() == "0" ? "" : ddlImportancia.SelectedItem.ToString(); 
+            string conducto = ddlConducto.SelectedValue.ToString() == "0" ? "" : ddlConducto.SelectedItem.ToString();
+            string forma = ddlForma.Items.Count > 0 ? ddlForma.SelectedItem.ToString() : "";
+            string clasificacion = ddlClasificacion.SelectedItem.ToString();
+            string descripcion = txtDetalle.Text == "" ? "" : txtDetalle.Text;
+            string usuarioResp = ddlResponsable.SelectedItem.ToString();
+            string sitio = ddlSitio.SelectedValue.ToString() == "0" ? "" : ddlSitio.SelectedItem.ToString();
+            int tema = int.Parse(ddlTema.SelectedValue);
+            int subtema = ddlSubtema.SelectedValue.ToString() == "" ? 0 : int.Parse(ddlSubtema.SelectedValue);
+            int idDep = ddlDepartamento.SelectedValue.ToString() == "" ? 0 : int.Parse(ddlDepartamento.SelectedValue);
+            string areaAsig = ddlArea.SelectedValue.ToString();
+            int idBQ = int.Parse(Session["idBq"].ToString());
+            string mensaje = txtMensaje2.Text == null ? null : txtMensaje2.Text;
+            string resumen = txtResumen.Text == null ? null : txtResumen.Text;
+            int responsable = int.Parse(ddlResponsable2.SelectedValue);
+            int revisor = idRevisor.Text == "" ? 0 : int.Parse(idRevisor.Text);
+            bool revisorActivo = revisorInc.Checked;
+            string enterad = enterados.Text == "" ? "" : enterados.Text;
+            if (idMensaje > 0)
+            {                
+            }
+            else
+            {
+                if (txtTitulo.Text != "" && txtMensaje2.Text != "")
+                {
+                    
+                    if (chbkAnonimo.Checked == false)
+                    {
+                        nombre = txtNombre.Text;
+                        correo = txtCorreo.Text;
+                        apellidoP = txtPaterno.Text;
+                        apellidoM = txtMaterno.Text;
+                        telefono = txtTelefono.Text;
+                        tipo = ddlTipo.SelectedValue.ToString();
+
+
+                    }
+                    id = DBHelper.guardarMensaje(idBQ, titulo, importancia, conducto, forma, clasificacion, descripcion
+                        , nombre, apellidoP, apellidoM, telefono, correo, chbkAnonimo.Checked, usuarioResp, usuario, sitio
+                        , tema, subtema, idDep, areaAsig, mensaje, resumen, tipo, responsable, revisor, revisorActivo, enterad);
+                   // idNuevo.InnerText = id.ToString();
+                    if (id == 0)
+                    {
+                        error.Visible = true;
+                        msgError.InnerText = "Hubo un Error";
+                    }
+                    else
+                    {
+                        
+                    }
+                } 
+                else
+                {
+                    error.Visible = true;
+                    msgError.InnerText = "Necesitas llenar el campo Título y Nuevo: Visible para auditoría";
+                }
+
+            }
+            
+        }
+
+        protected void chbkAnonimo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chbkAnonimo.Checked == true)
+            {
+                txtNombre.Text = string.Empty;
+                txtNombre.Enabled = false;
+                txtCorreo.Text = string.Empty;
+                txtCorreo.Enabled = false;
+                txtPaterno.Text = string.Empty;
+                txtPaterno.Enabled = false;
+                txtMaterno.Text = string.Empty;
+                txtMaterno.Enabled = false;
+                txtTelefono.Text = string.Empty;
+                txtTelefono.Enabled = false;
+                ddlTipo.Enabled = false;
+            }
+            else
+            {
+                txtNombre.Enabled = true;
+                txtCorreo.Enabled = true;
+                txtPaterno.Enabled = true; 
+                txtMaterno.Enabled = true;
+                txtTelefono.Enabled = true;
+                ddlTipo.Enabled = true;
+            }
         }
     }
 }

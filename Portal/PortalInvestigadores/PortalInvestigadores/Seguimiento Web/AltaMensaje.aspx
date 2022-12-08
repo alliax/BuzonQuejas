@@ -3,9 +3,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="contenido" runat="server">
     <form id="form" runat="server">
         <link href="css/especiales.css" rel="stylesheet" />
+        <link href="css/altaMensaje.css" rel="stylesheet" />
     <div class="container">
         <div class="row"style="margin-top:21px;">
-            <div class="table-header" runat="server" id="msgId" style="padding-bottom: 27px; text-align: center;">Nuevo Mensaje</div>                                
+            <div class="table-header" runat="server" id="msgId"> 
+                <h4>Folio: <span>Estatus:</span> </h4>
+            </div>                                
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header bg-primary text-white">
@@ -136,7 +139,7 @@
                             <div class="col-md-12 form-row">
                                 <div class="form-group col-md-6 col-xs-6">
                                     <label for="checkAnonimo">Anónimo</label>
-                                    <asp:CheckBox runat="server" ID="chbkAnonimo" />
+                                    <asp:CheckBox AutoPostBack="true" OnCheckedChanged="chbkAnonimo_CheckedChanged" runat="server" ID="chbkAnonimo" />
                                 </div>
                                 <div class="form-group col-md-6 col-xs-6">
                                     <label for="chbkSolAnonimo">Solicitud Anónimo</label>
@@ -347,6 +350,7 @@
                             <div class="form-group form-row col-md-12">
                                 <label class="col-sm-2 col-form-label">Revisor</label>
                                 <div class="form-group col-sm-5">
+                                    <asp:TextBox runat="server"  CssClass="form-control" ID="idRevisor" style="display:none;"/>
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtRevisor" Enabled="false"/>
                                 </div>
                                 <div class="form-group col-sm-5">
@@ -365,6 +369,22 @@
                     </div>
                 </div>
             <!---->
+                 <asp:Panel Visible="false" runat="server" ID="error">
+                    <div runat="server" id="divError" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong runat="server" id="msgError"></strong>.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </asp:Panel>
+                <div class="form-row col-md-12" style="padding-top:15px;">
+                    <div class="form-group col-md-4 offset-md-4 btns">
+                        <asp:Button OnClick="btnGuardar_Click" runat="server" ID="btnGuardar" CssClass="btn btn-primary" Text="Guardar" />
+                    </div>
+                    <div class="form-group col-md-4 btns">
+                        <asp:Button runat="server" ID="btnEnviar" CssClass=" btn btn-danger" Text="Enviar a Investigador" />                        
+                    </div>
+                </div>
             </div>
         </div>
     </form>

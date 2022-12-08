@@ -1,8 +1,4 @@
-﻿.btn {
-    width: 100%;
-    font-size: medium;
-    cursor: default;
-}
+﻿
 
 .btnFile {
     border-radius: 5px;
@@ -10,6 +6,17 @@
     padding: 5px 15px;
 }
 
-.panel-heading p {
-    text-align: center;
+.card-header p {
+    font-size: 18px;
+    font-weight: bold;
+}
+.card-header {
+    background-color: #4E8ABE !important;
+}
+.card{
+    margin-bottom: 10px;
+}
+
+btns input{
+    border-radius: 18px!important;
 }

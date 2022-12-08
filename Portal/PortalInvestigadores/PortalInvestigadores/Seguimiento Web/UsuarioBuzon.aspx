@@ -4,6 +4,21 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="contenido" runat="server">
     <form runat="server" id="form">
         <link href="css/especiales.css" rel="stylesheet" />
+
+        <script>
+
+            var idUsuario = '<%= Session["idUsuario"] %>';
+
+            $(document).ready(function () {
+
+            });
+
+
+
+        </script>
+
+
+
         <div class="container">
             <div class="row" style="margin-top:21px;">
                 <div class="table-header">
@@ -96,6 +111,36 @@
                     <asp:Button runat="server" ID="btnCancel" Text="regresar" CssClass="btn btn-secondary" />
                 </div>
             </div>
+
+            <div runat="server" class="row" id="divRelaciones" style="margin-top:21px;display:none;">
+                <div class="table-header"> Relaciones</div>
+
+
+                <div class="form-group col-md-4" id="divSelDelegados" style="display:none;">
+                        <label for="inputSitio">Selecciona Delegados</label>
+                        <asp:DropDownList ID="ddlDelegados" runat="server" CssClass="form-control" AutoPostBack="false">
+                                        <%--<asp:ListItem Text="Selecciona un Resultado" Value="0" />--%>
+                        </asp:DropDownList>
+
+                        <button id="agregarDelegado" type="button" style="margin-top: 10px;" class="btn btn-primary" onclick="return addDelegado();">Agregar</button>  
+
+                        <div id="tableDelegados" style="display:none;     margin-top: 20px;" class="table-editable">
+                                <table class="table table-bordered table-responsive-md table-striped text-center tblSoporte">  <%--style="width: 50%; margin-left: 24%;"--%>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">Delegados</th>
+                                            <th class="text-left" style="width:85px;">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+
+            </div>
+
+
         </div>
     </form>
 </asp:Content>
