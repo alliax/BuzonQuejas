@@ -29,10 +29,10 @@ namespace Portal_Investigadores
                 string sIdioma = Session["idioma"].ToString();
                 if (sIdioma == "2")
                 {
-                    this.gvTipo.HeaderRow.Cells[1].Text = "Type Id";
-                    this.gvTipo.HeaderRow.Cells[2].Text = "Description";
-                    this.gvTipo.HeaderRow.Cells[3].Text = "Active";
-                    this.gvTipo.HeaderRow.Cells[4].Text = "Active";
+                    this.gvTipo.Columns[0].HeaderText = "Type Id";
+                    this.gvTipo.Columns[1].HeaderText = "Description";
+                    this.gvTipo.Columns[2].HeaderText = "Active";
+
                 }
             }
         }

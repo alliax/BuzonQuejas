@@ -10,29 +10,29 @@ $(document).ready(function () {
             $.ajax({
                 type: "GET",
                 url: "CatalogoTemas.aspx/BQ_Etiquetas",
-                data: $.param({ iId: 5, iIdioma: Idioma }),
+                data: $.param({ iId: 1, iIdioma: Idioma }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (r) {
 
                 Json = createJson(r);
                 for (i = 0; i <= Json.length - 1; i++) {
-                    if (Json[i].Id == 141) { $("#lbl1").html(Json[i].Texto) }
-                    if (Json[i].Id == 142) { $("#lbl2").html(Json[i].Texto) }
-                    if (Json[i].Id == 143) { $("#lbl3").html(Json[i].Texto) }
-                    if (Json[i].Id == 137) { $("#lbl4").html(Json[i].Texto) }
-                    if (Json[i].Id == 140) { $("#lbl5").html(Json[i].Texto) }
-                    if (Json[i].Id == 146) { $("#lbl12").html(Json[i].Texto) }
-                    if (Json[i].Id == 144) { $("#lbl6").html(Json[i].Texto) }
-                    if (Json[i].Id == 143) { $("#lbl7").html(Json[i].Texto) }
-                    if (Json[i].Id == 145) { $("#lbl8").html(Json[i].Texto) }
-                    if (Json[i].Id == 137) { $("#lbl9").html(Json[i].Texto) }
-                    if (Json[i].Id == 140) { $("#lbl10").html(Json[i].Texto) }
-                    if (Json[i].Id == 147) { $("#lbl11").html(Json[i].Texto) }
+                    if (Json[i].Id == 9) { $("#lbl1").html(Json[i].Texto) }
+                    if (Json[i].Id == 23) { $("#lbl2").html(Json[i].Texto) }
+                    if (Json[i].Id == 24) { $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 6) { $("#lbl4").html(Json[i].Texto) }
+                    if (Json[i].Id == 10) { $("#lbl5").html(Json[i].Texto) }
+                    if (Json[i].Id == 27) { $("#lbl12").html(Json[i].Texto) }
+                    if (Json[i].Id == 25) { $("#lbl6").html(Json[i].Texto) }
+                    if (Json[i].Id == 24) { $("#lbl7").html(Json[i].Texto) }
+                    if (Json[i].Id == 26) { $("#lbl8").html(Json[i].Texto) }
+                    if (Json[i].Id == 6) { $("#lbl9").html(Json[i].Texto) }
+                    if (Json[i].Id == 10) { $("#lbl10").html(Json[i].Texto) }
+                    if (Json[i].Id == 28) { $("#lbl11").html(Json[i].Texto) }
                         
-                    if (Json[i].Id == 132) { $("#<%=btnAdd.ClientID%>").val(Json[i].Texto); $("#<%=btnAddSb.ClientID%>").val(Json[i].Texto); }
-                    if (Json[i].Id == 133) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); $("#<%=btnEdiSb.ClientID%>").val(Json[i].Texto); }
-                    if (Json[i].Id == 134) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); $("#<%=btnCanSb.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 1) { $("#<%=btnAdd.ClientID%>").val(Json[i].Texto); $("#<%=btnAddSb.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 2) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); $("#<%=btnEdiSb.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 3) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); $("#<%=btnCanSb.ClientID%>").val(Json[i].Texto); }
      
                     
                 }
@@ -64,7 +64,7 @@ function createJson(strJson) {
                 <div id="lbl1" class="table-header" style="padding-bottom: 27px; text-align: center;">Configuración de catalogo de Temas y Subtemas</div>
                     <div class="col-md-6 col-lg-6">
                         <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header text-white" style="background:#4E8ABE">
                                 <p id="lbl2" style="text-align: center;">Tema</p>
                             </div>
                             <div class="card-body">
@@ -73,11 +73,11 @@ function createJson(strJson) {
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtTema" />
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label id="lbl4">>Descripción</label>
+                                    <label id="lbl4">Descripción</label>
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtDesc" />
                                 </div>
                                 <div  class="col-md-2 form-group">
-                                    <label id="lbl5">>Activo:</label>
+                                    <label id="lbl5">Activo:</label>
                                     <asp:CheckBox runat="server" ID="cbActivo" CssClass="form-control"/>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@ function createJson(strJson) {
                     </div>
                     <div class="col-md-6 col-lg-6">
                          <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header text-white" style="background:#4E8ABE">
                                 <p  id="lbl12" style="text-align: center;">Lista de Temas</p>
                             </div>
                             <div class="card-body">
@@ -126,7 +126,7 @@ function createJson(strJson) {
                      </div>
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header bg-primary text-white">
+                        <div class="card-header  text-white" style="background:#4E8ABE">
                             <p id="lbl6" style="text-align:center;">Subtema</p>
                         </div>
                         <div class="card-body">
@@ -173,7 +173,7 @@ function createJson(strJson) {
                 </div>
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header bg-primary text-white">
+                        <div class="card-header  text-white" style="background:#4E8ABE">
                             <p id="lbl11" style="text-align: center;">Lista de Subtemas</p>
                         </div>
                         <div class="card-body">

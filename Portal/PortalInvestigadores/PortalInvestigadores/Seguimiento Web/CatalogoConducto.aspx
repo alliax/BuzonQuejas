@@ -11,28 +11,28 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: "CatalogoImportancia.aspx/BQ_Etiquetas",
-            data: $.param({ iId: 5, iIdioma: Idioma }),
+            data: $.param({ iId: 1, iIdioma: Idioma }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (r) {
 
                 Json = createJson(r);
                 for (i = 0; i <= Json.length - 1; i++) {
-                    if (Json[i].Id == 177) { $("#lbl1").html(Json[i].Texto) }
-                    if (Json[i].Id == 178) { $("#lbl2").html(Json[i].Texto); $("#lbl3").html(Json[i].Texto) }
-                    if (Json[i].Id == 179) { $("#lbl3").html(Json[i].Texto) }
-                    if (Json[i].Id == 137) { $("#lbl4").html(Json[i].Texto); $("#lbl11").html(Json[i].Texto); }
-                    if (Json[i].Id == 140) { $("#lbl5").html(Json[i].Texto) }
-                    if (Json[i].Id == 182) { $("#lbl6").html(Json[i].Texto) }
-                    if (Json[i].Id == 181) { $("#lbl7").html(Json[i].Texto) }
-                    if (Json[i].Id == 179) { $("#lbl8").html(Json[i].Texto) }
-                    if (Json[i].Id == 180) { $("#lbl9").html(Json[i].Texto) }
-                    if (Json[i].Id == 176) { $("#lbl10").html(Json[i].Texto) }
-                    if (Json[i].Id == 183) { $("#lbl12").html(Json[i].Texto) }
+                    if (Json[i].Id == 43) { $("#lbl1").html(Json[i].Texto) }
+                    if (Json[i].Id == 44) { $("#lbl2").html(Json[i].Texto); $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 45) { $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 6) { $("#lbl4").html(Json[i].Texto); $("#lbl11").html(Json[i].Texto); }
+                    if (Json[i].Id == 10) { $("#lbl5").html(Json[i].Texto) }
+                    if (Json[i].Id == 48) { $("#lbl6").html(Json[i].Texto) }
+                    if (Json[i].Id == 47) { $("#lbl7").html(Json[i].Texto) }
+                    if (Json[i].Id == 45) { $("#lbl8").html(Json[i].Texto) }
+                    if (Json[i].Id == 46) { $("#lbl9").html(Json[i].Texto) }
+                    if (Json[i].Id == 53) { $("#lbl10").html(Json[i].Texto) }
+                    if (Json[i].Id == 49) { $("#lbl12").html(Json[i].Texto) }
 
-                    if (Json[i].Id == 132) { $("#<%=btnAdd.ClientID%>").val(Json[i].Texto); $("#<%=btnAddForma.ClientID%>").val(Json[i].Texto); }
-                    if (Json[i].Id == 133) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); $("#<%=btnEditForma.ClientID%>").val(Json[i].Texto); }
-                    if (Json[i].Id == 134) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); $("#<%=btnCancelForma.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 1) { $("#<%=btnAdd.ClientID%>").val(Json[i].Texto); $("#<%=btnAddForma.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 2) { $("#<%=btnEdit.ClientID%>").val(Json[i].Texto); $("#<%=btnEditForma.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 3) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); $("#<%=btnCancelForma.ClientID%>").val(Json[i].Texto); }
 
                  }
 
@@ -64,7 +64,7 @@ function createJson(strJson) {
             <div id="lbl1" class="table-header" style="padding-bottom: 27px; text-align: center;">Catalogo de conductos y casos</div>
             <div class="col-md-6 col-xs-12">
                 <div class="card">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header  text-white" style="background:#4E8ABE">
                         <p id="lbl2" style="text-align: center;">Agregar Conducto</p>
                     </div>
                     <div class="card-body">
@@ -99,7 +99,7 @@ function createJson(strJson) {
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="card">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header  text-white" style="background:#4E8ABE">
                         <p id="lbl6" style="text-align: center;">Lista de conducto</p>
                     </div>
                     <div class="card-body">
@@ -117,7 +117,7 @@ function createJson(strJson) {
             </div>             
             <div class="col-md-6 col-xs-12" >
                 <div class="card">
-                    <div class="card-header bg-primary text-white">
+                    <div class="card-header  text-white" style="background:#4E8ABE">
                         <p id="lbl7" style="text-align:center;">Agregar Forma</p>
                     </div>
                     <div class="card-body">
@@ -164,7 +164,7 @@ function createJson(strJson) {
             </div>
              <div class="col-md-6 col-xs-12">
                  <div class="card">
-                     <div class="card-header bg-primary text-white">
+                     <div class="card-header  text-white" style="background:#4E8ABE">
                         <p id="lbl12" style="text-align:center;">Formas</p>
                     </div>
                      <div class="card-body">

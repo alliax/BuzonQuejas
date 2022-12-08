@@ -24,20 +24,20 @@ namespace Portal_Investigadores
             divActive.Visible = false;
             if (!Page.IsPostBack)
             {
-                bindGridImportancia();
-                bindUsuariosEscalacion();
                 string sIdioma = Session["idioma"].ToString();
                 if (sIdioma == "2")
                 {
-                    this.importanciaGV.HeaderRow.Cells[1].Text = "Importance";
-                    this.importanciaGV.HeaderRow.Cells[2].Text = "Description";
-                    this.importanciaGV.HeaderRow.Cells[3].Text = "Atention Reminder";
-                    this.importanciaGV.HeaderRow.Cells[4].Text = "Atention Scale Reminder";
-                    this.importanciaGV.HeaderRow.Cells[5].Text = "Owner Reminder";
-                    this.importanciaGV.HeaderRow.Cells[6].Text = "Scalar Reminder";
-                    this.importanciaGV.HeaderRow.Cells[7].Text = "Scale User";
-                    this.importanciaGV.HeaderRow.Cells[8].Text = "Active";
+                    this.importanciaGV.Columns[0].HeaderText = "Importance";
+                    this.importanciaGV.Columns[1].HeaderText = "Description";
+                    this.importanciaGV.Columns[2].HeaderText = "Atention Reminder";
+                    this.importanciaGV.Columns[3].HeaderText = "Atention Scale Reminder";
+                    this.importanciaGV.Columns[4].HeaderText = "Owner Reminder";
+                    this.importanciaGV.Columns[5].HeaderText = "Scalar Reminder";
+                    this.importanciaGV.Columns[6].HeaderText = "Scale User";
+                    this.importanciaGV.Columns[7].HeaderText = "Active";
                 }
+                bindGridImportancia();
+                bindUsuariosEscalacion();
             }
         }
 

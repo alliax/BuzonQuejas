@@ -10,7 +10,7 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: "CatalogoBuzones.aspx/BQ_Etiquetas",
-            data: $.param({ iId: 5, iIdioma: Idioma }),
+            data: $.param({ iId: 1, iIdioma: Idioma }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (r) {
@@ -58,7 +58,7 @@ function createJson(strJson) {
                 <div id="lbl1"  class="table-header" style="padding-bottom: 27px; text-align: center;">Catalogo de buzones</div>           
                     <div class="col-md-6">
                         <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header  text-white" style="background:#4E8ABE">
                                 <p id="lbl2"  style="text-align: center;">Agregar Buzón</p>
                             </div>
                             <div class="card-body">
@@ -110,7 +110,7 @@ function createJson(strJson) {
                     </div>                     
                     <div class="col-md-6">
                         <div class="card">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header text-white" style="background:#4E8ABE">
                                 <p id="lbl8"  style="text-align: center;">Lista de buzones</p>
                                 <asp:Label runat="server" ID="lbl" />
                             </div>

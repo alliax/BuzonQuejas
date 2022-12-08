@@ -1,6 +1,94 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="AltaMensaje.aspx.cs" Inherits="Portal_Investigadores.AltaMensaje" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="contenido" runat="server">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+
+  var Idioma = '<%=HttpContext.Current.Session["idioma"]%>'
+            $.ajax({
+                type: "GET",
+                url: "AltaMensaje.aspx/BQ_Etiquetas",
+                data: $.param({ iId: 2, iIdioma: Idioma }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+
+                Json = createJson(r);
+                for (i = 0; i <= Json.length - 1; i++) {
+                    if (Json[i].Id == 1) { $("#lbl1").html(Json[i].Texto) }
+                    if (Json[i].Id == 2) { $("#lbl2").html(Json[i].Texto) }
+                    if (Json[i].Id == 3) { $("#lbl3").html(Json[i].Texto); $("#lbl8").html(Json[i].Texto) }
+                    if (Json[i].Id == 4) { $("#lbl4").html(Json[i].Texto) }
+                    if (Json[i].Id == 5) { $("#lbl5").html(Json[i].Texto) }
+                    if (Json[i].Id == 6) { $("#lbl6").html(Json[i].Texto) }
+                    if (Json[i].Id == 7) { $("#lbl7").html(Json[i].Texto) }
+                    if (Json[i].Id == 8) { $("#lbl9").html(Json[i].Texto) }
+                    if (Json[i].Id == 9) { $("#lbl10").html(Json[i].Texto) }
+                    if (Json[i].Id == 10) { $("#lbl11").html(Json[i].Texto) }
+                    if (Json[i].Id == 11) { $("#lbl12").html(Json[i].Texto) }
+                    if (Json[i].Id == 12) { $("#lbl13").html(Json[i].Texto) }
+                    if (Json[i].Id == 13) { $("#lbl14").html(Json[i].Texto) }
+                    if (Json[i].Id == 14) { $("#lbl15").html(Json[i].Texto) }
+                    if (Json[i].Id == 15) { $("#lbl16").html(Json[i].Texto) }
+                    if (Json[i].Id == 18) { $("#lbl17").html(Json[i].Texto) }
+                    if (Json[i].Id == 16) { $("#lbl18").html(Json[i].Texto) }
+                    if (Json[i].Id == 17) { $("#lbl19").html(Json[i].Texto) }  
+                    if (Json[i].Id == 18) { $("#lbl20").html(Json[i].Texto) }
+                    if (Json[i].Id == 20) { $("#lbl21").html(Json[i].Texto) }
+                    if (Json[i].Id == 21) { $("#lbl22").html(Json[i].Texto) }
+                    if (Json[i].Id == 22) { $("#lbl23").html(Json[i].Texto) }
+                    if (Json[i].Id == 23) { $("#lbl24").html(Json[i].Texto) }
+                    if (Json[i].Id == 24) { $("#lbl25").html(Json[i].Texto) }
+                    if (Json[i].Id == 25) { $("#lbl26").html(Json[i].Texto) }
+                    if (Json[i].Id == 26) { $("#lbl27").html(Json[i].Texto) }
+                    if (Json[i].Id == 27) { $("#lbl28").html(Json[i].Texto) }
+                    if (Json[i].Id == 28) { $("#lbl29").html(Json[i].Texto) }
+                    if (Json[i].Id == 29) { $("#lbl30").html(Json[i].Texto) }
+                    if (Json[i].Id == 30) { $("#lbl31").html(Json[i].Texto) }
+                    if (Json[i].Id == 31) { $("#lbl32").html(Json[i].Texto) }
+                    if (Json[i].Id == 32) { $("#lbl33").html(Json[i].Texto) }
+                    if (Json[i].Id == 33) { $("#lbl34").html(Json[i].Texto) }
+                    if (Json[i].Id == 34) { $("#lbl35").html(Json[i].Texto) }
+                    if (Json[i].Id == 35) { $("#lbl36").html(Json[i].Texto) }
+                    if (Json[i].Id == 35) { $("#lbl36").html(Json[i].Texto) }
+                    if (Json[i].Id == 36) { $("#<%=invNombre.ClientID%>").attr("placeholder", Json[i].Texto); }
+                    if (Json[i].Id == 37) { $("#<%=invApellido.ClientID%>").attr("placeholder", Json[i].Texto); }
+                    if (Json[i].Id == 38) { $("#<%=invPuesto.ClientID%>").attr("placeholder", Json[i].Texto); }
+                    if (Json[i].Id == 39) { $("#<%=btnAddInv.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 40) { $("#lbl37").html(Json[i].Texto) }
+                    if (Json[i].Id == 41) { $("#lbl38").html(Json[i].Texto) }
+                    if (Json[i].Id == 42) { $("#<%=btnMensajesInt.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 43) { $("#lbl39").html(Json[i].Texto) }
+                    if (Json[i].Id == 44) { $("#lbl40").html(Json[i].Texto) }
+                    if (Json[i].Id == 45) { $("#lbl41").html(Json[i].Texto) }
+                    if (Json[i].Id == 46) { $("#lbl42").html(Json[i].Texto) }
+                    if (Json[i].Id == 45) { $("#lbl43").html(Json[i].Texto) }
+                    if (Json[i].Id == 47) { $("#lbl44").html(Json[i].Texto) }
+                    if (Json[i].Id == 48) { $("#lbl45").html(Json[i].Texto) }
+                    if (Json[i].Id == 49) { $("#lbl46").html(Json[i].Texto) }
+                }
+
+                },
+                error: function (r) {
+                    alert(r.d);
+                }
+            });
+
+ }); // Document Ready
+           
+function createJson(strJson) {
+        var strJson = JSON.stringify(strJson);
+        var iJsonLenght = strJson.length
+        strJson = strJson.substr(5, iJsonLenght);
+        strJson = strJson.slice(0, -1)
+        var Json = JSON.parse(strJson);
+        Json = JSON.parse(Json);
+
+        return Json;
+}
+</script>
     <form id="form" runat="server">
         <link href="css/especiales.css" rel="stylesheet" />
         <link href="css/altaMensaje.css" rel="stylesheet" />
@@ -14,23 +102,23 @@
                         <div class="card-header bg-primary text-white">
                             <p>
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                Información General
+                                <label id ="lbl2">Información General</label>
                             </p>
                         </div>
                         <div class="card-body">
                             <div class="form-group col-md-12">
-                                <label for="inputTitulo">Título</label>
+                                <label id ="lbl3" for="inputTitulo">Título</label>
                                 <asp:TextBox runat="server" CssClass="form-control" ID="txtTitulo"/>
                             </div>
                             <div class="col-md-12 form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputClasificacion">Clasificación</label>
+                                    <label for="inputClasificacion" id ="lbl4">Clasificación</label>
                                     <asp:DropDownList runat="server" CssClass="form-control" ID="ddlClasificacion">
                                         <asp:ListItem Selected="True" Value="White"> White </asp:ListItem>
                                     </asp:DropDownList>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputResponsable">Responsable</label>
+                                    <label for="inputResponsable" id ="lbl5">Responsable</label>
                                     <asp:DropDownList runat="server" CssClass="form-control" ID="ddlResponsable">
                                         <asp:ListItem Selected="True" Value="White"> White </asp:ListItem>
                                     </asp:DropDownList>
@@ -44,20 +132,20 @@
                         <div class="card-header bg-primary text-white">
                             <p>
                                 <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                                Fechas
+                                <label id="lbl6" >Fechas</label>
                             </p>
                         </div>
                         <div class="card-body">
                             <div class="form-group col-md-12">
-                                <label for="fechaRegistro">Registro</label>
+                                <label id="lbl7" for="fechaRegistro">Registro</label>
                                 <asp:TextBox Width="100%" runat="server" CssClass="form-control" ID="fechaRegistro" Enabled="false" TextMode="DateTime"/>
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="fechaClasificacion">Clasificación</label>
+                                <label id="lbl8" for="fechaClasificacion">Clasificación</label>
                                 <asp:TextBox Width="100%" runat="server" CssClass="form-control" ID="fechaClasificacion" Enabled="false" TextMode="DateTime" />
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="ultimaAct">Última Actualización</label>
+                                <label id="lbl9" for="ultimaAct">Última Actualización</label>
                                 <asp:TextBox Width="100%" runat="server" CssClass="form-control" ID="ultimaActualizacion" Enabled="false" TextMode="DateTime"/>
                             </div>
                         </div>
@@ -69,28 +157,28 @@
                         <div class="card-header bg-primary text-white">
                             <p>
                                 <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-                                Ubicación
+                                <label id="lbl10">Ubicación</label>
                             </p>
                         </div>
                         <div class="card-body">
                             <div class="form-group col-md-12">
-                                <label for="selGrupo">Grupo</label>
+                                <label id="lbl11" for="selGrupo">Grupo</label>
                                 <asp:DropDownList Enabled="false" runat="server" CssClass="form-control" ID="ddlGrupo" />                                                                    
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="selEmpresa">Empresa</label>
+                                <label id="lbl12" for="selEmpresa">Empresa</label>
                                 <asp:DropDownList Enabled="false" runat="server" CssClass="form-control" ID="ddlEmpresa" />                                                                    
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="selSitio">Sitio</label>
+                                <label id="lbl13" for="selSitio">Sitio</label>
                                 <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSitio">
                                     <asp:ListItem Selected="True">Sitio</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
                              <div class="form-group col-md-12">
-                                <label for="selDepartamento">Departamento</label>
+                                <label id="lbl14" for="selDepartamento">Departamento</label>
                                 <asp:DropDownList runat="server" CssClass="form-control" ID="ddlDepartamento">
-                                    <asp:ListItem Selected="True">Departamento</asp:ListItem>
+                                    <asp:ListItem  Selected="True" >Departamento</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -102,37 +190,37 @@
                         <div class="card-header bg-primary text-white">
                             <p>
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                Denunciante
+                                <label id="lbl15">Denunciante</label>
                             </p>
                         </div>
                         <div class="card-body">
                             <div class="col-md-12 form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputNombre">Nombre</label>
+                                    <label id="lbl16" for="inputNombre">Nombre</label>
                                     <asp:TextBox runat="server"  CssClass="form-control" ID="txtNombre" />
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputGrupo">Correo</label>
+                                    <label id="lbl17" for="inputGrupo">Correo</label>
                                     <asp:TextBox runat="server"  CssClass="form-control" ID="txtCorreo" placeholder="info@example.com"/>
                                 </div>
                             </div>
                             <div class="col-md-12 form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputGrupo">Apellido Paterno</label>
+                                    <label id="lbl18" for="inputGrupo">Apellido Paterno</label>
                                     <asp:TextBox runat="server"  CssClass="form-control" ID="txtPaterno" />
                                 </div>
                                     <div class="form-group col-md-6">
-                                    <label for="inputGrupo">Apellido Materno</label>
+                                    <label id="lbl19" for="inputGrupo">Apellido Materno</label>
                                     <asp:TextBox runat="server"  CssClass="form-control" ID="txtMaterno" />
                                 </div>
                             </div>
                             <div class="col-md-12 form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputTelefono">Teléfono</label>
+                                    <label id="lbl20" for="inputTelefono">Teléfono</label>
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtTelefono" />
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputTipo">Tipo</label>
+                                    <label id="lbl21" for="inputTipo">Tipo</label>
                                     <asp:DropDownList runat="server" CssClass="form-control" ID="ddlTipo" />                                                                    
                                 </div>
                             </div>
@@ -142,7 +230,7 @@
                                     <asp:CheckBox AutoPostBack="true" OnCheckedChanged="chbkAnonimo_CheckedChanged" runat="server" ID="chbkAnonimo" />
                                 </div>
                                 <div class="form-group col-md-6 col-xs-6">
-                                    <label for="chbkSolAnonimo">Solicitud Anónimo</label>
+                                    <label id="lbl23" for="chbkSolAnonimo">Solicitud Anónimo</label>
                                     <asp:CheckBox runat="server" ID="chbkSolAnonimo" />
                                 </div>
                             </div>
@@ -155,20 +243,20 @@
                         <div class="card-header bg-primary text-white">
                             <p>
                                 <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
-                                Mensaje
+                                <label id="lbl24">Mensaje</label>
                             </p>
                         </div>
                         <div class="card-body">
                             <div class="form-group col-md-12">
-                                <label for="selImportancia">Importancia</label>
+                                <label id="lbl25" for="selImportancia">Importancia</label>
                                 <asp:DropDownList runat="server" CssClass="form-control" ID="ddlImportancia" />                                                                    
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="selConducto">Conducto</label>
+                                <label id="lbl26" for="selConducto">Conducto</label>
                                 <asp:DropDownList OnSelectedIndexChanged="ddlConducto_SelectedIndexChanged" AutoPostBack="true" runat="server" CssClass="form-control" ID="ddlConducto" />                                                                    
                             </div>                            
                             <div class="form-group col-md-12">
-                                <label for="selForma">Forma</label>
+                                <label id="lbl27" for="selForma">Forma</label>
                                 <asp:DropDownList runat="server" CssClass="form-control" ID="ddlForma" />
                             </div>
                         </div>
@@ -180,20 +268,20 @@
                         <div class="card-header bg-primary text-white">
                             <p>
                                 <span class="glyphicon glyphicon-text-color" aria-hidden="true"></span>
-                                Mensaje
+                                <label id="lbl28">Mensaje</label>
                             </p>
                         </div>
                         <div class="card-body">
                             <div class="form-group col-md-12">
-                                <label>Nuevo: Visible para auditoría</label>
+                                <label id="lbl29">Nuevo: Visible para auditoría</label>
                                 <asp:TextBox runat="server" CssClass="form-control" ID="txtMensaje2"/>
                             </div>
                             <div class="form-group col-md-12">
-                                <label>Detalle </label>
+                                <label id="lbl30">Detalle </label>
                                 <asp:TextBox runat="server" CssClass="form-control" ID="txtDetalle" />
                             </div>
                             <div class="form-group col-md-12">
-                                <label>Resumen</label>
+                                <label id="lbl31">Resumen</label>
                                 <asp:TextBox runat="server" CssClass="form-control" ID="txtResumen" />
                             </div>
                         </div>
@@ -205,21 +293,21 @@
                         <div class="card-header bg-primary text-white">
                             <p>
                                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                                Tema y Subtema
+                                <label id="lbl32">Tema y Subtema</label>
                             </p>
                         </div>
                         <div class="card-body">
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <label for="selTema">Tema</label>
+                                    <label id="lbl33" for="selTema">Tema</label>
                                     <asp:DropDownList OnSelectedIndexChanged="ddlTema_SelectedIndexChanged" AutoPostBack="true" runat="server" CssClass="form-control" ID="ddlTema" />                                
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="selSubtema">Subtema</label>
+                                    <label id="lbl34" for="selSubtema">Subtema</label>
                                     <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSubtema" />                                
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Documentos</label>
+                                    <label id="lbl35">Documentos</label>
                                     <button type="button" class="btnFile btn-primary">
                                         <span class="glyphicon glyphicon-file" aria-hidden="true">Subir documentos</span>
                                     </button>
@@ -234,7 +322,7 @@
                         <div class="card-header bg-primary text-white">
                             <p>
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                Involucrados
+                                <label id="lbl36">Involucrados</label>
                             </p>
                         </div>
                         <div class="card-body">
@@ -251,17 +339,19 @@
                                 <asp:DropDownList runat="server" CssClass="form-control" ID="ddlPosicion" />                                
                             </div>
                             <div class="form-group col-md-4">
-                                <asp:Button runat="server" CssClass="btn btn-primary" ID="btnAddInv" Text="Guardar" />
+                                <asp:Button runat="server" CssClass="btn btn-primary" ID="btnAddInv" Text="Guardar" OnClick="addInvolucrados" />
                             </div>    
                             <div class="col-md-12" id="divInvolucrados">
-                                <asp:GridView ID="gvResponsables" runat="server" OnRowDataBound="gvResponsables_RowDataBound" CssClass="strip table table-hover table-dashboard">
-                                    <Columns>
-                                        
-                                        <asp:HyperLinkField Text ="Editar"
-                                            DataNavigateUrlFields="idusuario"
-                                            DataNavigateUrlFormatString="Responsable.aspx?id={0}"  ControlStyle-CssClass ="btn-detail"  />
+                                <div style="overflow-y:scroll; height:150px">
+                                <asp:GridView ID="gvInv" CssClass="table table-hover" RowStyle-CssClass="tdtable" HeaderStyle-CssClass="thead-light" runat="server"  AutoGenerateColumns="false">
+                                    <Columns>  
+                                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" /> 
+                                        <asp:BoundField DataField="Apellido" HeaderText="Apellido"  /> 
+                                        <asp:BoundField DataField="Puesto" HeaderText="Puesto"  /> 
+                                        <asp:BoundField DataField="Posicion" HeaderText="Posicion"  /> 
                                     </Columns>
                                 </asp:GridView>
+                                 </div>
                             </div>
                         </div>                
                     </div>
@@ -272,7 +362,7 @@
                         <div class="card-header bg-primary text-white">
                             <p>
                                 <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
-                                Asociar
+                                <label id="lbl37">Asociar</label>
                             </p>
                         </div>
                     </div>
@@ -282,18 +372,24 @@
                     <div class="card">
                         <div class="card-header bg-primary text-white">
                             <p> 
-                                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-                                Comentarios Internos
+                               <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                                <label id="lbl38">Comentarios Internos</label>
                             </p>
                         </div>
                         <div class="card-body">
-                            <h1>Mensajes Usuarios y Sistema</h1>
+                            <div style="overflow-y:scroll; height:150px">
+                                <asp:GridView CssClass="table table-hover" RowStyle-CssClass="tdtable" HeaderStyle-CssClass="thead-light" runat="server" ID="gvCom" AutoGenerateColumns="false">
+                                    <Columns>
+                                        <asp:BoundField DataField="Comentario" /> 
+                                    </Columns>                          
+                                 </asp:GridView>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <div class="input-group">
                                 <asp:TextBox runat="server" CssClass="form-control" ID="txtMsg" max-length="400" placeholder="Escribe tu mensaje.."/>
                                 <span class="input-group-btn">
-                                    <asp:TextBox runat="server" onclick="addMessage()" Text="Enviar" CssClass="form-control btn btn-warning" type="submit"/>
+                                    <asp:Button Id="btnMensajesInt" runat="server" CssClass="form-control btn btn-warning" Text="Agregar" OnClick="addMensajesInt" ></asp:Button>
                                 </span>                                    
                             </div>
                         </div>
@@ -305,12 +401,12 @@
                         <div class="card-header bg-primary text-white">
                             <p>
                                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                                Asignación de Responsable y Area
+                                <label id="lbl39">Asignación de Responsable y Area</label>
                             </p>
                         </div>
                         <div class="card-body">
                             <div class="form-group col-md-12">
-                                <label>Área Asignada</label>
+                                <label id="lbl40">Área Asignada</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon" aria-hidden="true" style="max-width: 100%;">
@@ -321,11 +417,11 @@
                                 </div>
                             </div>
                             <div class="form-row" style="padding-bottom: 10px;">
-                                <p>Responsable</p>
+                                <p id="lbl41">Responsable</p>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-row form-group">
-                                    <label class="col-sm-4 ">Grupo</label>
+                                    <label class="col-sm-4 " id="lbl42">Grupo</label>
                                     <div class="col-sm-8">
                                         <asp:DropDownList Enabled="false" runat="server" CssClass="form-control" ID="ddlGrupo2" />                                        
                                     </div>
@@ -333,7 +429,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-row form-group">
-                                    <label class="col-sm-4">Responsable</label>
+                                    <label id="lbl43" class="col-sm-4">Responsable</label>
                                     <div class="col-sm-8">
                                         <asp:DropDownList OnSelectedIndexChanged="ddlResponsable2_SelectedIndexChanged" AutoPostBack="true" runat="server" CssClass="form-control form-control-sm" ID="ddlResponsable2" />                                            
                                     </div>
@@ -348,7 +444,7 @@
                                 </div>
                             </div>                            
                             <div class="form-group form-row col-md-12">
-                                <label class="col-sm-2 col-form-label">Revisor</label>
+                                <label id="lbl44" class="col-sm-2 col-form-label">Revisor</label>
                                 <div class="form-group col-sm-5">
                                     <asp:TextBox runat="server"  CssClass="form-control" ID="idRevisor" style="display:none;"/>
                                     <asp:TextBox runat="server" CssClass="form-control" ID="txtRevisor" Enabled="false"/>
@@ -359,10 +455,10 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <asp:CheckBox runat="server" ID="revisorInc" />
-                                <label for="chbkRevisor">Deseas incluir al revisor?</label>
+                                <label id="lbl45" for="chbkRevisor">Deseas incluir al revisor?</label>
                             </div>
                             <div class="col-md-12">
-                                <label>Enterados</label>
+                                <label id="lbl46">Enterados</label>
                                 <asp:TextBox runat="server" ID="enterados" Width="100%" TextMode="MultiLine" Wrap="true" CssClass="form-control" />
                             </div>
                         </div>

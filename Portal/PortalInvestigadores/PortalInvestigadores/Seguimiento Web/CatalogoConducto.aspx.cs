@@ -28,14 +28,19 @@ namespace Portal_Investigadores
             divActive.Visible = false;
             if (!Page.IsPostBack)
             {
-                bindGridConducto();
                 string sIdioma = Session["idioma"].ToString();
                 if (sIdioma == "2")
                 {
-                    this.conductoGV.HeaderRow.Cells[1].Text = "Conducto";
-                    this.conductoGV.HeaderRow.Cells[2].Text = "Description";
-                    this.conductoGV.HeaderRow.Cells[3].Text = "Active";
+                    this.conductoGV.Columns[0].HeaderText = "Conduit";
+                    this.conductoGV.Columns[1].HeaderText = "Description";
+                    this.conductoGV.Columns[2].HeaderText = "Active";
+                    this.formaGV.Columns[0].HeaderText = "Form";
+                    this.formaGV.Columns[1].HeaderText = "Description";
+                    this.formaGV.Columns[2].HeaderText = "Active";
+
                 }
+                bindGridConducto();
+
             }
         }
 
@@ -48,18 +53,13 @@ namespace Portal_Investigadores
         }
         protected void bindGridFormasByConducto(int idConducto, int idBQ)
         {
+
             DataTable formas = DBHelper.getFormasBQ(idConducto, idBQ);
             ViewState["formas"] = formas;
             formaGV.DataSource = formas;
             formaGV.DataBind();
 
-            string sIdioma = Session["idioma"].ToString();
-            if (sIdioma == "2")
-            {
-                this.formaGV.HeaderRow.Cells[1].Text = "Form";
-                this.formaGV.HeaderRow.Cells[2].Text = "Description";
-                this.formaGV.HeaderRow.Cells[3].Text = "Active";
-            }
+
         }
 
         protected void agregarConducto(object sender, EventArgs e)
