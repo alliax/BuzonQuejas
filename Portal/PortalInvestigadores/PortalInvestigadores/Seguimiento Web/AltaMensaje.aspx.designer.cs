@@ -24,6 +24,33 @@ namespace Portal_Investigadores
         protected global::System.Web.UI.HtmlControls.HtmlForm form;
 
         /// <summary>
+        /// msgId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl msgId;
+
+        /// <summary>
+        /// folio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl folio;
+
+        /// <summary>
+        /// estatusFolio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl estatusFolio;
+
+        /// <summary>
         /// txtTitulo control.
         /// </summary>
         /// <remarks>
@@ -312,6 +339,33 @@ namespace Portal_Investigadores
         protected global::System.Web.UI.WebControls.GridView gvInv;
 
         /// <summary>
+        /// asociadosDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList asociadosDDL;
+
+        /// <summary>
+        /// desasociar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button desasociar;
+
+        /// <summary>
+        /// asociadasGV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView asociadasGV;
+
+        /// <summary>
         /// gvCom control.
         /// </summary>
         /// <remarks>
@@ -463,5 +517,23 @@ namespace Portal_Investigadores
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEnviar;
+
+        /// <summary>
+        /// btnCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancel;
+
+        /// <summary>
+        /// btnAceptar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAceptar;
     }
 }

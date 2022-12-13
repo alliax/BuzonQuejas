@@ -3807,6 +3807,7 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@P_Nombre", SqlDbType.VarChar).Value = "";
                         cmd.Parameters.Add("@P_Apellido", SqlDbType.VarChar).Value = "";
                         cmd.Parameters.Add("@P_Puesto", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Posicion", SqlDbType.VarChar).Value = "";
                         cmd.Parameters.Add("@P_Usr", SqlDbType.VarChar).Value = "";
                         con.Open();
 
@@ -4470,7 +4471,6 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@revisorActivo", SqlDbType.Bit).Value = revisorActivo;
                         cmd.Parameters.Add("@enterados", SqlDbType.VarChar).Value = enterados;
 
-
                         con.Open();
                         int id = int.Parse(cmd.ExecuteScalar().ToString());
                         return id;
@@ -4481,6 +4481,141 @@ namespace Portal_Investigadores.clases
             catch
             {
                 return 0;
+                throw;
+            }
+        }
+        public string updateMensaje(int idMensaje, int idAsociada, int idBQ, string titulo, string importancia, string conducto, string forma, string clasificacion
+            , string descripcion, string nombre, string apellidoP, string apellidoM, string telefono, string correo,
+            bool anonimo, string usuarioResp, string usuario, string sitio, int tema, int subtema, int idDep,
+            string areaAsig, string mensaje, string resumen, string tipo, int responsable, int revisor, bool revisorActivo,
+            string enterados)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_UpdateMensaje", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        
+                        cmd.Parameters.Add("@idMensaje", SqlDbType.Int).Value = idMensaje;
+                        //cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+                        cmd.Parameters.Add("@titulo", SqlDbType.VarChar).Value = titulo;
+                        cmd.Parameters.Add("@importancia", SqlDbType.VarChar).Value = importancia;
+                        cmd.Parameters.Add("@conducto", SqlDbType.VarChar).Value = conducto;
+                        cmd.Parameters.Add("@forma", SqlDbType.VarChar).Value = forma;
+                        cmd.Parameters.Add("@clasificacion", SqlDbType.VarChar).Value = clasificacion;
+                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = descripcion;
+                        cmd.Parameters.Add("@nombre", SqlDbType.VarChar).Value = nombre;
+                        cmd.Parameters.Add("@apellidoP", SqlDbType.VarChar).Value = apellidoP;
+                        cmd.Parameters.Add("@apellidoM", SqlDbType.VarChar).Value = apellidoM;
+                        cmd.Parameters.Add("@telefono", SqlDbType.VarChar).Value = telefono;
+                        cmd.Parameters.Add("@correo", SqlDbType.VarChar).Value = correo;
+                        cmd.Parameters.Add("@anonimo", SqlDbType.Bit).Value = anonimo;
+                        cmd.Parameters.Add("@usuarioResponsable", SqlDbType.VarChar).Value = usuarioResp;
+                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = usuario;
+                        cmd.Parameters.Add("@sitio", SqlDbType.VarChar).Value = sitio;
+                        cmd.Parameters.Add("@tema", SqlDbType.Int).Value = tema;
+                        cmd.Parameters.Add("@subtema", SqlDbType.Int).Value = subtema;
+                        cmd.Parameters.Add("@idDepartamento", SqlDbType.Int).Value = idDep;
+                        cmd.Parameters.Add("@areaAsig", SqlDbType.VarChar).Value = areaAsig;
+                        cmd.Parameters.Add("@mensaje", SqlDbType.VarChar).Value = mensaje;
+                        cmd.Parameters.Add("@resumen", SqlDbType.VarChar).Value = resumen;
+                        cmd.Parameters.Add("@tipo", SqlDbType.VarChar).Value = tipo;
+                        cmd.Parameters.Add("@responsable", SqlDbType.Int).Value = responsable;
+                        cmd.Parameters.Add("@revisor", SqlDbType.Int).Value = revisor;
+                        cmd.Parameters.Add("@revisorActivo", SqlDbType.Bit).Value = revisorActivo;
+                        cmd.Parameters.Add("@enterados", SqlDbType.VarChar).Value = enterados;
+                        cmd.Parameters.Add("@idAsociada", SqlDbType.Int).Value = idAsociada;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+                        return "OK";
+                    }
+                }
+                
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string enviarVoboMensaje(int idMensaje, string user, string ip)  //Rodolfo Godina
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_enviarVobo", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idMensaje", SqlDbType.Int).Value = idMensaje;
+                        cmd.Parameters.Add("@p_ip", SqlDbType.VarChar).Value = ip;
+                        cmd.Parameters.Add("@userName", SqlDbType.VarChar).Value = user;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+                        return "OK";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string aceptarVoboMensaje(int idMensaje, string user, string ip)  //Rodolfo Godina
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_AceptarVobo", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idMensaje", SqlDbType.Int).Value = idMensaje;
+                        cmd.Parameters.Add("@p_ip", SqlDbType.VarChar).Value = ip;
+                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = user;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+                        return "OK";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string savecomentariosIniciales(int idMensaje, string user, string ip)  //Rodolfo Godina
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_CrearComentariosIni", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idMensaje", SqlDbType.Int).Value = idMensaje;
+                        cmd.Parameters.Add("@User",SqlDbType.VarChar).Value = user;
+                        cmd.Parameters.Add("@p_Ip", SqlDbType.VarChar).Value = ip;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+                        return "OK";
+                    }
+                }
+            }
+            catch
+            {
                 throw;
             }
         }
@@ -4601,6 +4736,62 @@ namespace Portal_Investigadores.clases
                     DataTable dt = new DataTable();
                     sda.Fill(dt);
                     return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getQuejasAsociadasMensaje(string sitio, int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_BQ_GetQuejasAsociadas", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@Sitio", SqlDbType.VarChar).Value = sitio;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+                        
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getMensaje(int idMensaje) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_getMensaje", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@idMensaje", SqlDbType.VarChar).Value = idMensaje;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
                 }
             }
             catch

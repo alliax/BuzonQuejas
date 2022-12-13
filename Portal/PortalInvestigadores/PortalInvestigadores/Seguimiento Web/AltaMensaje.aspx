@@ -2,9 +2,64 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="contenido" runat="server">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+           
+
+        <%--Referencias para Data Tables--%>
+        <%--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"/>--%>
+        
+        <%--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"/>--%>
+        <%--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>--%>
+
+        <%--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.foundation.min.css"/>--%>
+
+        <%--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css"/>--%>
+        <%--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.semanticui.min.css"/>--%>
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+        
+
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"></script>
+    <style>
+        #contenido_asociadasGV_filter{
+            float: none;
+            font-size: 12px;
+            padding-right: 10px;
+        }
+        #contenido_asociadasGV_paginate, #contenido_asociadasGV_length{
+            display:none;
+        }
+    </style>
 <script type="text/javascript">
 
-$(document).ready(function () {
+    $(document).ready(function () {
+
+        $('#contenido_asociadasGV').DataTable({
+            info: false,
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla =(",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                },
+                "buttons": {
+                    "copy": "Copiar",
+                    "colvis": "Visibilidad"
+                }
+            }
+        });
 
   var Idioma = '<%=HttpContext.Current.Session["idioma"]%>'
             $.ajax({
@@ -95,7 +150,11 @@ function createJson(strJson) {
     <div class="container">
         <div class="row"style="margin-top:21px;">
             <div class="table-header" runat="server" id="msgId"> 
-                <h4>Folio: <span>Estatus:</span> </h4>
+                <h4>
+                    Folio: <span runat="server" id="folio" class="badge badge-secondary" style="font-size:x-large"></span> 
+                    Estatus: <span runat="server" id="estatusFolio" class="badge badge-secondary"></span> 
+
+                </h4>
             </div>                                
                 <div class="col-md-6">
                     <div class="card">
@@ -113,14 +172,12 @@ function createJson(strJson) {
                             <div class="col-md-12 form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputClasificacion" id ="lbl4">Clasificación</label>
-                                    <asp:DropDownList runat="server" CssClass="form-control" ID="ddlClasificacion">
-                                        <asp:ListItem Selected="True" Value="White"> White </asp:ListItem>
+                                    <asp:DropDownList runat="server" CssClass="form-control" ID="ddlClasificacion">                                       
                                     </asp:DropDownList>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputResponsable" id ="lbl5">Responsable</label>
-                                    <asp:DropDownList runat="server" CssClass="form-control" ID="ddlResponsable">
-                                        <asp:ListItem Selected="True" Value="White"> White </asp:ListItem>
+                                    <asp:DropDownList runat="server" CssClass="form-control" ID="ddlResponsable">                                        
                                     </asp:DropDownList>
                                 </div>
                             </div>
@@ -171,14 +228,12 @@ function createJson(strJson) {
                             </div>
                             <div class="form-group col-md-12">
                                 <label id="lbl13" for="selSitio">Sitio</label>
-                                <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSitio">
-                                    <asp:ListItem Selected="True">Sitio</asp:ListItem>
+                                <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSitio">                                    
                                 </asp:DropDownList>
                             </div>
                              <div class="form-group col-md-12">
                                 <label id="lbl14" for="selDepartamento">Departamento</label>
-                                <asp:DropDownList runat="server" CssClass="form-control" ID="ddlDepartamento">
-                                    <asp:ListItem  Selected="True" >Departamento</asp:ListItem>
+                                <asp:DropDownList runat="server" CssClass="form-control" ID="ddlDepartamento">                                    
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -274,15 +329,15 @@ function createJson(strJson) {
                         <div class="card-body">
                             <div class="form-group col-md-12">
                                 <label id="lbl29">Nuevo: Visible para auditoría</label>
-                                <asp:TextBox runat="server" CssClass="form-control" ID="txtMensaje2"/>
+                                <asp:TextBox TextMode="MultiLine" Wrap="true" runat="server" CssClass="form-control" ID="txtMensaje2"/>
                             </div>
                             <div class="form-group col-md-12">
                                 <label id="lbl30">Detalle </label>
-                                <asp:TextBox runat="server" CssClass="form-control" ID="txtDetalle" />
+                                <asp:TextBox TextMode="MultiLine" Wrap="true" runat="server" CssClass="form-control" ID="txtDetalle" />
                             </div>
                             <div class="form-group col-md-12">
                                 <label id="lbl31">Resumen</label>
-                                <asp:TextBox runat="server" CssClass="form-control" ID="txtResumen" />
+                                <asp:TextBox TextMode="MultiLine" Wrap="true" runat="server" CssClass="form-control" ID="txtResumen" />
                             </div>
                         </div>
                     </div>
@@ -317,7 +372,7 @@ function createJson(strJson) {
                     </div>
                 </div>
             <!---->
-                 <div class="col-md-7">
+                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header bg-primary text-white">
                             <p>
@@ -345,8 +400,7 @@ function createJson(strJson) {
                                 <div style="overflow-y:scroll; height:150px">
                                 <asp:GridView ID="gvInv" CssClass="table table-hover" RowStyle-CssClass="tdtable" HeaderStyle-CssClass="thead-light" runat="server"  AutoGenerateColumns="false">
                                     <Columns>  
-                                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" /> 
-                                        <asp:BoundField DataField="Apellido" HeaderText="Apellido"  /> 
+                                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />                                         
                                         <asp:BoundField DataField="Puesto" HeaderText="Puesto"  /> 
                                         <asp:BoundField DataField="Posicion" HeaderText="Posicion"  /> 
                                     </Columns>
@@ -357,13 +411,36 @@ function createJson(strJson) {
                     </div>
                 </div>
             <!---->
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-header bg-primary text-white">
                             <p>
                                 <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
                                 <label id="lbl37">Asociar</label>
                             </p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="input-group ">
+                                <span class="input-group-btn">
+                                    <label class="btn-sm" style="font-weight:bold;">Asociar a</label>
+                                </span>
+                                <asp:DropDownList CssClass="form-control" runat="server" ID="asociadosDDL" Enabled="false">                                    
+                                </asp:DropDownList>
+                                <span class="input-group-btn">
+                                    <asp:Button runat="server" OnClick="desasociar_Click" ID="desasociar" CssClass="btn btn-danger btn-sm" Text="Desasociar" />                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <asp:GridView OnSelectedIndexChanged="asociadasGV_SelectedIndexChanged" runat="server" ID="asociadasGV" OnRowDataBound="asociadasGV_RowDataBound" AutoGenerateColumns="true" CssClass="strip table table-hover table-dashboard">                        
+                                <Columns>
+                                    <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <asp:Button ID="asociarBTN" runat="server" CommandName="Select" Text="Asociar" CssClass="btn btn-primary btn-sm"/>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
                         </div>
                     </div>
                 </div>
@@ -478,7 +555,13 @@ function createJson(strJson) {
                         <asp:Button OnClick="btnGuardar_Click" runat="server" ID="btnGuardar" CssClass="btn btn-primary" Text="Guardar" />
                     </div>
                     <div class="form-group col-md-4 btns">
-                        <asp:Button runat="server" ID="btnEnviar" CssClass=" btn btn-danger" Text="Enviar a Investigador" />                        
+                        <asp:Button runat="server" ID="btnEnviar" OnClick="btnEnviar_Click" CssClass=" btn btn-danger" Text="Enviar a VOBO" />                        
+                    </div>
+                    <div class="form-group col-md-4 btns">
+                        <asp:Button OnClick="btnCancel_Click" Visible="false" runat="server" ID="btnCancel" CssClass="btn btn-danger" Text="Cancelar"/>
+                    </div>
+                    <div class="form-group col-md-4 btns">
+                        <asp:Button OnClick="btnAceptar_Click" Visible="false" runat="server" ID="btnAceptar" CssClass="btn btn-primary" Text="Aceptar" />
                     </div>
                 </div>
             </div>
