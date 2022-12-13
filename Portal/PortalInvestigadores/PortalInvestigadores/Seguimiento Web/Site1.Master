@@ -9,7 +9,7 @@
    <%-- <meta name="viewport" content="width=device-width, initial-scale=1" />--%>
     <%--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
@@ -61,6 +61,8 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="Dashboard.aspx"> <% row = tags.Select("id = '16'");  if (row.Length > 0){Response.Write(row[0][1]);}   %>  </a>
+                    <a class="dropdown-item" href="AltaMensaje.aspx">Alta Mensaje</a>
+                    <a class="dropdown-item" href="DashboardQuejas.aspx">Dashboard Quejas</a>
                      <% if (Session["idioma"].ToString() == "1"){ %>
                         <a class="dropdown-item" href="Manual/Manualdeusuario-PortaldeResponsables.pdf" target="_blank"><% row = tags.Select("id = '17'"); if (row.Length > 0) { Response.Write(row[0][1]); }   %> </a>
                     <% } else  { %>

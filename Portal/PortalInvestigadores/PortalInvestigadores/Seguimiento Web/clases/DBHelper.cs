@@ -3923,6 +3923,86 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
+        public DataTable getUsrRol(int iUsr) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Rol_Usr", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.Int).Value = iUsr;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public DataTable getDashboardBQ(string sOpt, int iIdBQ) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Dashboard", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = sOpt;
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getDetalleMensaje(int iIdQueja) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_DetalleMensaje", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         public string saveForma(int idConducto, string forma, string descripcion, bool activo, string usuarioCreacion, int idBQ)
         {
