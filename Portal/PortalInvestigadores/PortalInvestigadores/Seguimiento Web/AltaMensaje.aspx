@@ -74,8 +74,8 @@
                 for (i = 0; i <= Json.length - 1; i++) {
                     if (Json[i].Id == 1) { $("#lbl1").html(Json[i].Texto) }
                     if (Json[i].Id == 2) { $("#lbl2").html(Json[i].Texto) }
-                    if (Json[i].Id == 3) { $("#lbl3").html(Json[i].Texto); $("#lbl8").html(Json[i].Texto) }
-                    if (Json[i].Id == 4) { $("#lbl4").html(Json[i].Texto) }
+                    if (Json[i].Id == 3) { $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 4) { $("#lbl4").html(Json[i].Texto); $("#lbl8").html(Json[i].Texto) }
                     if (Json[i].Id == 5) { $("#lbl5").html(Json[i].Texto) }
                     if (Json[i].Id == 6) { $("#lbl6").html(Json[i].Texto) }
                     if (Json[i].Id == 7) { $("#lbl7").html(Json[i].Texto) }
@@ -89,8 +89,8 @@
                     if (Json[i].Id == 15) { $("#lbl16").html(Json[i].Texto) }
                     if (Json[i].Id == 18) { $("#lbl17").html(Json[i].Texto) }
                     if (Json[i].Id == 16) { $("#lbl18").html(Json[i].Texto) }
-                    if (Json[i].Id == 17) { $("#lbl19").html(Json[i].Texto) }  
-                    if (Json[i].Id == 18) { $("#lbl20").html(Json[i].Texto) }
+                    if (Json[i].Id == 19) { $("#lbl19").html(Json[i].Texto) }  
+                    if (Json[i].Id == 17) { $("#lbl20").html(Json[i].Texto) }
                     if (Json[i].Id == 20) { $("#lbl21").html(Json[i].Texto) }
                     if (Json[i].Id == 21) { $("#lbl22").html(Json[i].Texto) }
                     if (Json[i].Id == 22) { $("#lbl23").html(Json[i].Texto) }
@@ -361,12 +361,12 @@ function createJson(strJson) {
                                     <label id="lbl34" for="selSubtema">Subtema</label>
                                     <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSubtema" />                                
                                 </div>
-                                <div class="form-group col-md-4">
+<%--                                <div class="form-group col-md-4" >
                                     <label id="lbl35">Documentos</label>
                                     <button type="button" class="btnFile btn-primary">
                                         <span class="glyphicon glyphicon-file" aria-hidden="true">Subir documentos</span>
                                     </button>
-                                </div>
+                                </div>--%>
                             </div>
                         </div>
                     </div>

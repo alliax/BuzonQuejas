@@ -4376,7 +4376,7 @@ namespace Portal_Investigadores.clases
                 using (SqlConnection con = new SqlConnection(connStr))
                 {
 
-                    String query = "SELECT Id, IdSubtema, Descripcion FROM BQ_Cat_Subtema WHERE Activo = 1 and IdBQ = " + idBQ + " and IdTema = " + idTema;
+                    String query = "SELECT Id, IdSubtema, Descripcion FROM BQ_Cat_Subtema WHERE Activo = 1  and IdTema = " + idTema;
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();

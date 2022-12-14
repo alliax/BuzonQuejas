@@ -482,8 +482,8 @@ namespace Portal_Investigadores
             respo.Columns.Add("Nombre");
             respo.Columns.Add("Id");
             DataRow dr = respo.NewRow();
-            dr["Nombre"] = "Ericka Sifuentes";
-            dr["Id"] = "474";
+            dr["Nombre"] = "Eduardo Acevedo";
+            dr["Id"] = "1";
             respo.Rows.Add(dr);
             ddlResponsable2.DataSource = respo;
             ddlResponsable2.DataTextField = respo.Columns["Nombre"].ToString();
@@ -516,8 +516,8 @@ namespace Portal_Investigadores
             users.Columns.Add("Nombre");
             users.Columns.Add("Usuario");
             DataRow dr = users.NewRow();
-            dr["Nombre"] = "Eduardo Nino";
-            dr["Usuario"] = "eduardo.nino@alliax.com";
+            dr["Nombre"] = "Ericka Sifuentes";
+            dr["Usuario"] = "ericka.sifuentes@alliax.com";
             users.Rows.Add(dr);
             ddlResponsable.DataSource = users;
             ddlResponsable.DataTextField = users.Columns["Nombre"].ToString();
@@ -608,9 +608,7 @@ namespace Portal_Investigadores
         }
         protected void addMensajesInt(object sender, EventArgs e)
         {
-            if (Request.QueryString["idMensaje"] != null)
-            {
-                int idM = int.Parse(Request.QueryString["idMensaje"].ToString());
+
                 if (txtMsg.Text != "")
                 {
 
@@ -624,21 +622,10 @@ namespace Portal_Investigadores
                     dtMsgInt.Rows.Add(msgRow);
 
 
-                    foreach (DataRow row in dtMsgInt.Rows)
-                    {
-                        //1 Mensaje
-                        
-                        int iIdBQ = Convert.ToInt32(Session["idBq"].ToString());
-                        string sUsr = Session["nomUsuario"].ToString();
-                        string sOutput = DBHelper.postMensajesInt("NEW", iIdBQ, idM, sUsr, row["Comentario"].ToString(), row["IP"].ToString());
-                    }
-
                     gvCom.DataSource = dtMsgInt;
                     gvCom.DataBind();
                 }
-            }
-
-            
+                       
 
         }
         protected void cargarComentarios(int idMensaje)
@@ -656,9 +643,9 @@ namespace Portal_Investigadores
         }
         protected void addInvolucrados(object sender, EventArgs e)
         {
-            if (Request.QueryString["idMensaje"] != null)
+
+            if (invNombre.Text != "" && invNombre.Text != "" && invPuesto.Text != "")
             {
-                int idM = int.Parse(Request.QueryString["idMensaje"].ToString());
                 DataTable dtUsrInv = (DataTable)Session["dtUsrInv"];
                 DataRow msgRow = dtUsrInv.NewRow();
                 msgRow["Nombre"] = invNombre.Text;
@@ -667,22 +654,9 @@ namespace Portal_Investigadores
                 msgRow["Posicion"] = ddlPosicion.SelectedValue;
                 dtUsrInv.Rows.Add(msgRow);
 
-
-                foreach (DataRow row in dtUsrInv.Rows)
-                {
-                    //1 Mensaje
-
-                    string sUsr = Session["idUsuario"].ToString();
-                    string sOutput = DBHelper.postInvolucrados("NEW", 0, idM, row["Nombre"].ToString(), row["Apellido"].ToString(), row["Puesto"].ToString(), row["Posicion"].ToString(), sUsr);
-
-                }
-
                 gvInv.DataSource = dtUsrInv;
                 gvInv.DataBind();
-                cargarInvolucrados(idMensaje);
-
             }
-
 
         }
 
@@ -705,7 +679,8 @@ namespace Portal_Investigadores
             string usuario = Session["username"].ToString();            
             string titulo = txtTitulo.Text;
             string nuevo = txtMensaje2.Text;
-            string nombre = ""; string correo = ""; string apellidoP = ""; string apellidoM = "";string telefono = "";string tipo = "";
+            string nombre = ""; string correo = ""; string apellidoP = ""; string apellidoM = "";string telefono = "";
+            string tipo = chbkAnonimo.Checked == true ? "0" : ddlTipo.SelectedValue.ToString();
             string importancia = ddlImportancia.SelectedValue.ToString() == "0" ? "" : ddlImportancia.SelectedItem.ToString(); 
             string conducto = ddlConducto.SelectedValue.ToString() == "0" ? "" : ddlConducto.SelectedItem.ToString();
             string forma = ddlForma.Items.Count > 0 ? ddlForma.SelectedItem.ToString() : "";
@@ -755,6 +730,7 @@ namespace Portal_Investigadores
 
 
                     }
+
                     id = DBHelper.guardarMensaje(idBQ, titulo, importancia, conducto, forma, clasificacion, descripcion
                         , nombre, apellidoP, apellidoM, telefono, correo, chbkAnonimo.Checked, usuarioResp, usuario, sitio
                         , tema, subtema, idDep, areaAsig, mensaje, resumen, tipo, responsable, revisor, revisorActivo, enterad);
@@ -768,6 +744,26 @@ namespace Portal_Investigadores
                     {
                         folio.InnerText = id.ToString();
                         DBHelper.savecomentariosIniciales(id, user, myIP);
+
+                        DataTable dtUsrInv = (DataTable)Session["dtUsrInv"];
+                        foreach (DataRow row in dtUsrInv.Rows)
+                        {
+                            //1 Mensaje
+
+                            string sUsr = Session["idUsuario"].ToString();
+                            string sOutput = DBHelper.postInvolucrados("NEW", 0, id, row["Nombre"].ToString(), row["Apellido"].ToString(), row["Puesto"].ToString(), row["Posicion"].ToString(), sUsr);
+
+                        }
+
+                        DataTable dtMsgInt = (DataTable)Session["dtMsgInt"];
+                        foreach (DataRow row in dtMsgInt.Rows)
+                        {
+                            //1 Mensaje
+
+                            int iIdBQ = Convert.ToInt32(Session["idBq"].ToString());
+                            string sUsr = Session["nomUsuario"].ToString();
+                            string sOutput = DBHelper.postMensajesInt("NEW", iIdBQ, id, sUsr, row["Comentario"].ToString(), row["IP"].ToString());
+                        }
 
                         Response.Redirect(string.Format("~/AltaMensaje.aspx?idMensaje={0}",
                             id));
@@ -941,7 +937,7 @@ namespace Portal_Investigadores
                     output2 = DBHelper.enviarVoboMensaje(idM, user, myIP);
                     if (output2 == "OK")
                     {
-                        Response.Redirect("Dashboard");
+                        Response.Redirect("DashboardQuejas");
                     }
                 }
             }
@@ -963,7 +959,7 @@ namespace Portal_Investigadores
             output = DBHelper.aceptarVoboMensaje(idM, user, myIP);
             if ( output == "OK")
             {
-                Response.Redirect("Dashboard");
+                Response.Redirect("DashboardQuejas");
             } else
             {
                 error.Visible = true;

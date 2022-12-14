@@ -127,6 +127,7 @@
     <Content Include="DashboardQuejas.aspx" />
     <Content Include="DetalleQuejas.aspx" />
     <Content Include="GestionBuzones.aspx" />
+    <Content Include="img\msg.png" />
     <Content Include="UsuarioBuzon.aspx" />
     <Content Include="CambiarContrasena.aspx" />
     <Content Include="CargarArchivo.asmx" />
