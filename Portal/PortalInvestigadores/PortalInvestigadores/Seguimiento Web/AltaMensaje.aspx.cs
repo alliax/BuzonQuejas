@@ -424,19 +424,16 @@ namespace Portal_Investigadores
             if (sIdioma == "2")
             {
                 dr["Descripcion"] = "Select Value";
-                dr["IdTipo"] = "0";
-                tipos.Rows.Add(dr);
+                dr["IdTipo"] = "0";                
 
             }
             else
             {
                 dr["Descripcion"] = "Selecciona un Valor";
                 dr["IdTipo"] = "0";
-                tipos.Rows.Add(dr);
+                
             }
-
-            
-
+            tipos.Rows.Add(dr);
             ddlTipo.DataSource = tipos;
             ddlTipo.DataTextField = tipos.Columns["Descripcion"].ToString();
             ddlTipo.DataValueField = tipos.Columns["IdTipo"].ToString();
@@ -888,7 +885,7 @@ namespace Portal_Investigadores
             string usuario = Session["username"].ToString();            
             string titulo = txtTitulo.Text;
             string nuevo = txtMensaje2.Text;
-            string nombre = ""; string correo = ""; string apellidoP = ""; string apellidoM = ""; string telefono = ""; string tipo = "";
+            string nombre = ""; string correo = ""; string apellidoP = ""; string apellidoM = ""; string telefono = ""; string tipo = "0";
             string importancia = ddlImportancia.SelectedValue.ToString() == "0" ? "" : ddlImportancia.SelectedItem.ToString();
             string conducto = ddlConducto.SelectedValue.ToString() == "0" ? "" : ddlConducto.SelectedItem.ToString();
             string forma = ddlForma.Items.Count > 0 ? ddlForma.SelectedItem.ToString() : "";
