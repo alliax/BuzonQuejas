@@ -84,6 +84,8 @@
                         $('#<%= txtTema.ClientID %>').val(Json[0].Tema);
                         $('#<%= txtResumen.ClientID %>').val(Json[0].Resumen);
                         $('#<%= txtMensaje.ClientID %>').val(Json[0].Mensaje);
+                        $('#<%= txtSubtema.ClientID %>').val(Json[0].Subtema);
+                        $('#<%= txtDepartamento.ClientID %>').val(Json[0].Departamento);
 
                         $('#tblQ').html("");
                         if (idioma == 1) {
