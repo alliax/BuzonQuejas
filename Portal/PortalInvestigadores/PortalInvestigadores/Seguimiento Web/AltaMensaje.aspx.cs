@@ -870,8 +870,12 @@ namespace Portal_Investigadores
                        && txtTelefono.Text != "" && int.Parse(ddlTipo.SelectedValue) != 0)
                     {
                         return true;
+                    } else
+                    {
+                        return false;
                     }
                 }
+                return true;
             }
             return false;
         }

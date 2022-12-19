@@ -953,6 +953,74 @@ function addEntrevistados() {
 
 }
 
+function cargarEntrevistadosBQ() {
+
+    var idQueja = $('#contenido_txtFolio').val();
+
+    var readOnlyActivado = validarReadOnly();
+
+    if (readOnlyActivado == 1) {
+       
+        var editable = "false";
+    } else {
+       
+        var editable = "true";
+    }
+
+    $.ajax({
+        type: "POST",
+        url: 'DetalleQuejas.aspx/CargarEntrevistadosBQ',        
+        data: JSON.stringify({ 'idDenuncia': idDenuncia }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+
+            var objdata = $.parseJSON(data.d);
+
+            var s = $('#accordionEnt h2 button ').text().split('(')[0];
+
+            $('#accordionEnt h2 button ').empty();
+            $('#accordionEnt h2 button ').append(s + " (" + (objdata.Table1.length - 1) + ") ");            
+
+            if (objdata.Table1.length > 1) {
+
+                for (i = 0; i < objdata.Table1.length - 1; i++) {
+
+                    var idEntrevistado = objdata.Table1[i]["0"];
+                    var nombre = objdata.Table1[i]["1"];
+                    var puesto = objdata.Table1[i]["2"];
+                    var entrevistador = objdata.Table1[i]["3"];
+
+                    const $tableID = $('#tableEnt');                    
+
+                    const newTr = `<tr>
+                                        <td class="pt-3-half" contenteditable="false" style="display:none;">`+ idEntrevistado + `</td>
+                                        <td class="pt-3-half" contenteditable="false"><input type="text" value="`+ nombre + `" ` + (editable == "false" ? `readOnly` : ``) + ` ></td>
+                                        <td class="pt-3-half" contenteditable="false"><input type="text" value="`+ puesto + `" ` + (editable == "false" ? `readOnly` : ``) + `></td>
+                                        <td class="pt-3-half" contenteditable="false"><input type="text" value="`+ entrevistador + `" ` + (editable == "false" ? `readOnly` : ``) + `></td>
+                                        <td>
+                                            <span>
+                                                <button type="button" title="Guardar/Save"  style="width:30px; margin-right: -5px;" class="btn btn-success btn-rounded btn-sm my-0 table-save" ` + (editable == "false" ? `disabled` : ``) + `><img src="img/save-2.png" style="margin-left:-4px;"/></button>
+                                                <button type="button" title="Eliminar/Delete"  style="width:30px;"class="btn btn-danger btn-rounded btn-sm my-0 table-remove" ` + (editable == "false" ? `disabled` : ``) + ` >-</button>
+                                            </span>
+                                        </td>
+                                    </tr>`;
+
+                    if ($tableID.find('tbody').length > 0) {
+
+                        $('#tableEnt tbody').append(newTr);
+                    }
+
+                }
+            }
+
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    });
+}
+
 function cargarEntrevistados() {
 
     var idDenuncia = $('#contenido_txtFolio').val();
@@ -1027,6 +1095,39 @@ function cargarEntrevistados() {
     });
 }
 
+
+function saveEntrevistadoBQ(idEntrevistado, nombre, puesto, entrevistador) {
+
+    var queja = $('#contenido_txtFolio').val();
+    var usuarioAlta = idUsuario;
+
+    $.ajax({
+        type: "POST",
+        beforeSend: function () {
+            $('.ajax-loader').css("visibility", "visible");
+        },
+        url: 'DetalleQuejas.aspx/SaveEntrevistadoBQ',
+        
+        data: JSON.stringify({ 'idQueja': queja, 'idEntrevistado': idEntrevistado, 'nombre': nombre, 'puesto': puesto, 'entrevistador': entrevistador, 'usuarioAlta': usuarioAlta }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $('#tableEnt table tbody').empty();
+            cargarEntrevistados();
+
+        },
+        complete: function () {
+            $('.ajax-loader').css("visibility", "hidden");
+
+            $(".ajax-save").show();
+            setTimeout(function () { $(".ajax-save").hide(); }, 500);
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    });
+}
+
 function saveEntrevistado(idEntrevistado,nombre, puesto, entrevistador) {
 
     var denuncia = $('#contenido_txtFolio').val();
@@ -1083,6 +1184,26 @@ function saveEntrevistadoEnvio(idEntrevistado, nombre, puesto, entrevistador) {
         },
         complete: function () {
             
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    });
+}
+
+function deleteEntrevistadoBQ(idEntrevistado) {
+    var queja = $('#contenido_txtFolio').val();
+    var usuarioBaja = idUsuario;
+
+    $.ajax({
+        type: "POST",
+        url: 'DetalleQuejas.aspx/DeleteEntrevistadoBQ',
+        
+        data: JSON.stringify({ 'idEntrevistado': idEntrevistado, 'usuarioBaja': usuarioBaja }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+
         },
         error: function (e) {
             console.log(e);

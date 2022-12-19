@@ -4689,7 +4689,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
-        public DataTable getClasificacionTarea(string opt, int IdBQ) //Saul Sanchez
+        public DataTable getClasificacionTarea(string opt, int IdBQ)
         {
             try
             {
@@ -4796,6 +4796,151 @@ namespace Portal_Investigadores.clases
             }
             catch
             {
+                throw;
+            }
+        }
+        public string saveAccion(string opt, string usuario, int idBQ, string accion, string descripcion, bool activo, int idAccion)  //Rodolfo Godina
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_CatAcciones", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@sp_option", SqlDbType.VarChar).Value = opt;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = usuario;
+                        cmd.Parameters.Add("@accion", SqlDbType.VarChar).Value = accion;
+                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = descripcion;
+                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
+                        cmd.Parameters.Add("@idAccion", SqlDbType.Int).Value = idAccion;
+                        con.Open();
+
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+                        return "OK";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getCatalogoAcciones(string opt, int IdBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_CatAcciones", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@sp_option", SqlDbType.VarChar).Value = opt;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = IdBQ;
+                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@accion", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = false;
+                        cmd.Parameters.Add("@idAccion", SqlDbType.Int).Value = 0;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string saveEntrevistadoBQ(int idQueja, int idEntrevistado, string nombre, string puesto, string entrevistador, int usuarioAlta)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GuardarEntrevistado", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        // cmd.Parameters.Add("@idIssue", SqlDbType.Int).Value = null;
+                        cmd.Parameters.Add("@idQueja", SqlDbType.Int).Value = idQueja;
+                        cmd.Parameters.Add("@idEntrevistado", SqlDbType.Int).Value = idEntrevistado;
+                        cmd.Parameters.Add("@nombre", SqlDbType.VarChar).Value = nombre;
+                        cmd.Parameters.Add("@puesto", SqlDbType.VarChar).Value = puesto;
+                        cmd.Parameters.Add("@entrevistadoPor", SqlDbType.VarChar).Value = entrevistador;
+                        cmd.Parameters.Add("@usuarioAlta", SqlDbType.Int).Value = usuarioAlta;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "exito";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
+                throw;
+            }
+        }
+        public DataTable getEntrevistadosBQ(Int64 idQueja)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GetEntrevistados", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idqueja", SqlDbType.Int).Value = idQueja;
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string deleteEntrevistadoBQ(int idEntrevistado, int usuarioBaja)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_DeleteEntrevistado", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        // cmd.Parameters.Add("@idIssue", SqlDbType.Int).Value = null;
+                        cmd.Parameters.Add("@idEntrevistado", SqlDbType.Int).Value = idEntrevistado;
+                        cmd.Parameters.Add("@usuarioBaja", SqlDbType.Int).Value = usuarioBaja;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "exito";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
                 throw;
             }
         }
