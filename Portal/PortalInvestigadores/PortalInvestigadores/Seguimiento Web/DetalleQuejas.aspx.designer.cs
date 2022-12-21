@@ -114,6 +114,15 @@ namespace Seguimiento_Web
         protected global::System.Web.UI.WebControls.TextBox txtMensaje;
 
         /// <summary>
+        /// gvAsociados control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvAsociados;
+
+        /// <summary>
         /// Div2 control.
         /// </summary>
         /// <remarks>
@@ -156,7 +165,16 @@ namespace Seguimiento_Web
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnDelegar;
+        protected global::System.Web.UI.WebControls.Button btnDelegar;
+
+        /// <summary>
+        /// gvTemas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvTemas;
 
         /// <summary>
         /// txtConclusion control.
@@ -184,6 +202,15 @@ namespace Seguimiento_Web
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtComentario;
+
+        /// <summary>
+        /// btnCom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCom;
 
         /// <summary>
         /// Div1 control.
@@ -348,6 +375,24 @@ namespace Seguimiento_Web
         protected global::System.Web.UI.WebControls.DropDownList beneficioDDL;
 
         /// <summary>
+        /// btnTemaGuardar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnTemaGuardar;
+
+        /// <summary>
+        /// btnTemaCancelar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnTemaCancelar;
+
+        /// <summary>
         /// txtComentarioRechazo control.
         /// </summary>
         /// <remarks>
@@ -364,14 +409,5 @@ namespace Seguimiento_Web
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtComentarioRechazoInv;
-
-        /// <summary>
-        /// ddlMadurez control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlMadurez;
     }
 }

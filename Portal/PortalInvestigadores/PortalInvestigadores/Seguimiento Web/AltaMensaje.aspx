@@ -123,6 +123,14 @@
                     if (Json[i].Id == 47) { $("#lbl44").html(Json[i].Texto) }
                     if (Json[i].Id == 48) { $("#lbl45").html(Json[i].Texto) }
                     if (Json[i].Id == 49) { $("#lbl46").html(Json[i].Texto) }
+                    if (Json[i].Id == 50) { $("#<%=btnGuardar.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 51) { $("#<%=btnEnviar.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 52) { $("#<%=btnCancel.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 53) { $("#<%=btnAceptar.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 54) { $("#lbl47").html(Json[i].Texto) }
+                    if (Json[i].Id == 55) { $("#lbl48").html(Json[i].Texto) }
+                    if (Json[i].Id == 56) { $("#lbl49").html(Json[i].Texto) }
+                    if (Json[i].Id == 57) { $("#lbl50").html(Json[i].Texto) }
                 }
 
                 },
@@ -151,8 +159,8 @@ function createJson(strJson) {
         <div class="row"style="margin-top:21px;">
             <div class="table-header" runat="server" id="msgId"> 
                 <h4>
-                    Folio: <span runat="server" id="folio" class="badge badge-secondary" style="font-size:x-large"></span> 
-                    Estatus: <span runat="server" id="estatusFolio" class="badge badge-secondary"></span> 
+                    <label id ="lbl47">Folio:</label> <span runat="server" id="folio" class="badge badge-secondary" style="font-size:x-large"></span> 
+                    <label id ="lbl48">Estatus:</label> <span runat="server" id="estatusFolio" class="badge badge-secondary"></span> 
 
                 </h4>
             </div>                                
@@ -281,7 +289,7 @@ function createJson(strJson) {
                             </div>
                             <div class="col-md-12 form-row">
                                 <div class="form-group col-md-6 col-xs-6">
-                                    <label for="checkAnonimo">Anónimo</label>
+                                    <label id="lbl50" for="checkAnonimo">Anónimo</label>
                                     <asp:CheckBox AutoPostBack="true" OnCheckedChanged="chbkAnonimo_CheckedChanged" runat="server" ID="chbkAnonimo" />
                                 </div>
                                 <div class="form-group col-md-6 col-xs-6">
@@ -422,7 +430,7 @@ function createJson(strJson) {
                         <div class="card-footer">
                             <div class="input-group ">
                                 <span class="input-group-btn">
-                                    <label class="btn-sm" style="font-weight:bold;">Asociar a</label>
+                                    <label id="lbl49" class="btn-sm" style="font-weight:bold;">Asociar a</label>
                                 </span>
                                 <asp:DropDownList CssClass="form-control" runat="server" ID="asociadosDDL" Enabled="false">                                    
                                 </asp:DropDownList>

@@ -54,7 +54,7 @@ namespace Portal_Investigadores
                     }
                     else
                     {
-
+                        
                         //Session["nomUsuario"] = DBHelper.getUserName(usuario);
                         Session["idUsuario"] = user.Rows[0][0].ToString();
                         Session["nomUsuario"] = user.Rows[0][1].ToString();
@@ -67,9 +67,10 @@ namespace Portal_Investigadores
                         //int perfil = DBHelper.getPerfil(usuario);
                         //Session["rol"] = perfil.ToString();
                         Session["idioma"] = ddlIdioma.SelectedValue;
-                        Session["empresa"] = "CANCUN";
-                        Session["grupo"] = "SIGMA";
-                        Session["idBQ"] = "1";
+                        DataTable userBQ = DBHelper.getBQUsr(Convert.ToInt32(user.Rows[0][0].ToString()));
+                        Session["empresa"] = userBQ.Rows[0][1].ToString();
+                        Session["grupo"] = userBQ.Rows[0][2].ToString();
+                        Session["idBQ"] = userBQ.Rows[0][0].ToString();
 
                         Response.Redirect("Dashboard.aspx", true);
                     }
