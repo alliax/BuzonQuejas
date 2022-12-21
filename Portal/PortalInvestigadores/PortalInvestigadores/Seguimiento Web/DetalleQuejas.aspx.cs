@@ -211,6 +211,66 @@ namespace Seguimiento_Web
             return (str);
 
         }
+        [WebMethod]
+        public static string SaveEntrevistadoBQ(int idQueja, int idEntrevistado, string nombre, string puesto, string entrevistador, int usuarioAlta)
+        {
+            DBHelper DBHelper = new DBHelper();
+
+            string resp = DBHelper.saveEntrevistadoBQ(idQueja, idEntrevistado, nombre, puesto, entrevistador, usuarioAlta);
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(resp);
+
+        }
+        [WebMethod]
+        public static string CargarEntrevistadosBQ(string idQueja)
+        {
+            DBHelper DBHelper = new DBHelper();
+
+            DataTable entrevistados = DBHelper.getEntrevistadosBQ(Int64.Parse(idQueja));
+
+            DataSet ds = new DataSet();
+            ds.Tables.Add(entrevistados);
+
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            foreach (DataTable dt in ds.Tables)
+            {
+                object[] arr = new object[dt.Rows.Count + 1];
+
+                for (int i = 0; i <= dt.Rows.Count - 1; i++)
+                {
+                    arr[i] = dt.Rows[i].ItemArray;
+                }
+
+                dict.Add(dt.TableName, arr);
+            }
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(dict);
+
+        }
+        [WebMethod]
+        public static string DeleteEntrevistadoBQ(int idEntrevistado, int usuarioBaja)
+        {
+            DBHelper DBHelper = new DBHelper();
+
+            string resp = DBHelper.deleteEntrevistadoBQ(idEntrevistado, usuarioBaja);
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(resp);
+
+        }
+        [WebMethod]
+        public static string SaveComentarioBQ(int idQueja, string comentario, int usuarioAlta)
+        {
+            DBHelper DBHelper = new DBHelper();
+
+            string resp = DBHelper.saveComentarioBQ(idQueja, comentario, usuarioAlta);
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(resp);
+
+        }
 
 
 
