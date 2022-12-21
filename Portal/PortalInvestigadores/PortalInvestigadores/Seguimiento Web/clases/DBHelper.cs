@@ -4931,6 +4931,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
+
         public DataTable getClasificacionesTareaByIdBQ(int idBQ)
         {
             try
@@ -4981,6 +4982,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
+
 
     }
 }
