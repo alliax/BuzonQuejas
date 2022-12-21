@@ -1785,6 +1785,47 @@ function deleteSoporteBD(idSoporte) {
 
 }
 
+function saveComentarioBQ() {
+    var queja = $('#contenido_txtFolio').val();
+    var comentario = $('#contenido_txtComentario').val();
+    var usuarioAlta = idUsuario;
+
+    if (comentario.length > 0) {
+
+        $.ajax({
+            type: "POST",
+            url: 'DetalleQuejas.aspx/saveComentarioBQ',
+            // data: {'idDenuncia: ' + idDenuncia },
+            data: JSON.stringify({ 'idDenuncia': denuncia, 'comentario': comentario, 'usuarioAlta': usuarioAlta }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {                
+                var objdata = $.parseJSON(data.d);                
+
+                $('#contenido_txtComentario').val('');
+
+                var comentarioAnterior = $('#contenido_txtDisplayComentario').val();
+
+                const date = new Date();
+                
+                const formattedDate = date.toLocaleDateString('es-ES', {
+                    day: 'numeric', month: 'short', year: 'numeric'
+                }).replace(/ /g, ' ').replace('.', '').replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });;                
+
+                $('#contenido_txtDisplayComentario').val(comentarioAnterior + '\n' + formattedDate + ' - ' + nombreUsuario + ' - ' + comentario);
+
+                var $textarea = $('#contenido_txtDisplayComentario');
+                $textarea.scrollTop($textarea[0].scrollHeight);
+
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
+}
+
+
 function saveComentario() {
 
     var denuncia = $('#contenido_txtFolio').val();

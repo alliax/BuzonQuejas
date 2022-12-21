@@ -4944,6 +4944,33 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
+        public string saveComentarioBQ(int idQueja, string comentario, int usuarioAlta)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GuardarComentario", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        // cmd.Parameters.Add("@idIssue", SqlDbType.Int).Value = null;
+                        cmd.Parameters.Add("@idDenuncia", SqlDbType.Int).Value = idQueja;
+                        cmd.Parameters.Add("@comentario", SqlDbType.VarChar).Value = comentario;
+                        cmd.Parameters.Add("@usuarioAlta", SqlDbType.Int).Value = usuarioAlta;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "exito";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
+                throw;
+            }
+        }
 
     }
 }

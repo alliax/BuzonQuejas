@@ -101,6 +101,17 @@ namespace Seguimiento_Web
             return json.Serialize(resp);
 
         }
+        [WebMethod]
+        public static string SaveComentarioBQ(int idQueja, string comentario, int usuarioAlta)
+        {
+            DBHelper DBHelper = new DBHelper();
+
+            string resp = DBHelper.saveComentarioBQ(idQueja, comentario, usuarioAlta);
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(resp);
+
+        }
 
     }
 }

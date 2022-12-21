@@ -362,6 +362,22 @@ namespace Portal_Investigadores
         protected void cargarTemas(int idBQ, int selectedValue = 0)
         {
             DataTable temas = DBHelper.getTemasByIdBQ(idBQ);
+            
+            DataRow dr = temas.NewRow();
+            
+            string sIdioma = Session["idioma"].ToString();
+            if (sIdioma == "2")
+            {
+                dr["IdTema"] = "0";
+                dr["Descripcion"] = "Choose one";
+
+            }
+            else
+            {
+                dr["Descripcion"] = "Selecciona uno";
+                dr["IdTema"] = "0";
+            }
+            temas.Rows.Add(dr);
             ddlTema.DataSource = temas;
             ddlTema.DataTextField = temas.Columns["Descripcion"].ToString();
             ddlTema.DataValueField = temas.Columns["IdTema"].ToString();
@@ -375,6 +391,9 @@ namespace Portal_Investigadores
                         ddlTema.SelectedValue = tema["IdTema"].ToString();
                     }
                 }
+            } else
+            {
+                ddlTema.SelectedValue = 0.ToString();
             }
         }
         protected void cargarSubtemas(int idBQ, int idTema, int selectedValue = 0)
