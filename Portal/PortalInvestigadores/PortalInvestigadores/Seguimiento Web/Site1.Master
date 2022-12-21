@@ -61,8 +61,17 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="Dashboard.aspx"> <% row = tags.Select("id = '16'");  if (row.Length > 0){Response.Write(row[0][1]);}   %>  </a>
-                    <a class="dropdown-item" href="AltaMensaje.aspx">Alta Mensaje</a>
-                    <a class="dropdown-item" href="DashboardQuejas.aspx">Dashboard Quejas</a>
+                  <% if (Session["idioma"].ToString() == "1"){ %>
+                    <a class="dropdown-item" href="AltaMensaje.aspx"><% row = tags.Select("id = '124'"); if (row.Length > 0) { Response.Write(row[0][1]); }   %>  </a>
+                    <% } else  { %>
+                    <a class="dropdown-item" href="AltaMensaje.aspx"> <% row = tags.Select("id = '124'"); if (row.Length > 0) { Response.Write(row[0][1]); }   %>  </a>
+                        <%   } %>
+
+                    <% if (Session["idioma"].ToString() == "1"){ %>
+                    <a class="dropdown-item" href="DashboardQuejas.aspx"> <% row = tags.Select("id = '125'");  if (row.Length > 0){Response.Write(row[0][1]);}   %>  </a>
+                    <% } else  { %>
+                        <a class="dropdown-item" href="DashboardQuejas.aspx"> <% row = tags.Select("id = '125'");  if (row.Length > 0){Response.Write(row[0][1]);}   %>  </a>
+                    <%   } %>
                      <% if (Session["idioma"].ToString() == "1"){ %>
                         <a class="dropdown-item" href="Manual/Manualdeusuario-PortaldeResponsables.pdf" target="_blank"><% row = tags.Select("id = '17'"); if (row.Length > 0) { Response.Write(row[0][1]); }   %> </a>
                     <% } else  { %>
