@@ -189,7 +189,7 @@ namespace Portal_Investigadores.clases
                 using (SqlConnection con = new SqlConnection(connStr))
                 {
                     List<string> usuarios = new List<string>();
-                    String query = "SELECT idUsuario, nombre, tipoUsuario, esInvestigador, esDelegado, esRevisor, esEnterado, contrasenaTemporal, case when AdministradorDenuncias = null then 0 else AdministradorDenuncias end as AdministradorDenuncias  FROM PR_CatalogoUsuarioPortal WHERE usuario = '" + usuario + "'";
+                    String query = "SELECT idUsuario, nombre, tipoUsuario, esInvestigador, esDelegado, esRevisor, esEnterado, contrasenaTemporal, case when AdministradorDenuncias = null then 0 else AdministradorDenuncias end as AdministradorDenuncias  FROM PR_CatalogoUsuarioPortal " +"WHERE usuario = '" + usuario + "'";
                     SqlCommand cmd = new SqlCommand(query, con);
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable("Usuario");
@@ -4004,6 +4004,248 @@ namespace Portal_Investigadores.clases
             }
         }
 
+        public DataTable getMensaje(int idMensaje) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_getMensaje", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@idMensaje", SqlDbType.VarChar).Value = idMensaje;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getClasificacionTarea(string opt, int IdBQ) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Cat_ClasificacionTarea", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@option", SqlDbType.VarChar).Value = opt;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = IdBQ;
+                        cmd.Parameters.Add("@id", SqlDbType.Int).Value = 0;
+                        cmd.Parameters.Add("@clasificacionTarea", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = false;
+                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = "";
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getQuejasAsociadas( int iIdQueja) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_QuejasAsociadas", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.VarChar).Value = iIdQueja;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getDelegados(int iIdioma) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Delegados", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Idioma", SqlDbType.VarChar).Value = iIdioma;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public DataTable getBQUsr(int iUsr) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Usr", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_IdUsr", SqlDbType.VarChar).Value = iUsr;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public DataTable getBQInvTema(int iIdQueja,int iIdioma) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_InvTema", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value ="SEL";
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
+                        cmd.Parameters.Add("@P_Tema", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Asunto", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Actividades", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Detalle", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Plan", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Con", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Res", SqlDbType.Int).Value = 0;
+                        cmd.Parameters.Add("@P_Ben", SqlDbType.Int).Value = 0;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.Int).Value = 0;
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = 0;
+                        cmd.Parameters.Add("@P_Idioma", SqlDbType.Int).Value =iIdioma;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public string postBQInvTema(int iIdQueja,string sTema,string sAsunto,string sActividades,string sDetalle,string sPlan,string sCon,int iRes,int iBen, int iUsr,int iIdBQ,int iIdioma) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_InvTema", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = "NEW";
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
+                        cmd.Parameters.Add("@P_Tema", SqlDbType.VarChar).Value = sTema;
+                        cmd.Parameters.Add("@P_Asunto", SqlDbType.VarChar).Value = sAsunto;
+                        cmd.Parameters.Add("@P_Actividades", SqlDbType.VarChar).Value = sActividades;
+                        cmd.Parameters.Add("@P_Detalle", SqlDbType.VarChar).Value = sDetalle;
+                        cmd.Parameters.Add("@P_Plan", SqlDbType.VarChar).Value = sPlan;
+                        cmd.Parameters.Add("@P_Con", SqlDbType.VarChar).Value = sCon;
+                        cmd.Parameters.Add("@P_Res", SqlDbType.Int).Value = iRes;
+                        cmd.Parameters.Add("@P_Ben", SqlDbType.Int).Value = iBen;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.Int).Value = iUsr;
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
+                        cmd.Parameters.Add("@P_Idioma", SqlDbType.Int).Value = iIdioma;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+
+                        return "Ok";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public string postBQInvConclusion(int iIdQueja, string sCon) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_InvConclusion", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
+                        cmd.Parameters.Add("@P_Con", SqlDbType.VarChar).Value = sCon;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+
+                        return "Ok";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public string saveForma(int idConducto, string forma, string descripcion, bool activo, string usuarioCreacion, int idBQ)
         {
             try
@@ -4689,39 +4931,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
-        public DataTable getClasificacionTarea(string opt, int IdBQ)
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connStr))
-                {
-                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Cat_ClasificacionTarea", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        
-                        cmd.Parameters.Add("@option", SqlDbType.VarChar).Value = opt;
-                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = IdBQ;
-                        cmd.Parameters.Add("@id", SqlDbType.Int).Value = 0;
-                        cmd.Parameters.Add("@clasificacionTarea", SqlDbType.VarChar).Value = "";
-                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = "";
-                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = false;
-                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = "";
-                        con.Open();
 
-                        DataTable dt = new DataTable();
-
-                        dt.Load(cmd.ExecuteReader());
-                        con.Close();
-                        con.Dispose();
-                        return dt;
-                    }
-                }
-            }
-            catch
-            {
-                throw;
-            }
-        }
         public DataTable getClasificacionesTareaByIdBQ(int idBQ)
         {
             try
@@ -4772,205 +4982,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
-        public DataTable getMensaje(int idMensaje) //Saul Sanchez
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connStr))
-                {
-                    using (SqlCommand cmd = new SqlCommand("SP_BQ_getMensaje", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.Add("@idMensaje", SqlDbType.VarChar).Value = idMensaje;
-                        con.Open();
-
-                        DataTable dt = new DataTable();
-
-                        dt.Load(cmd.ExecuteReader());
-                        con.Close();
-                        con.Dispose();
-                        return dt;
-                    }
-                }
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        public string saveAccion(string opt, string usuario, int idBQ, string accion, string descripcion, bool activo, int idAccion)  //Rodolfo Godina
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connStr))
-                {
-                    using (SqlCommand cmd = new SqlCommand("SP_BQ_CatAcciones", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@sp_option", SqlDbType.VarChar).Value = opt;
-                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
-                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = usuario;
-                        cmd.Parameters.Add("@accion", SqlDbType.VarChar).Value = accion;
-                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = descripcion;
-                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = activo;
-                        cmd.Parameters.Add("@idAccion", SqlDbType.Int).Value = idAccion;
-                        con.Open();
-
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                        con.Dispose();
-                        return "OK";
-                    }
-                }
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        public DataTable getCatalogoAcciones(string opt, int IdBQ)
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connStr))
-                {
-                    using (SqlCommand cmd = new SqlCommand("SP_BQ_CatAcciones", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        cmd.Parameters.Add("@sp_option", SqlDbType.VarChar).Value = opt;
-                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = IdBQ;
-                        cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = "";
-                        cmd.Parameters.Add("@accion", SqlDbType.VarChar).Value = "";
-                        cmd.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = "";
-                        cmd.Parameters.Add("@activo", SqlDbType.Bit).Value = false;
-                        cmd.Parameters.Add("@idAccion", SqlDbType.Int).Value = 0;
-                        con.Open();
-
-                        DataTable dt = new DataTable();
-
-                        dt.Load(cmd.ExecuteReader());
-                        con.Close();
-                        con.Dispose();
-                        return dt;
-                    }
-                }
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        public string saveEntrevistadoBQ(int idQueja, int idEntrevistado, string nombre, string puesto, string entrevistador, int usuarioAlta)
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connStr))
-                {
-                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GuardarEntrevistado", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        // cmd.Parameters.Add("@idIssue", SqlDbType.Int).Value = null;
-                        cmd.Parameters.Add("@idQueja", SqlDbType.Int).Value = idQueja;
-                        cmd.Parameters.Add("@idEntrevistado", SqlDbType.Int).Value = idEntrevistado;
-                        cmd.Parameters.Add("@nombre", SqlDbType.VarChar).Value = nombre;
-                        cmd.Parameters.Add("@puesto", SqlDbType.VarChar).Value = puesto;
-                        cmd.Parameters.Add("@entrevistadoPor", SqlDbType.VarChar).Value = entrevistador;
-                        cmd.Parameters.Add("@usuarioAlta", SqlDbType.Int).Value = usuarioAlta;
-
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-
-                        return "exito";
-                    }
-                }
-            }
-            catch
-            {
-                return "Ocurrio un error al intentar guardar";
-                throw;
-            }
-        }
-        public DataTable getEntrevistadosBQ(Int64 idQueja)
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connStr))
-                {
-                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GetEntrevistados", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@idqueja", SqlDbType.Int).Value = idQueja;
-
-                        con.Open();
-
-                        DataTable dt = new DataTable();
-
-                        dt.Load(cmd.ExecuteReader());
-
-                        return dt;
-                    }
-                }
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        public string deleteEntrevistadoBQ(int idEntrevistado, int usuarioBaja)
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connStr))
-                {
-                    using (SqlCommand cmd = new SqlCommand("SP_BQ_DeleteEntrevistado", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        // cmd.Parameters.Add("@idIssue", SqlDbType.Int).Value = null;
-                        cmd.Parameters.Add("@idEntrevistado", SqlDbType.Int).Value = idEntrevistado;
-                        cmd.Parameters.Add("@usuarioBaja", SqlDbType.Int).Value = usuarioBaja;
-
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-
-                        return "exito";
-                    }
-                }
-            }
-            catch
-            {
-                return "Ocurrio un error al intentar guardar";
-                throw;
-            }
-        }
-        public string saveComentarioBQ(int idQueja, string comentario, int usuarioAlta)
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connStr))
-                {
-                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GuardarComentario", con))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        // cmd.Parameters.Add("@idIssue", SqlDbType.Int).Value = null;
-                        cmd.Parameters.Add("@idDenuncia", SqlDbType.Int).Value = idQueja;
-                        cmd.Parameters.Add("@comentario", SqlDbType.VarChar).Value = comentario;
-                        cmd.Parameters.Add("@usuarioAlta", SqlDbType.Int).Value = usuarioAlta;
-
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-
-                        return "exito";
-                    }
-                }
-            }
-            catch
-            {
-                return "Ocurrio un error al intentar guardar";
-                throw;
-            }
-        }
 
     }
 }

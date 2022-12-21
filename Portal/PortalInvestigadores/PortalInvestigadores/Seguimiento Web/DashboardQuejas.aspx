@@ -396,7 +396,7 @@ function dashboardData(Opt, idBQ) {
 
         }
         if (Opt == 2) {
-            var url = window.location.origin + "/DetalleQuejas.aspx";
+            var url = window.location.origin + "/DetalleQuejas.aspx?idQueja="+Id;
             window.location.replace(url);
             sessionStorage.setItem("sIdQueja", Id);
         }
