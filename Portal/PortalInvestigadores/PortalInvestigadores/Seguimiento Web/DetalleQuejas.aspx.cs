@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Portal_Investigadores;
 using Portal_Investigadores.clases;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -25,7 +27,7 @@ namespace Seguimiento_Web
                 string sIdioma = Session["idioma"].ToString();
                 int iIdQueja = int.Parse(Request.QueryString["idQueja"]);
                 txtResponsable.Text = Session["nomUsuario"].ToString();
-
+                int idBQ = int.Parse(Session["idBq"].ToString());
 
                 //Quejas Asociadas
                 DataTable dtAsociados = DBHelper.getQuejasAsociadas(iIdQueja);
@@ -91,48 +93,50 @@ namespace Seguimiento_Web
                 beneficioDDL.DataBind();
                 beneficioDDL.EnableViewState = true;
 
-                DataTable dtAnalisis = DBHelper.getBQInvTema(iIdQueja, Convert.ToInt32(sIdioma));
-                gvTemas.DataSource = dtAnalisis;
-                gvTemas.DataBind();
-                if (dtAnalisis.Rows.Count > 0)
+                // Tipo
+                DataTable tipos = DBHelper.getTiposMensaje(idBQ);
+                DataRow dr = tipos.NewRow();
+
+                if (sIdioma == "2")
                 {
-                    if (sIdioma == "2")
-                    {
-                        GridViewRow header = gvTemas.HeaderRow;
-                        header.Cells[0].Text = "Investigation Id";
-                        header.Cells[1].Text = "Investigation Topic";
-                        header.Cells[2].Text = "Investigation Case";
-                        header.Cells[3].Text = "Investigation Activities";
-                        header.Cells[4].Text = "Accion Plan";
-                        header.Cells[5].Text = "Conclutions";
-                        header.Cells[6].Text = "Benefit";
-                        header.Cells[7].Text = "Result";
-                    }
-                    else
-                    {
-                        GridViewRow header = gvTemas.HeaderRow;
-                        header.Cells[0].Text = "Id Investigacion";
-                        header.Cells[1].Text = "Tema Investigacion";
-                        header.Cells[2].Text = "Asunto Investigacion";
-                        header.Cells[3].Text = "Actividades Investigacion";
-                        header.Cells[4].Text = "Plan Accion";
-                        header.Cells[5].Text = "Conclusiones";
-                        header.Cells[6].Text = "Beneficio";
-                        header.Cells[7].Text = "Resultado";
-                    }
+                    dr["Descripcion"] = "Select Value";
+                    dr["IdTipo"] = "0";
+                    tipos.Rows.Add(dr);
+
                 }
+                else
+                {
+                    dr["Descripcion"] = "Selecciona un Valor";
+                    dr["IdTipo"] = "0";
+                    tipos.Rows.Add(dr);
+                }
+                tipos.DefaultView.Sort = "IdTipo";
+                ddlTipo.DataSource = tipos;
+                ddlTipo.DataTextField = "Descripcion";
+                ddlTipo.DataValueField = "IdTipo";
+                ddlTipo.DataBind();
+
+
+                // Investigacion Analisis
+                Cargar_InvestigacionTemas(iIdQueja, Convert.ToInt32(sIdioma));
+                //Investigacion Involucrados
+                Cargar_InvestigacionInv(iIdQueja, Convert.ToInt32(sIdioma));
+
+
+
+
             }
         }
         protected void btnCom_Click(object sender, EventArgs e)
         {
             int iIdQueja = int.Parse(Request.QueryString["idQueja"]);
-            string sConclusion =txtConclusion.Text;
+            string sConclusion = txtConclusion.Text;
             DBHelper.postBQInvConclusion(iIdQueja, sConclusion);
 
         }
         protected void btnDelegar_Click(object sender, EventArgs e)
-        { 
-        
+        {
+
         }
 
         protected void btnTemaGuardar_Click(object sender, EventArgs e)
@@ -144,51 +148,76 @@ namespace Seguimiento_Web
             string sTema = mTxtTema.Text;
             string sAsunto = mTxtAsunto.Text;
             string sActividades = mTxtActividades.Text;
-            string sDetalle=mTxtDetalle.Text;
-            string sPlan = mTxtPlan.Text;       
+            string sDetalle = mTxtDetalle.Text;
+            string sPlan = mTxtPlan.Text;
             string sCon = mTxtConclusiones.Text;
 
             if (beneficioDDL.SelectedIndex != 0 && resultadoDDL.SelectedIndex != 0)
             {
                 int iBeneficio = Convert.ToInt32(beneficioDDL.SelectedValue);
                 int iResultado = Convert.ToInt32(resultadoDDL.SelectedValue);
-                DBHelper.postBQInvTema(iIdQueja, sTema, sAsunto, sActividades, sDetalle, sPlan, sCon, iResultado, iBeneficio, iUsr, iIdBQ ,iIdioma);
-
-                DataTable dtAnalisis = DBHelper.getBQInvTema(iIdQueja, iIdioma);
-                gvTemas.DataSource = dtAnalisis;
-                gvTemas.DataBind();
-                if (dtAnalisis.Rows.Count > 0)
-                {
-                    if (iIdioma == 2)
-                    {
-                        GridViewRow header = gvTemas.HeaderRow;
-                        header.Cells[0].Text = "Investigation Id";
-                        header.Cells[1].Text = "Investigation Topic";
-                        header.Cells[2].Text = "Investigation Case";
-                        header.Cells[3].Text = "Investigation Activities";
-                        header.Cells[4].Text = "Accion Plan";
-                        header.Cells[5].Text = "Conclutions";
-                        header.Cells[6].Text = "Benefit";
-                        header.Cells[7].Text = "Result";
-                    }
-                    else
-                    {
-                        GridViewRow header = gvTemas.HeaderRow;
-                        header.Cells[0].Text = "Id Investigacion";
-                        header.Cells[1].Text = "Tema Investigacion";
-                        header.Cells[2].Text = "Asunto Investigacion";
-                        header.Cells[3].Text = "Actividades Investigacion";
-                        header.Cells[4].Text = "Plan Accion";
-                        header.Cells[5].Text = "Conclusiones";
-                        header.Cells[6].Text = "Beneficio";
-                        header.Cells[7].Text = "Resultado";
-                    }
-                }
-
+                DBHelper.postBQInvTema("NEW", iIdQueja, sTema, sAsunto, sActividades, sDetalle, sPlan, sCon, iResultado, iBeneficio, iUsr, iIdBQ, iIdioma, 0);
+                Cargar_InvestigacionTemas(iIdQueja, iIdioma);
             }
 
         }
+        protected void delTemas_Click(object sender, EventArgs e)
+        {
 
+            int iUsr = int.Parse(Session["idUsuario"].ToString());
+            int iIdQueja = int.Parse(Request.QueryString["idQueja"]);
+            int iIdBQ = int.Parse(Session["idBQ"].ToString());
+            int iIdioma = int.Parse(Session["idioma"].ToString());
+
+            foreach (GridViewRow gvRow in gvTemas.Rows)
+            {
+                var chk = gvRow.FindControl("Chk1") as CheckBox;
+                if (chk.Checked == true)
+                {
+                    int iTemaId = Convert.ToInt32(gvRow.Cells[1].Text);
+                    DBHelper.postBQInvTema("CAN", iIdQueja, "", "", "", "", "", "", 0, 0, iUsr, iIdBQ, 0, iTemaId);
+                }
+            }
+
+            Cargar_InvestigacionTemas(iIdQueja, iIdioma);
+        }
+        protected void btnInvGuardar_Click(object sender, EventArgs e)
+        {
+            int iIdioma = int.Parse(Session["idioma"].ToString());
+            int iIdQueja = int.Parse(Request.QueryString["idQueja"]);
+            int iIdBQ = int.Parse(Session["idBq"].ToString());
+            int iUsr = int.Parse(Session["idUsuario"].ToString());
+            string sNombre = txtInvNombre.Text;
+            string sPuesto = txtInvPuesto.Text;
+            int iTipo = Convert.ToInt32(ddlTipo.SelectedValue);
+            DateTime dFechaIng = Convert.ToDateTime(fechaIngreso.Text);
+            DateTime dFechaCom = Convert.ToDateTime(fechaCom.Text);
+
+            DBHelper.postBQInvInvolucrados("NEW",iIdQueja, sNombre, sPuesto, iTipo, dFechaIng, dFechaCom, iUsr, iIdBQ,0);
+            Cargar_InvestigacionInv(iIdQueja, iIdioma);
+
+        }
+
+        protected void delInv_Click(object sender, EventArgs e)
+        {
+
+            int iUsr = int.Parse(Session["idUsuario"].ToString());
+            int iIdQueja = int.Parse(Request.QueryString["idQueja"]);
+            int iIdBQ = int.Parse(Session["idBQ"].ToString());
+            int iIdioma = int.Parse(Session["idioma"].ToString());
+
+            foreach (GridViewRow gvRow in gvInv.Rows)
+            {
+                var chk = gvRow.FindControl("Chk2") as CheckBox;
+                if (chk.Checked == true)
+                {
+                    int iIdInv = Convert.ToInt32(gvRow.Cells[1].Text);
+                    DBHelper.postBQInvInvolucrados("CAN", iIdQueja,"","",0, DateTime.Now,DateTime.Now, iUsr, iIdBQ, iIdInv);
+                }
+            }
+
+            Cargar_InvestigacionInv(iIdQueja, iIdioma);
+        }
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true)]
@@ -212,7 +241,73 @@ namespace Seguimiento_Web
 
         }
 
+        public void Cargar_InvestigacionTemas(int iIdQueja, int iIdioma)
+        {
+            DataTable dtAnalisis = DBHelper.getBQInvTema(iIdQueja, iIdioma);
+            gvTemas.DataSource = dtAnalisis;
+            gvTemas.DataBind();
 
+            if (dtAnalisis.Rows.Count > 0)
+            {
+                if (iIdioma == 2)
+                {
+                    GridViewRow header = gvTemas.HeaderRow;
+                    header.Cells[0].Text = "Select";
+                    header.Cells[1].Text = "Topic Id";
+                    header.Cells[2].Text = "Investigation Topic";
+                    header.Cells[3].Text = "Investigation Case";
+                    header.Cells[4].Text = "Investigation Activities";
+                    header.Cells[5].Text = "Accion Plan";
+                    header.Cells[6].Text = "Conclutions";
+                    header.Cells[7].Text = "Benefit";
+                    header.Cells[8].Text = "Result";
+                }
+                else
+                {
+                    GridViewRow header = gvTemas.HeaderRow;
+                    header.Cells[0].Text = "Seleccionar";
+                    header.Cells[1].Text = "Id Tema";
+                    header.Cells[2].Text = "Tema Investigacion";
+                    header.Cells[3].Text = "Asunto Investigacion";
+                    header.Cells[4].Text = "Actividades Investigacion";
+                    header.Cells[5].Text = "Plan Accion";
+                    header.Cells[6].Text = "Conclusiones";
+                    header.Cells[7].Text = "Beneficio";
+                    header.Cells[8].Text = "Resultado";
+                }
+            }
+        }
+        public void Cargar_InvestigacionInv(int iIdQueja, int iIdioma)
+        {
+            DataTable dtInvolucrados = DBHelper.getBQInvInvolucrados(iIdQueja);
+            gvInv.DataSource = dtInvolucrados;
+            gvInv.DataBind();
+            if (dtInvolucrados.Rows.Count > 0)
+            {
+                if (iIdioma == 2)
+                {
+                    GridViewRow header = gvInv.HeaderRow;
+                    header.Cells[0].Text = "Select";
+                    header.Cells[1].Text = "Involved Id";
+                    header.Cells[2].Text = "Name";
+                    header.Cells[3].Text = "Position";
+                    header.Cells[4].Text = "Type";
+                    header.Cells[5].Text = "Create Date";
+                    header.Cells[6].Text = "Due Date";
+                }
+                else
+                {
+                    GridViewRow header = gvInv.HeaderRow;
+                    header.Cells[0].Text = "Seleccionar";
+                    header.Cells[1].Text = "Id Involucrado";
+                    header.Cells[2].Text = "Nombre";
+                    header.Cells[3].Text = "Puesto";
+                    header.Cells[4].Text = "Tipo";
+                    header.Cells[5].Text = "Fecha Registro";
+                    header.Cells[6].Text = "Fecha Compromiso";
+                }
+            }
 
+        }
     }
-}
+ }

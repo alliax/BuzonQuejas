@@ -57,6 +57,29 @@
                             if (Json[i].Id == 20) { $("#lbl20").html(Json[i].Texto) }
                             if (Json[i].Id == 21) { $("#lbl21").html(Json[i].Texto) }
                             if (Json[i].Id == 21) { $("#<%=btnCom.ClientID%>").val(Json[i].Texto); }
+                            if (Json[i].Id == 35) { $("#lbl22").html(Json[i].Texto); }
+                            if (Json[i].Id == 23) { $("#lbl23").html(Json[i].Texto); }
+                            if (Json[i].Id == 24) { $("#lbl24").html(Json[i].Texto); }
+                            if (Json[i].Id == 36) { $("#lbl25").html(Json[i].Texto); }
+                            if (Json[i].Id == 25) { $("#lbl26").html(Json[i].Texto); }
+                            if (Json[i].Id == 26) { $("#lbl27").html(Json[i].Texto); }
+                            if (Json[i].Id == 27) { $("#lbl28").html(Json[i].Texto); }
+                            if (Json[i].Id == 28) { $("#lbl29").html(Json[i].Texto); }
+                            if (Json[i].Id == 29) { $("#lbl30").html(Json[i].Texto); }
+                            if (Json[i].Id == 30) { $("#lbl31").html(Json[i].Texto); }
+                            if (Json[i].Id == 31) { $("#btnAddSoporteModal").html(Json[i].Texto); }
+                            if (Json[i].Id == 32) { $("#btnMSop").html(Json[i].Texto); }
+                            if (Json[i].Id == 33) { $("#<%=btnTemaGuardar.ClientID%>").val(Json[i].Texto); }
+                            if (Json[i].Id == 34) { $("#<%=btnTemaCancelar.ClientID%>").val(Json[i].Texto); }
+                            if (Json[i].Id == 36) { $("#lbl32").html(Json[i].Texto); }
+                            if (Json[i].Id == 37) { $("#lbl33").html(Json[i].Texto); }
+                            if (Json[i].Id == 38) { $("#lbl34").html(Json[i].Texto); }
+                            if (Json[i].Id == 39) { $("#lbl35").html(Json[i].Texto); }
+                            if (Json[i].Id == 40) { $("#lbl36").html(Json[i].Texto); }
+                            if (Json[i].Id == 41) { $("#lbl37").html(Json[i].Texto); }
+                            if (Json[i].Id == 33) { $("#<%=btnInvGuardar.ClientID%>").val(Json[i].Texto); }
+                            if (Json[i].Id == 34) { $("#<%=btnInvCan.ClientID%>").val(Json[i].Texto); }
+
                     }
 
                 },
@@ -113,6 +136,9 @@
                 $("#contenido_Div1").hide();
                 //alert(tipoLectura);
             }
+
+          $("#<%=fechaIngreso.ClientID%>").datepicker({dateFormat:"yyyy-MM-dd"});
+          $("#<%=fechaCom.ClientID%>").datepicker({dateFormat:"yyyy-MM-dd"});
 
         </script>
         
@@ -270,11 +296,10 @@
 
                                 <div class="form-group col-md-2" style="margin-top:32.19px;">
                                     <asp:Button runat="server" OnClick="btnDelegar_Click"  ID="btnDelegar" CssClass="btn btn-primary" Text="Delegate"/>
-
                                 </div>
                             </div>   
 
-                            <%--Acordion Temas--%>
+                            <%--Acordion Analisis--%>
                             <div class="accordion" id="accordionTema" style="margin-top: 15px;">
                                 <div class="card">
                                     <div class="card-header cardheader-detalle" id="headingTema">
@@ -289,39 +314,55 @@
                                     <div id="collapseTema" class="collapse" aria-labelledby="headingTema">
                                         <div class="card-body" >
                                             <div id="tableTema" class="table-editable">
-                                                <span class="float-right mb-3 mr-2 card-add " data-target="#modalTemas"><a id="addTemaPlus" title="Añadir un Nuevo Tema" data-toggle="modal" style="font-size:30px; font-weight:bold; text-decoration:none;"  data-target="#modalTemas" class="text-success openModal">+</a></span>
-                                                    <asp:GridView runat="server" ID="gvTemas" CssClass="table table-bordered table-responsive-md table-striped text-center tblinvolucrados">
-                                                    </asp:GridView>
+                                                <span class="float-right mb-3 mr-2 card-add "><asp:Button runat="server" OnClick="delTemas_Click"  ID="delTema" style="font-size:30px; font-weight:bold; text-decoration:none;  border: none; background:none;" CssClass="text-danger openModal" Text="-" /></span>
+                                                <span class="float-right mb-3 mr-2 card-add " data-target="#modalTemas"><a id="addTemaPlus" title="Añadir un Nuevo Tema" data-toggle="modal" style="font-size:30px; font-weight:bold; text-decoration:none;"  data-target="#modalTemas" class="text-success openModal">+</a></span>                                                  
+                                                <asp:GridView runat="server" ID="gvTemas" CssClass="table table-bordered table-responsive-md table-striped text-center tblinvolucrados">
+                                                        <Columns>
+                                                        <asp:TemplateField>  
+                                                        <EditItemTemplate>  
+                                                            <asp:CheckBox ID="Chk1" runat="server" />  
+                                                        </EditItemTemplate>  
+                                                        <ItemTemplate>  
+                                                            <asp:CheckBox ID="Chk1" runat="server" />  
+                                                        </ItemTemplate>  
+                                                        </asp:TemplateField>  
+                                                        </Columns>
+                                                </asp:GridView>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <%--Acordion Involucrados2--%>
+                            <%--Acordion Involucrados--%>
                             <div class="accordion" id="accordionInv2" style="margin-top: 15px;">
                                 <div class="card" style="overflow: auto;">
                                     <div class="card-header cardheader-detalle" id="headingInv2">
                                         <h2 class="mb-0" style="float: left; width: 94%;">
-                                            <button id="lbl18" class="btn btn-link btn-collapse"  type="button" data-toggle="collapse" data-target="#collapseInv2" aria-expanded="false" aria-controls="collapseInv2">
+                                            <button id="lbl18" class="btn btn-link btn-collapse" type="button" data-toggle="collapse" data-target="#modalInv" aria-expanded="false" aria-controls="collapseInv">
                                                Involucrados
                                             </button>
                                         </h2>
-                                        <img src="img/down-arrow.svg" style="float:right; margin-right: 20px; margin-top: 9px; height: 24px; cursor: pointer;" data-toggle="collapse" data-target="#collapseInv2"/>
+                                        <img src="img/down-arrow.svg" style="float:right; margin-right: 20px; margin-top: 9px; height: 24px; cursor: pointer;" data-toggle="collapse" data-target="#collapseInv"/>
                                     </div>
 
-                                    <div id="collapseInv2" class="collapse" aria-labelledby="headingInv2" >
+                                    <div id="collapseInv" class="collapse" aria-labelledby="headingInv2" >
                                         <div class="card-body">
                                             <div id="tableInv2" class="table-editable">
-                                                <span class="table-addInv float-right mb-3 mr-2 card-add"></span>
-                                                <table class="table table-bordered table-responsive-md table-striped text-center tblinvolucrados">
-                                                    <thead>
-                                                        <tr>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
+                                                <span class="float-right mb-3 mr-2 card-add "><asp:Button runat="server" OnClick="delInv_Click"  ID="delInv" style="font-size:30px; font-weight:bold; text-decoration:none;  border: none; background:none;" CssClass="text-danger openModal" Text="-" /></span>  
+                                                <span class="float-right mb-3 mr-2 card-add " data-target="#modalInv"><a id="addInvPlus" title="Añadir un Nuevo Tema" data-toggle="modal" style="font-size:30px; font-weight:bold; text-decoration:none;"  data-target="#modalInv" class="text-success openModal">+</a></span>
+                                                    <asp:GridView  runat="server" ID="gvInv" CssClass="table table-bordered table-responsive-md table-striped text-center tblinvolucrados">
+                                                        <Columns>
+                                                        <asp:TemplateField>  
+                                                        <EditItemTemplate>  
+                                                            <asp:CheckBox ID="Chk2" runat="server" />  
+                                                        </EditItemTemplate>  
+                                                        <ItemTemplate>  
+                                                            <asp:CheckBox ID="Chk2" runat="server" />  
+                                                        </ItemTemplate>  
+                                                        </asp:TemplateField>  
+                                                        </Columns>
+                                                    </asp:GridView>
                                             </div>
                                         </div>
                                     </div>
@@ -412,12 +453,12 @@
             </div>
             
 
-            <%--Modal--%>
+            <%--Modal Analisis--%>
             <div id="modalTemas" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" style="display:none"> 
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 id="modalPrincipal-title" class="modal-title">Análisis</h5>
+                            <h5 id="lbl22" class="modal-title">Análisis</h5>
                             <button runat="server" id="closeModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -427,41 +468,40 @@
                     
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label for="inputFolio">Tema Investigado</label>
-                                        <asp:TextBox runat="server"  CssClass="form-control" ID="mTxtIdTema" style="display:none;" />
+                                        <label id="lbl23" for="inputFolio">Tema Investigado</label>
                                         <asp:TextBox runat="server"  CssClass="form-control" ID="mTxtTema" MaxLength="100" />
                                     </div>
                                 </div>
 
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label for="inputGrupo">Asunto Investigado</label>                                       
+                                        <label id="lbl24" for="inputGrupo">Asunto Investigado</label>                                       
                                         <asp:TextBox runat="server"  CssClass="form-control" ID="mTxtAsunto" MaxLength="250" />
                                     </div>
                                 </div>
 
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label for="inputEmpresa">Actividades de la Investigación</label>
+                                        <label id="lbl25" for="inputEmpresa">Actividades de la Investigación</label>
                                         <asp:TextBox runat="server" CssClass="form-control" ID="mTxtActividades" textMode="MultiLine" Rows="2" />
                                     </div>
                                 </div>
 
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label for="inputSitio">Detalle de las actividades de Investigación</label>                  
+                                        <label id="lbl26" for="inputSitio">Detalle de las actividades de Investigación</label>                  
                                         <asp:TextBox runat="server"  CssClass="form-control" ID="mTxtDetalle" textMode="MultiLine" Rows="5" />
                                     </div>
                                 </div>
 
                                 <div class="form-row">
                                      <div class="form-group col-md-6">
-                                        <label for="inputDepartamento">Plan de Acción</label>
+                                        <label id="lbl27" for="inputDepartamento">Plan de Acción</label>
                                         <asp:TextBox runat="server" CssClass="form-control" ID="mTxtPlan" textMode="MultiLine" Rows="3"  />
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <label for="inputTema">Conclusiones</label>
+                                        <label id="lbl28" for="inputTema">Conclusiones</label>
                                      
                                         <asp:TextBox runat="server" CssClass="form-control" ID="mTxtConclusiones" textMode="MultiLine" Rows="3"  />
                                     </div>
@@ -469,23 +509,23 @@
 
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        <label for="inputTitulo">Resultado</label>
+                                        <label id="lbl29" for="inputTitulo">Resultado</label>
                                         <asp:DropDownList ID="resultadoDDL" runat="server" CssClass="form-control" >
 
                                         </asp:DropDownList>
                                     </div>
 
                                     <div class="form-group col-md-4">
-                                        <label for="inputResumen">Beneficio</label>
+                                        <label id="lbl30" for="inputResumen">Beneficio</label>
                                         <asp:DropDownList ID="beneficioDDL" runat="server" CssClass="form-control">
                                         </asp:DropDownList>
                                     </div>
 
                                     <div class="form-group col-md-4">
-                                        <label for="inputResumen">Soporte</label>
+                                        <label id="lbl31" for="inputResumen">Soporte</label>
                                         <div id="SoporteContainer">
                                             <button title="Añadir Soporte" id="btnAddSoporteModal" style="width:49%;"class="btn btn-info btn-rounded btn-sm my-0" onclick="event.preventDefault(); popUp('UploadFile.aspx', 2, 0 ); ">Agregar Soporte</button>
-                                            <%--<button title="Ver Soportes Agregados" id="btnMSop"style="width:49%;"  disabled="disabled" type="button" class="btn btn-secondary btn-rounded btn-sm my-0 btnVerModalSoporte" data-toggle="modal" data-target="#modalSoporte" onclick="event.preventDefault(); cargarModalSoporte(2,0);">Ver</button>                                   --%>
+                                            <button title="Ver Soportes Agregados" id="btnMSop"style="width:49%;"  disabled="disabled" type="button" class="btn btn-secondary btn-rounded btn-sm my-0 btnVerModalSoporte" data-toggle="modal" data-target="#modalSoporte" onclick="event.preventDefault(); cargarModalSoporte(2,0);">Ver</button>   
                                      </div>
                                         
                                     </div>
@@ -543,6 +583,68 @@
                 </div>
             </div>
 
+
+           <%--Modal Involucrados--%>
+            <div id="modalInv" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" style="display:none"> 
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 id="lbl32" class="modal-title">Involucrados</h5>
+                            <button runat="server" id="Button1" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                          <div class="modal-body principal">
+                    
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label id="lbl33" for="inputFolio">Nombre Completo</label>
+                                        <asp:TextBox Width="50%" runat="server"  CssClass="form-control" ID="txtInvNombre" MaxLength="100" />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label id="lbl34" for="inputGrupo">Puesto</label>                                       
+                                        <asp:TextBox Width="50%" runat="server"  CssClass="form-control" ID="txtInvPuesto" MaxLength="250" />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label id="lbl35" for="inputGrupo">Tipo</label>                                       
+                                        <asp:DropDownList Width="50%"  runat="server" CssClass="form-control" ID="ddlTipo" /> 
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                    <label id="lbl36" for="inputGrupo">Fecha Ingreso</label>                                       
+                                        <asp:TextBox Width="50%"  runat="server" CssClass="form-control" ID="fechaIngreso" TextMode="Date"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label id="lbl37" for="inputGrupo">Fecha Compromiso</label>                                       
+                                        <asp:TextBox Width="50%" runat="server"  CssClass="form-control" ID="fechaCom" TextMode="Date" />
+                                    </div>
+                                </div>
+ 
+                        </div>
+                        <div class="modal-footer principal">
+                            <asp:Button runat="server" CssClass="btn btn-primary" ID="btnInvGuardar" Text="Guardar" OnClick="btnInvGuardar_Click"/>
+                            <asp:Button runat="server" CssClass="btn btn-danger" ID="btnInvCan" Text="Cancelar"/>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           
+
+              <%--Modal Soporte--%>
             <div id="modalSoporte" class="modal fade bd-example-modal-xl"  tabindex="-1" data-backdrop-limit="1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" data-modal-parent="#modalDetail">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
