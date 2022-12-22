@@ -119,6 +119,7 @@
     <Content Include="AltaMensaje.aspx" />
     <Content Include="CatalogoBuzones.aspx" />
     <Content Include="CatalogoClasificaciones.aspx" />
+    <Content Include="CatalogoAcciones.aspx" />
     <Content Include="CatalogoConducto.aspx" />
     <Content Include="CatalogoClasificacionTarea.aspx" />
     <Content Include="CatalogoImportancia.aspx" />
@@ -3173,6 +3174,13 @@
     </Compile>
     <Compile Include="CatalogoClasificaciones.aspx.designer.cs">
       <DependentUpon>CatalogoClasificaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CatalogoAcciones.aspx.cs">
+      <DependentUpon>CatalogoAcciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CatalogoAcciones.aspx.designer.cs">
+      <DependentUpon>CatalogoAcciones.aspx</DependentUpon>
     </Compile>
     <Compile Include="CatalogoConducto.aspx.cs">
       <DependentUpon>CatalogoConducto.aspx</DependentUpon>

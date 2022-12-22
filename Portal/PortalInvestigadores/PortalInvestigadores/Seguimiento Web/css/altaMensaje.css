@@ -15,6 +15,7 @@
 }
 .card {
     margin-bottom: 10px;
+    border: 1px solid #4E8ABE !important;
 }
 
 btns input{
