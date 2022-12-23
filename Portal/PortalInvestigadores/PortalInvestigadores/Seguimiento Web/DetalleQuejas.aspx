@@ -21,6 +21,10 @@
                 var idQueja = sessionStorage.getItem("sIdQueja");               
                 setValues(idQueja)
                 setLanguage(idioma)
+
+                cargarEntrevistadosBQ();
+                
+                addEntrevistadosBQ();
             });
 
             function setLanguage(Idioma) {
@@ -56,7 +60,7 @@
                             if (Json[i].Id == 19) { $("#lbl19").html(Json[i].Texto) }
                             if (Json[i].Id == 20) { $("#lbl20").html(Json[i].Texto) }
                             if (Json[i].Id == 21) { $("#lbl21").html(Json[i].Texto) }
-                            if (Json[i].Id == 21) { $("#<%=btnCom.ClientID%>").val(Json[i].Texto); }
+                            <%--if (Json[i].Id == 21) { $("#<%=btnCom.ClientID%>").val(Json[i].Texto); }--%>
                     }
 
                 },
@@ -343,10 +347,15 @@
                                     <div id="collapseEnt" class="collapse" aria-labelledby="headingEnt">
                                         <div class="card-body">
                                             <div id="tableEnt" class="table-editable">
-                                                <span class="table-addEnt float-right mb-3 mr-2 card-add"><a href="#!" id="addEntrevistadoPlus" title="Añadir un nuevo Entrevistado"  style="font-size:30px; font-weight:bold; text-decoration:none;" class="text-success"></a></span>
+                                                <span class="table-addEnt float-right mb-3 mr-2 card-add"><a href="#!" id="addEntrevistadoPlus" title="Añadir un nuevo Entrevistado"  style="font-size:30px; font-weight:bold; text-decoration:none;" class="text-success">+</a></span>
                                                 <table class="table table-bordered table-responsive-md table-striped text-center tblinvolucrados">
                                                     <thead>
                                                         <tr>
+                                                            <th class="text-left" style="display:none;">id</th>
+                                                            <th class="text-left">Nombre Completo</th>
+                                                            <th class="text-left">Puesto</th>
+                                                            <th class="text-left">Entrevistado por:</th>
+                                                            <th class="text-left" style="width:85px;"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -370,11 +379,11 @@
                                 
                                 <div class="form-row" style="margin-top:5px;">
                                     <div class="form-group col-md-10" >
-                                        <asp:TextBox runat="server" AutoPostBack="false" CssClass="form-control" onkeydown = "return (event.keyCode!=13);" ID="txtComentario" Placeholder="Escribe un comentario/Write a comment..."/>
+                                        <asp:TextBox runat="server" AutoPostBack="false" CssClass="form-control" onkeydown = "return (event.keyCode!=13);" ID="txtComentarioQueja" Placeholder="Escribe un comentario/Write a comment..."/>
                                         
                                     </div>
                                     <div class="form-group col-md-2 " >
-                                        <asp:Button ID="btnCom" runat="server" OnClick="btnCom_Click" cssClass="btn btn-info" Text="Comentar" />
+                                        <button type="button" id="txtComentarioInv" class="btn btn-info" onclick="return saveComentarioBQ()">Comentar</button>
                                     </div>
                                 </div>
                             </div>

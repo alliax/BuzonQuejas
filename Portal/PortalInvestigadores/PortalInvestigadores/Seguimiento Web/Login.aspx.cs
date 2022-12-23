@@ -67,7 +67,7 @@ namespace Portal_Investigadores
                         //int perfil = DBHelper.getPerfil(usuario);
                         //Session["rol"] = perfil.ToString();
                         Session["idioma"] = ddlIdioma.SelectedValue;
-                        DataTable userBQ = DBHelper.getBQUsr(Convert.ToInt32(user.Rows[0][0].ToString()));
+                       DataTable userBQ = DBHelper.getBQUsr(Convert.ToInt32(user.Rows[0][0].ToString()));
                         Session["empresa"] = userBQ.Rows[0][1].ToString();
                         Session["grupo"] = userBQ.Rows[0][2].ToString();
                         Session["idBQ"] = userBQ.Rows[0][0].ToString();

@@ -890,6 +890,70 @@ function addInvolucrados() {
 
 }
 
+function addEntrevistadosBQ() {
+
+    const $tableIDEnt = $('#tableEnt');
+
+    $('.table-addEnt').on('click', () => {
+        var lastRow = $tableIDEnt.find("tr").length - 1;
+
+        var newTr2 = `
+            <tr>
+                <td class="pt-3-half" contenteditable="true" style="display:none;">0</td>
+                <td class="pt-3-half" contenteditable="false"><input type="text"></td>
+                <td class="pt-3-half" contenteditable="false"><input type="text"></td>
+                <td class="pt-3-half" contenteditable="false"><input type="text"></td>
+                <td>
+                    <span>
+                        <button type="button" title="Guardar/Save" style="width:30px; margin-right: -5px;" class="btn btn-success btn-rounded btn-sm my-0 table-save"><img src="img/save-2.png" style="margin-left: -4px;" /></button>
+                        <button type="button" title="Eliminar/Delete" style="width:30px;"class="btn btn-danger btn-rounded btn-sm my-0 table-remove">-</button>
+                    </span>
+                </td>
+            </tr>`;
+
+        $('#tableEnt tbody').append(newTr2);
+
+    });
+
+    $tableIDEnt.on('click', '.table-remove', function () {
+
+        var txt;
+        var r = confirm("" + tagsTable.filter(function (tag) { return tag.id == 92; })[0].tag + ""); /*¿Estas seguro que deseas eliminar el Entrevistado ?*/
+        if (r == true) {
+
+            var idEntrevistado;
+
+            $(this).parents('tr').each(function () {
+                idEntrevistado = $(this).find("td:first").html();
+            });
+
+            deleteEntrevistado(idEntrevistado);
+
+            $(this).parents('tr').detach();
+        }
+    });
+
+    $tableIDEnt.on('click', '.table-save', function () {
+
+        var idEntrevistado;
+        var nombre;
+        var puesto;
+        var entrevistado;
+        var idQueja = $("#contenido_txtMsg").val();
+
+        $(this).parents('tr').each(function () {
+            idEntrevistado = $(this).find("td:first").html();
+            nombre = $(this).find("td:nth-child(2) input").val();
+            puesto = $(this).find("td:nth-child(3) input").val();
+            entrevistado = $(this).find("td:nth-child(4) input").val();
+        });
+
+        saveEntrevistadoBQ(idQueja, idEntrevistado, nombre, puesto, entrevistado);
+
+    });
+
+}
+
 function addEntrevistados() {
 
     const $tableIDEnt = $('#tableEnt');
@@ -955,7 +1019,7 @@ function addEntrevistados() {
 
 function cargarEntrevistadosBQ() {
 
-    var idQueja = $('#contenido_txtFolio').val();
+    var idQueja = $('#contenido_txtMsg').val();
 
     var readOnlyActivado = validarReadOnly();
 
@@ -970,7 +1034,7 @@ function cargarEntrevistadosBQ() {
     $.ajax({
         type: "POST",
         url: 'DetalleQuejas.aspx/CargarEntrevistadosBQ',        
-        data: JSON.stringify({ 'idDenuncia': idDenuncia }),
+        data: JSON.stringify({ 'idQueja': idQueja }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -1096,9 +1160,9 @@ function cargarEntrevistados() {
 }
 
 
-function saveEntrevistadoBQ(idEntrevistado, nombre, puesto, entrevistador) {
+function saveEntrevistadoBQ(idQueja, idEntrevistado, nombre, puesto, entrevistador) {
 
-    var queja = $('#contenido_txtFolio').val();
+    var queja = idQueja;
     var usuarioAlta = idUsuario;
 
     $.ajax({
@@ -1113,7 +1177,7 @@ function saveEntrevistadoBQ(idEntrevistado, nombre, puesto, entrevistador) {
         dataType: "json",
         success: function (data) {
             $('#tableEnt table tbody').empty();
-            cargarEntrevistados();
+            cargarEntrevistadosBQ();
 
         },
         complete: function () {
@@ -1786,7 +1850,7 @@ function deleteSoporteBD(idSoporte) {
 }
 
 function saveComentarioBQ() {
-    var queja = $('#contenido_txtFolio').val();
+    var queja = $('#contenido_txtMsg').val();
     var comentario = $('#contenido_txtComentario').val();
     var usuarioAlta = idUsuario;
 
@@ -1796,7 +1860,7 @@ function saveComentarioBQ() {
             type: "POST",
             url: 'DetalleQuejas.aspx/saveComentarioBQ',
             // data: {'idDenuncia: ' + idDenuncia },
-            data: JSON.stringify({ 'idDenuncia': denuncia, 'comentario': comentario, 'usuarioAlta': usuarioAlta }),
+            data: JSON.stringify({ 'idQueja': queja, 'comentario': comentario, 'usuarioAlta': usuarioAlta }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {                

@@ -195,22 +195,13 @@ namespace Seguimiento_Web
         protected global::System.Web.UI.WebControls.TextBox txtDisplayComentario;
 
         /// <summary>
-        /// txtComentario control.
+        /// txtComentarioQueja control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtComentario;
-
-        /// <summary>
-        /// btnCom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCom;
+        protected global::System.Web.UI.WebControls.TextBox txtComentarioQueja;
 
         /// <summary>
         /// Div1 control.
