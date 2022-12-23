@@ -4166,6 +4166,7 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@P_Usr", SqlDbType.Int).Value = 0;
                         cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = 0;
                         cmd.Parameters.Add("@P_Idioma", SqlDbType.Int).Value =iIdioma;
+                        cmd.Parameters.Add("@P_IdTema", SqlDbType.Int).Value = 0;
                         con.Open();
 
                         DataTable dt = new DataTable();
@@ -4183,7 +4184,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public string postBQInvTema(int iIdQueja,string sTema,string sAsunto,string sActividades,string sDetalle,string sPlan,string sCon,int iRes,int iBen, int iUsr,int iIdBQ,int iIdioma) //Saul Sanchez
+        public string postBQInvTema(string sOpt,int iIdQueja,string sTema,string sAsunto,string sActividades,string sDetalle,string sPlan,string sCon,int iRes,int iBen, int iUsr,int iIdBQ,int iIdioma, int iIdTema) //Saul Sanchez
         {
             try
             {
@@ -4192,7 +4193,7 @@ namespace Portal_Investigadores.clases
                     using (SqlCommand cmd = new SqlCommand("SP_BQ_InvTema", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = "NEW";
+                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = sOpt;
                         cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
                         cmd.Parameters.Add("@P_Tema", SqlDbType.VarChar).Value = sTema;
                         cmd.Parameters.Add("@P_Asunto", SqlDbType.VarChar).Value = sAsunto;
@@ -4205,6 +4206,7 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@P_Usr", SqlDbType.Int).Value = iUsr;
                         cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
                         cmd.Parameters.Add("@P_Idioma", SqlDbType.Int).Value = iIdioma;
+                        cmd.Parameters.Add("@P_IdTema", SqlDbType.Int).Value = iIdTema;
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
@@ -4237,6 +4239,76 @@ namespace Portal_Investigadores.clases
                         con.Dispose();
 
                         return "Ok";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public string postBQInvInvolucrados(string sOpt,int iIdQueja, string sNombre , string sPuesto, int iTipo, DateTime dtFechaIng,DateTime dtFechaCom,int iUsr,int iIdBQ,int iInv  ) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_InvInvolucrados", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = sOpt;
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
+                        cmd.Parameters.Add("@P_Nombre", SqlDbType.VarChar).Value = sNombre;
+                        cmd.Parameters.Add("@P_Puesto", SqlDbType.VarChar).Value = sPuesto;
+                        cmd.Parameters.Add("@P_Tipo", SqlDbType.Int).Value = iTipo;
+                        cmd.Parameters.Add("@P_FechaIngreso", SqlDbType.DateTime).Value = dtFechaIng;
+                        cmd.Parameters.Add("@P_FechaCompromiso", SqlDbType.DateTime).Value = dtFechaCom;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.Int).Value = iUsr;
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
+                        cmd.Parameters.Add("@P_Inv", SqlDbType.Int).Value = iInv;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+
+                        return "Ok";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public DataTable getBQInvInvolucrados(int iIdQueja) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_InvInvolucrados", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = "SEL";
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
+                        cmd.Parameters.Add("@P_Nombre", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Puesto", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Tipo", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_FechaIngreso", SqlDbType.Date).Value = DateTime.Now;
+                        cmd.Parameters.Add("@P_FechaCompromiso", SqlDbType.Date).Value =DateTime.Now ;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.Int).Value = 0;
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = 0;
+                        cmd.Parameters.Add("@P_Inv", SqlDbType.Int).Value = 0;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
                     }
                 }
             }
