@@ -4881,7 +4881,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
-        public string aceptarVoboMensaje(int idMensaje, string user, string ip)  //Rodolfo Godina
+        public int aceptarVoboMensaje(int idMensaje, string user, string ip)  //Rodolfo Godina
         {
             try
             {
@@ -4895,10 +4895,9 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = user;
 
                         con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                        con.Dispose();
-                        return "OK";
+                        
+                        int id = int.Parse(cmd.ExecuteScalar().ToString());
+                        return id;
                     }
                 }
             }
@@ -5223,6 +5222,110 @@ namespace Portal_Investigadores.clases
             catch
             {
                 return "Ocurrio un error al intentar guardar";
+                throw;
+            }
+        }
+        public DataTable getComentariosBQ(Int64 idQueja)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GetComentariosInvestigacion", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@queja", SqlDbType.Int).Value = idQueja;
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string asignarInvestigacionBQ(int idQueja)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_AsignarInvestigador", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+
+                        cmd.Parameters.Add("@queja", SqlDbType.Int).Value = idQueja;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "OK";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
+                throw;
+            }
+        }
+        public DataTable getGerentesBQ(int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GetGerentes", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getInvestigadoresBQ(int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GetInvestigadores", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
                 throw;
             }
         }
