@@ -29,7 +29,7 @@ namespace Seguimiento_Web
                 txtResponsable.Text = Session["nomUsuario"].ToString();
 
                 int idBQ = int.Parse(Session["idBq"].ToString());
-                CargarComentariosBQ(iIdQueja);
+                //CargarComentariosBQ(iIdQueja);
 
                 //Quejas Asociadas
                 DataTable dtAsociados = DBHelper.getQuejasAsociadas(iIdQueja);
