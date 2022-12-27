@@ -116,7 +116,6 @@ namespace Seguimiento_Web
                 ddlTipo.DataValueField = "IdTipo";
                 ddlTipo.DataBind();
 
-
                 // Investigacion Analisis
                 Cargar_InvestigacionTemas(iIdQueja, Convert.ToInt32(sIdioma));
                 //Investigacion Involucrados
@@ -221,12 +220,31 @@ namespace Seguimiento_Web
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_ArchivosAnalisis(int iIdQueja,string sForm)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dt = DBHelper.getBQInvArchivos(iIdQueja,sForm);
+            string str = JsonConvert.SerializeObject(dt);
+            return (str);
+
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
         public static string BQ_DetalleMensaje(int iIdQueja)
         {
             DBHelper DBHelper = new DBHelper();
             DataTable dt = DBHelper.getDetalleMensaje(iIdQueja);
             string str = JsonConvert.SerializeObject(dt);
             return (str);
+
+        }
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public void BQ_InvArchivos(int iIdQueja,string sForm,string sName,string sExt, string sPath)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DBHelper.postBQInvArchivos(iIdQueja,sForm,sName,sExt,sPath);
 
         }
 

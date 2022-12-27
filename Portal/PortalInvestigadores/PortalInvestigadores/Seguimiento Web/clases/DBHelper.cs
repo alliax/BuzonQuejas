@@ -4318,6 +4318,67 @@ namespace Portal_Investigadores.clases
             }
         }
 
+        public string postBQInvArchivos(int iIdQueja, string sForm,string sName ,string sExt , string sPath) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_InvArchivos", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = "INS";
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
+                        cmd.Parameters.Add("@P_Form", SqlDbType.VarChar).Value =sForm;
+                        cmd.Parameters.Add("@P_Name", SqlDbType.VarChar).Value = sName;
+                        cmd.Parameters.Add("@P_Ext", SqlDbType.VarChar).Value = sExt;
+                        cmd.Parameters.Add("@P_Path", SqlDbType.VarChar).Value = sPath;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+
+                        return "Ok";
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getBQInvArchivos(int iIdQueja,string sForm) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_InvArchivos", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = "SEL";
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
+                        cmd.Parameters.Add("@P_Form", SqlDbType.VarChar).Value = sForm;
+                        cmd.Parameters.Add("@P_Name", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Ext", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Path", SqlDbType.VarChar).Value = "";
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public string saveForma(int idConducto, string forma, string descripcion, bool activo, string usuarioCreacion, int idBQ)
         {
             try

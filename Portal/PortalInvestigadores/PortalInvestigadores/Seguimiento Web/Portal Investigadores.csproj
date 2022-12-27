@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AltaMensaje.aspx" />
+    <Content Include="ArchivosInvestigacion.aspx" />
     <Content Include="CatalogoBuzones.aspx" />
     <Content Include="CatalogoClasificaciones.aspx" />
     <Content Include="CatalogoAcciones.aspx" />
@@ -3129,6 +3130,7 @@
     <Content Include="FileUploadHandler.ashx" />
     <Content Include="SimpleUpload.aspx" />
     <Content Include="Manual\Manualdeusuario-PortaldeResponsables.pdf" />
+    <Content Include="HandlerInvestigador.ashx" />
     <None Include="Properties\PublishProfiles\seguimiento.pubxml" />
     <Content Include="scripts\ai.1.0.0-build00159.js" />
     <Content Include="scripts\ai.1.0.0-build00159.min.js" />
@@ -3160,6 +3162,13 @@
     </Compile>
     <Compile Include="AltaMensaje.aspx.designer.cs">
       <DependentUpon>AltaMensaje.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ArchivosInvestigacion.aspx.cs">
+      <DependentUpon>ArchivosInvestigacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ArchivosInvestigacion.aspx.designer.cs">
+      <DependentUpon>ArchivosInvestigacion.aspx</DependentUpon>
     </Compile>
     <Compile Include="CatalogoBuzones.aspx.cs">
       <DependentUpon>CatalogoBuzones.aspx</DependentUpon>
@@ -3238,6 +3247,9 @@
     </Compile>
     <Compile Include="GestionBuzones.aspx.designer.cs">
       <DependentUpon>GestionBuzones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HandlerInvestigador.ashx.cs">
+      <DependentUpon>HandlerInvestigador.ashx</DependentUpon>
     </Compile>
     <Compile Include="Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>
@@ -3432,7 +3444,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
-    <Folder Include="uploads\" />
+    <Folder Include="uploads\Investigacion\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
