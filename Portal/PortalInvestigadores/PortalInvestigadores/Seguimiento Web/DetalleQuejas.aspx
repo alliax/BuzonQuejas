@@ -19,73 +19,13 @@
 
             $(document).ready(function () {
                 var idQueja = sessionStorage.getItem("sIdQueja");               
-                setValues(idQueja);
-                setLanguage(idioma);
+                setValues(idQueja)
+                setLanguage(idioma)
 
-                $("#btnVerSoporte").click(
-                    function () {
-                        
-                        var archivoData = ArchivoAnalisisData(idQueja,"Analisis");
-
-                        $("#tblSoporte").html("");
-                        if (idioma == 1) {
-                            $("#tblSoporte").append("<tr><th>Archivo</th></tr>");
-                        }
-                        else {
-                            $("#tblSoporte>").append("<tr><th>File</th></tr>");
-                        }
-                        for (i = 0; i <= archivoData.length - 1; i++) {
-                            $("#tblSoporte").append('<tr>' + '<td>' + archivoData[i].Archivo + '</td>'  + '</tr>');
-                        }
-                        $('#modalSoporte').modal('show');
-                    }
-                );
-
-
-                $("#btnVerSopInvolucrados").click(
-                    function () {
-
-                        var archivoData = ArchivoAnalisisData(idQueja, "Involucrados");
-
-                        $("#tblSoporte").html("");
-                        if (idioma == 1) {
-                            $("#tblSoporte").append("<tr><th>Archivo</th></tr>");
-                        }
-                        else {
-                            $("#tblSoporte").append("<tr><th>File</th></tr>");
-                        }
-                        for (i = 0; i <= archivoData.length - 1; i++) {
-                             $("#tblSoporte").append('<tr>' + '<td>' + archivoData[i].Archivo + '</td>' + '</tr>');
-                        }
-                        $('#modalSoporte').modal('show');
-                    }
-                );
-
-
-
-
-            });//Document
-
-            function ArchivoAnalisisData(idQueja,idForm) {
-                var Json = [];
-                $.ajax({
-                    type: "GET", 
-                    async:false,
-                    url: "DetalleQuejas.aspx/BQ_ArchivosAnalisis",
-                    data: $.param({ iIdQueja: idQueja, sForm: "'" + idForm+"'" }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (r) {
-
-                        var result = createJson(r);
-                        Json = result;
-                    },
-                    error: function (r) {
-                        alert("Error System");
-                    }
-                });
-                return Json;
-            }
+                cargarEntrevistadosBQ();
+                
+                addEntrevistadosBQ();
+            });
 
             function setLanguage(Idioma) {
                 $.ajax({
@@ -120,6 +60,7 @@
                             if (Json[i].Id == 19) { $("#lbl19").html(Json[i].Texto) }
                             if (Json[i].Id == 20) { $("#lbl20").html(Json[i].Texto) }
                             if (Json[i].Id == 21) { $("#lbl21").html(Json[i].Texto) }
+
                             if (Json[i].Id == 21) { $("#<%=btnCom.ClientID%>").val(Json[i].Texto); }
                             if (Json[i].Id == 35) { $("#lbl22").html(Json[i].Texto); }
                             if (Json[i].Id == 23) { $("#lbl23").html(Json[i].Texto); }
@@ -143,6 +84,7 @@
                             if (Json[i].Id == 41) { $("#lbl37").html(Json[i].Texto); }
                             if (Json[i].Id == 33) { $("#<%=btnInvGuardar.ClientID%>").val(Json[i].Texto); }
                             if (Json[i].Id == 34) { $("#<%=btnInvCan.ClientID%>").val(Json[i].Texto); }
+
 
                     }
 
@@ -448,10 +390,15 @@
                                     <div id="collapseEnt" class="collapse" aria-labelledby="headingEnt">
                                         <div class="card-body">
                                             <div id="tableEnt" class="table-editable">
-                                                <span class="table-addEnt float-right mb-3 mr-2 card-add"><a href="#!" id="addEntrevistadoPlus" title="Añadir un nuevo Entrevistado"  style="font-size:30px; font-weight:bold; text-decoration:none;" class="text-success"></a></span>
+                                                <span class="table-addEnt float-right mb-3 mr-2 card-add"><a href="#!" id="addEntrevistadoPlus" title="Añadir un nuevo Entrevistado"  style="font-size:30px; font-weight:bold; text-decoration:none;" class="text-success">+</a></span>
                                                 <table class="table table-bordered table-responsive-md table-striped text-center tblinvolucrados">
                                                     <thead>
                                                         <tr>
+                                                            <th class="text-left" style="display:none;">id</th>
+                                                            <th class="text-left">Nombre Completo</th>
+                                                            <th class="text-left">Puesto</th>
+                                                            <th class="text-left">Entrevistado por:</th>
+                                                            <th class="text-left" style="width:85px;"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -475,11 +422,11 @@
                                 
                                 <div class="form-row" style="margin-top:5px;">
                                     <div class="form-group col-md-10" >
-                                        <asp:TextBox runat="server" AutoPostBack="false" CssClass="form-control" onkeydown = "return (event.keyCode!=13);" ID="txtComentario" Placeholder="Escribe un comentario/Write a comment..."/>
+                                        <asp:TextBox runat="server" AutoPostBack="false" CssClass="form-control" onkeydown = "return (event.keyCode!=13);" ID="txtComentarioQueja" Placeholder="Escribe un comentario/Write a comment..."/>
                                         
                                     </div>
                                     <div class="form-group col-md-2 " >
-                                        <asp:Button ID="btnCom" runat="server" OnClick="btnCom_Click" cssClass="btn btn-info" Text="Comentar" />
+                                        <button type="button" id="txtComentarioInv" class="btn btn-info" onclick="return saveComentarioBQ()">Comentar</button>
                                     </div>
                                 </div>
                             </div>
@@ -514,11 +461,10 @@
                         </div>
                     </div>
                 </div>
-            </div>          
-
             </div>
+            
 
-                    <%--Modal Analisis--%>
+            <%--Modal Analisis--%>
             <div id="modalTemas" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" style="display:none"> 
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
@@ -589,8 +535,8 @@
                                     <div class="form-group col-md-4">
                                         <label id="lbl31" for="inputResumen">Soporte</label>
                                         <div id="SoporteContainer">
-                                            <button title="Añadir Soporte" id="btnAddSoporteModal" style="width:49%;"class="btn btn-info btn-rounded btn-sm my-0" onclick="event.preventDefault(); popUp('ArchivosInvestigacion.aspx?idForm=Analisis', 2, 0 ); ">Agregar Soporte</button>
-                                            <button title="Ver Soportes Agregados" id="btnVerSoporte"style="width:49%;"  type="button" class="btn btn-secondary btn-rounded btn-sm my-0 btnVerModalSoporte" >Ver</button>   
+                                            <button title="Añadir Soporte" id="btnAddSoporteModal" style="width:49%;"class="btn btn-info btn-rounded btn-sm my-0" onclick="event.preventDefault(); popUp('UploadFile.aspx', 2, 0 ); ">Agregar Soporte</button>
+                                            <button title="Ver Soportes Agregados" id="btnMSop"style="width:49%;"  disabled="disabled" type="button" class="btn btn-secondary btn-rounded btn-sm my-0 btnVerModalSoporte" data-toggle="modal" data-target="#modalSoporte" onclick="event.preventDefault(); cargarModalSoporte(2,0);">Ver</button>   
                                      </div>
                                         
                                     </div>
@@ -628,13 +574,28 @@
                                 </div>
                             </form>
                         </div>
-  
+                        <div class="modal-body soporte" style="display:none;">
+                            <div id="tableSoporte" class="table-editable">
+                                
+                                <table class="table table-bordered table-responsive-md table-striped text-center tblSoporte" style="width: 50%; margin-left: 24%;">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">Nombre del Archivo</th>
+                                            <th class="text-left" style="width:85px;">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>   
                 
                     </div>
                 </div>
             </div>
 
-                   <%--Modal Involucrados--%>
+
+           <%--Modal Involucrados--%>
             <div id="modalInv" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" style="display:none"> 
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
@@ -683,27 +644,18 @@
  
                         </div>
                         <div class="modal-footer principal">
-                            <div class="col-md-3">
-                            <asp:Button runat="server" CssClass="btn btn-primary btn-sm my-0" ID="btnInvGuardar" Text="Guardar" OnClick="btnInvGuardar_Click"/>
-                            </div>
-                            <div class="col-md-3">
-                            <asp:Button runat="server" CssClass="btn btn-danger btn-sm my-0" ID="btnInvCan" Text="Cancelar"/>
-                            </div>
-                            <div class="col-md-3">
-                            <button title="Añadir Soporte" id="btnAddSopInvolucrados" type="button" class="btn btn-info btn-rounded btn-sm my-0" onclick="event.preventDefault(); popUp('ArchivosInvestigacion.aspx?idForm=Involucrados', 2, 0 ); ">Agregar Soporte</button>
-                            </div>
-                            <div class="col-md-3">
-                            <button title="Ver Soportes Agregados" id="btnVerSopInvolucrados" type="button" class="btn btn-secondary btn-rounded btn-sm my-0" >Ver</button>   
-                            </div>
-                          
-                         </div>
+                            <asp:Button runat="server" CssClass="btn btn-primary" ID="btnInvGuardar" Text="Guardar" OnClick="btnInvGuardar_Click"/>
+                            <asp:Button runat="server" CssClass="btn btn-danger" ID="btnInvCan" Text="Cancelar"/>
+                        </div>
 
                         </div>
                     </div>
                 </div>
+            </div>
+
            
 
-              <%--Modal Soporte Analisis--%>
+              <%--Modal Soporte--%>
             <div id="modalSoporte" class="modal fade bd-example-modal-xl"  tabindex="-1" data-backdrop-limit="1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" data-modal-parent="#modalDetail">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
@@ -714,8 +666,16 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div id="tableSoporte" class="table-editable">
-                                <table id="tblSoporte" class="table table-bordered table-responsive-md table-striped text-center tblinvolucrados">
+                            <div id="tableSoporte2" class="table-editable">
+                                <table class="table table-bordered table-responsive-md table-striped text-center tblSoporte" style="width: 50%; margin-left: 24%;">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">Nombre del Archivo</th>
+                                            <th class="text-left" style="width:85px;"> Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>   
@@ -725,7 +685,7 @@
 
 
 
-        
+        </div>
     </form>
 </asp:Content >
     

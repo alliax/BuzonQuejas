@@ -72,7 +72,7 @@ namespace Portal_Investigadores
                     fechaClasificacion.Text = row["fechaClasificacion"].ToString();
                     ultimaActualizacion.Text = row["fechaActualizacion"].ToString();
                     cargarClasificacciones(row["clasificacion"].ToString());
-                    cargarResponsables(row["usuario"].ToString());
+                    cargarResponsables(idBQ,row["usuario"].ToString());
                     cargarGrupos(row["grupo"].ToString());
                     cargarEmpresas(row["grupo"].ToString(), row["empresa"].ToString());
                     txtNombre.Text = row["nombre"].ToString();
@@ -88,7 +88,7 @@ namespace Portal_Investigadores
                     cargarConducto(1, row["conducto"].ToString());
                     cargarTemas(1, int.Parse(row["area"].ToString()));
                     cargarAreaAsig(row["areaAsignada"].ToString());
-                    cargarResponsablesArea(gpo, row["responsable"].ToString());
+                    cargarResponsablesArea(int.Parse(row["idBQ"].ToString()), row["responsable"].ToString());
                     txtEmail.Text = row["revisor"].ToString();
                     enterados.Text = row["enterados"].ToString();
                     revisorInc.Checked = bool.Parse(row["revisorActivo"].ToString());
@@ -114,8 +114,8 @@ namespace Portal_Investigadores
                     cargarTemas(idBQ);
                     cargarAreaAsig();
                     cargarTipos(idBQ);
-                    cargarResponsablesArea(grupo);
-                    cargarResponsables();                    
+                    cargarResponsablesArea(idBQ);
+                    cargarResponsables(idBQ);                    
                     
                 }
 
@@ -489,32 +489,33 @@ namespace Portal_Investigadores
 
             
         }
-        protected void cargarResponsablesArea(string grupo, string selectedValue = "")
+        protected void cargarResponsablesArea(int idBQ, string selectedValue = "")
         {
-            DataTable responsables = DBHelper.getResponsablesMensaje(grupo);
-            ViewState["responsables"] = responsables;
 
-            DataTable respo = new DataTable();
-            respo.Columns.Add("Nombre");
-            respo.Columns.Add("Id");
-            DataRow dr = respo.NewRow();
-            dr["Nombre"] = "Eduardo Acevedo";
-            dr["Id"] = "1";
-            respo.Rows.Add(dr);
-            ddlResponsable2.DataSource = respo;
-            ddlResponsable2.DataTextField = respo.Columns["Nombre"].ToString();
-            ddlResponsable2.DataValueField = respo.Columns["Id"].ToString();
-            ddlResponsable2.DataBind();
+            DataTable investigadores = DBHelper.getInvestigadoresBQ(idBQ);
+            ViewState["responsables"] = investigadores;
 
-
-            //ddlResponsable2.DataSource = responsables;
-            //ddlResponsable2.DataTextField = responsables.Columns["Nombre"].ToString();
-            //ddlResponsable2.DataValueField = responsables.Columns["Id"].ToString();
+            //DataTable respo = new DataTable();
+            //respo.Columns.Add("Nombre");
+            //respo.Columns.Add("Id");
+            //DataRow dr = respo.NewRow();
+            //dr["Nombre"] = "Eduardo Acevedo";
+            //dr["Id"] = "1";
+            //respo.Rows.Add(dr);
+            //ddlResponsable2.DataSource = respo;
+            //ddlResponsable2.DataTextField = respo.Columns["Nombre"].ToString();
+            //ddlResponsable2.DataValueField = respo.Columns["Id"].ToString();
             //ddlResponsable2.DataBind();
+
+
+            ddlResponsable2.DataSource = investigadores;
+            ddlResponsable2.DataTextField = investigadores.Columns["Nombre"].ToString();
+            ddlResponsable2.DataValueField = investigadores.Columns["Id"].ToString();
+            ddlResponsable2.DataBind();
 
             if (selectedValue != "")
             {
-                foreach (DataRow responsable  in respo.Rows)
+                foreach (DataRow responsable  in investigadores.Rows)
                 {
                     if (selectedValue == responsable["Id"].ToString())
                     {
@@ -524,30 +525,30 @@ namespace Portal_Investigadores
             }
         }
 
-        protected void cargarResponsables(string userName = "")
-        {
-            DataTable usuarios = DBHelper.getUsuariosResponsables();
+        protected void cargarResponsables(int idBQ, string userName = "")
+        {            
+            DataTable responsables = DBHelper.getGerentesBQ(idBQ);
             
-            DataTable users = new DataTable();
-            users.Columns.Add("Nombre");
-            users.Columns.Add("Usuario");
-            DataRow dr = users.NewRow();
-            dr["Nombre"] = "Ericka Sifuentes";
-            dr["Usuario"] = "ericka.sifuentes@alliax.com";
-            users.Rows.Add(dr);
-            ddlResponsable.DataSource = users;
-            ddlResponsable.DataTextField = users.Columns["Nombre"].ToString();
-            ddlResponsable.DataValueField = users.Columns["Usuario"].ToString();
-            ddlResponsable.DataBind();
-
-            //ddlResponsable.DataSource = usuarios;
-            //ddlResponsable.DataTextField = usuarios.Columns["Nombre"].ToString();
-            //ddlResponsable.DataValueField = usuarios.Columns["Usuario"].ToString();
+            //DataTable users = new DataTable();
+            //users.Columns.Add("Nombre");
+            //users.Columns.Add("Usuario");
+            //DataRow dr = users.NewRow();
+            //dr["Nombre"] = "Ericka Sifuentes";
+            //dr["Usuario"] = "ericka.sifuentes@alliax.com";
+            //users.Rows.Add(dr);
+            //ddlResponsable.DataSource = users;
+            //ddlResponsable.DataTextField = users.Columns["Nombre"].ToString();
+            //ddlResponsable.DataValueField = users.Columns["Usuario"].ToString();
             //ddlResponsable.DataBind();
+
+            ddlResponsable.DataSource = responsables;
+            ddlResponsable.DataTextField = responsables.Columns["Nombre"].ToString();
+            ddlResponsable.DataValueField = responsables.Columns["Usuario"].ToString();
+            ddlResponsable.DataBind();
             
             if (userName != "")
             {
-                foreach (DataRow usuario in users.Rows)
+                foreach (DataRow usuario in responsables.Rows)
                 {
                     if (userName == usuario["Nombre"].ToString())
                     {
@@ -975,10 +976,11 @@ namespace Portal_Investigadores
             string user = Session["nomUsuario"].ToString();
             string hostName = Dns.GetHostName();
             string myIP = Dns.GetHostEntry(hostName).AddressList[0].ToString();
-
-            output = DBHelper.aceptarVoboMensaje(idM, user, myIP);
-            if ( output == "OK")
+            int idQueja = 0;
+            idQueja = DBHelper.aceptarVoboMensaje(idM, user, myIP);
+            if ( idQueja != 0)
             {
+                DBHelper.asignarInvestigacionBQ(idQueja);
                 Response.Redirect("DashboardQuejas");
             } else
             {

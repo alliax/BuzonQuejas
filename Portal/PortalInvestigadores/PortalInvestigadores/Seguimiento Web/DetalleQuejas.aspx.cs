@@ -27,7 +27,9 @@ namespace Seguimiento_Web
                 string sIdioma = Session["idioma"].ToString();
                 int iIdQueja = int.Parse(Request.QueryString["idQueja"]);
                 txtResponsable.Text = Session["nomUsuario"].ToString();
+
                 int idBQ = int.Parse(Session["idBq"].ToString());
+                CargarComentariosBQ(iIdQueja);
 
                 //Quejas Asociadas
                 DataTable dtAsociados = DBHelper.getQuejasAsociadas(iIdQueja);
@@ -318,7 +320,33 @@ namespace Seguimiento_Web
             return json.Serialize(resp);
 
         }
+        protected void CargarComentariosBQ(int idQueja)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable comentarios = DBHelper.getComentariosBQ(idQueja);
+            string comment;
+            string salto;
 
+            if (comentarios.Rows.Count > 0)
+            {
+
+                for (int i = 0; i < comentarios.Rows.Count; i++)
+                {
+
+                    comment = comentarios.Rows[i][0].ToString();
+
+                    if (txtDisplayComentario.Text != "")
+                        salto = "\n";
+                    else
+                        salto = "";
+
+                    txtDisplayComentario.Text = txtDisplayComentario.Text + salto + comment;
+
+                }
+
+            }
+
+        }
 
         public void Cargar_InvestigacionTemas(int iIdQueja, int iIdioma)
         {
