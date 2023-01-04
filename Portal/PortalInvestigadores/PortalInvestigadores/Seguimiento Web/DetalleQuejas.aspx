@@ -9,201 +9,366 @@
        <script src="scripts/events.js"></script>
        
 
-        <script type="text/javascript">
-            var idUsuario = '<%= Session["idUsuario"] %>';
-            var nombreUsuario = '<%= Session["nomUsuario"] %>';
-            var estatusDenuncia = '<%= Session["estatusDenuncia"] %>';
-            var tipoAsignacion = '<%= Session["tipoAsignacion"] %>';
-            var idioma = '<%= Session["idioma"] %>';
+<script type="text/javascript">
+    var idUsuario = '<%= Session["idUsuario"] %>';
+    var nombreUsuario = '<%= Session["nomUsuario"] %>';
+    var estatusDenuncia = '<%= Session["estatusDenuncia"] %>';
+    var tipoAsignacion = '<%= Session["tipoAsignacion"] %>';
+    var idioma = '<%= Session["idioma"] %>';
+    var idBQ = '<%= Session["idBQ"] %>';
 
 
-            $(document).ready(function () {
-                var idQueja = sessionStorage.getItem("sIdQueja");               
-                setValues(idQueja)
-                setLanguage(idioma)
-                //cargarEntrevistadosBQ();
-                //addEntrevistadosBQ();
+    $(document).ready(function () {
+        var idQueja = sessionStorage.getItem("sIdQueja"); 
+        var idRol = sessionStorage.getItem("usrRol");
+
+        setValues(idQueja);
+        setLanguage(idioma);
+        configRoles(idRol, idBQ,idioma);
+        cargarEntrevistadosBQ();
+        addEntrevistadosBQ();
 
 
-                $('#btnSopVer').click(function () {
-                     var verData = archivosData(idQueja,"Analisis")
-
-                        $('#tblSoporte').html("");
-                        if (idioma == 1) {
-                            $("#tblSoporte").append("<tr><th>Archivo</th></tr>")
-                        }
-                        else {
-                            $("#tblSoporte").append("<tr><th>File</th></tr>")
-                        }
-                        for (i = 0; i <= verData.length - 1; i++) {
-                            $("#tblSoporte").append('<tr>' + '<td>' + verData[i].Archivo + '</td>'  + '</tr>');
-                        }
-                  
-                    $('#modalSoporte').modal('show');
-                });
-                
-                $('#btnSopInvVer').click(function () {
-                    var verData = archivosData(idQueja, "Involucrados")
-
-                    $('#tblSoporte').html("");
-                    if (idioma == 1) {
-                        $("#tblSoporte").append("<tr><th>Archivo</th></tr>")
-                    }
-                    else {
-                        $("#tblSoporte").append("<tr><th>File</th></tr>")
-                    }
-                    for (i = 0; i <= verData.length - 1; i++) {
-                        $("#tblSoporte").append('<tr>' + '<td>' + verData[i].Archivo + '</td>' + '</tr>');
-                    }
-
-                    $('#modalSoporte').modal('show');
-
-                });
-
-
-            });
-
-            function archivosData(idQueja, idForm) {
-                var Json = [];
-                $.ajax({
-                    type: "GET",
-                    async: false,
-                    url: "DetalleQuejas.aspx/BQ_ArchivosAnalisis",
-                    data: $.param({ iIdQueja: idQueja, sForm: "'" + idForm + "'" }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (r) {
-
-                        var result = createJson(r);
-                        Json = result;
-                    },
-                    error: function (r) {
-                        alert("Error System");
-                    }
-                });
-                return Json;
-            }//End Function
-
-            function setLanguage(Idioma) {
-                $.ajax({
-                    type: "GET",
-                    async: false,
-                    url: "DetalleQuejas.aspx/BQ_Etiquetas",
-                    data: $.param({ iId: 4, iIdioma: Idioma }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (r) {
-
-                        Json = createJson(r);
-                    for (i = 0; i <= Json.length - 1; i++) {
-                            if (Json[i].Id == 1) { $("#lbl1").html(Json[i].Texto) }
-                            if (Json[i].Id == 2) { $("#lbl2").html(Json[i].Texto) }
-                            if (Json[i].Id == 3) { $("#lbl3").html(Json[i].Texto) }
-                            if (Json[i].Id == 4) { $("#lbl4").html(Json[i].Texto);}
-                            if (Json[i].Id == 5) { $("#lbl5").html(Json[i].Texto) }
-                            if (Json[i].Id == 6) { $("#lbl6").html(Json[i].Texto) }
-                            if (Json[i].Id == 7) { $("#lbl7").html(Json[i].Texto) }
-                            if (Json[i].Id == 8) { $("#lbl8").html(Json[i].Texto) }
-                            if (Json[i].Id == 9) { $("#lbl9").html(Json[i].Texto) }
-                            if (Json[i].Id == 10) { $("#lbl10").html(Json[i].Texto) }
-                            if (Json[i].Id == 11) { $("#lbl11").html(Json[i].Texto) }
-                            if (Json[i].Id == 12) { $("#lbl12").html(Json[i].Texto) }
-                            if (Json[i].Id == 13) { $("#lbl13").html(Json[i].Texto) }
-                            if (Json[i].Id == 14) { $("#lbl14").html(Json[i].Texto) }
-                            if (Json[i].Id == 15) { $("#lbl15").html(Json[i].Texto) }
-                            if (Json[i].Id == 16) { $("#<%=btnDelegar.ClientID%>").val(Json[i].Texto); }
-                            if (Json[i].Id == 17) { $("#lbl17").html(Json[i].Texto) }
-                            if (Json[i].Id == 18) { $("#lbl18").html(Json[i].Texto) }
-                            if (Json[i].Id == 19) { $("#lbl19").html(Json[i].Texto) }
-                            if (Json[i].Id == 20) { $("#lbl20").html(Json[i].Texto) }
-                            if (Json[i].Id == 21) { $("#lbl21").html(Json[i].Texto) }
-
-                            <%--if (Json[i].Id == 21) { $("#<%=btnCom.ClientID%>").val(Json[i].Texto); }--%>
-                            if (Json[i].Id == 35) { $("#lbl22").html(Json[i].Texto); }
-                            if (Json[i].Id == 23) { $("#lbl23").html(Json[i].Texto); }
-                            if (Json[i].Id == 24) { $("#lbl24").html(Json[i].Texto); }
-                            if (Json[i].Id == 36) { $("#lbl25").html(Json[i].Texto); }
-                            if (Json[i].Id == 25) { $("#lbl26").html(Json[i].Texto); }
-                            if (Json[i].Id == 26) { $("#lbl27").html(Json[i].Texto); }
-                            if (Json[i].Id == 27) { $("#lbl28").html(Json[i].Texto); }
-                            if (Json[i].Id == 28) { $("#lbl29").html(Json[i].Texto); }
-                            if (Json[i].Id == 29) { $("#lbl30").html(Json[i].Texto); }
-                            if (Json[i].Id == 30) { $("#lbl31").html(Json[i].Texto); }
-                            if (Json[i].Id == 31) { $("#btnAddSoporteModal").html(Json[i].Texto); }
-                            if (Json[i].Id == 32) { $("#btnMSop").html(Json[i].Texto); }
-                            if (Json[i].Id == 33) { $("#<%=btnTemaGuardar.ClientID%>").val(Json[i].Texto); }
-                            if (Json[i].Id == 34) { $("#<%=btnTemaCancelar.ClientID%>").val(Json[i].Texto); }
-                            if (Json[i].Id == 36) { $("#lbl32").html(Json[i].Texto); }
-                            if (Json[i].Id == 37) { $("#lbl33").html(Json[i].Texto); }
-                            if (Json[i].Id == 38) { $("#lbl34").html(Json[i].Texto); }
-                            if (Json[i].Id == 39) { $("#lbl35").html(Json[i].Texto); }
-                            if (Json[i].Id == 40) { $("#lbl36").html(Json[i].Texto); }
-                            if (Json[i].Id == 41) { $("#lbl37").html(Json[i].Texto); }
-                            if (Json[i].Id == 33) { $("#<%=btnInvGuardar.ClientID%>").val(Json[i].Texto); }
-                            if (Json[i].Id == 34) { $("#<%=btnInvCan.ClientID%>").val(Json[i].Texto); }
-
-
-                    }
-
+        $('#btnEnviarRev').click(function () {
+            $.ajax({
+                type: "GET",
+                /* async: false,*/
+                url: "DetalleQuejas.aspx/BQ_Workflow",
+                data: $.param({ sOpt: "'" + "EnviarOperador" + "'", iIdQueja: idQueja }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    var url = window.location.origin + '/DashboardQuejas.aspx';
+                    window.location.replace(url);
                 },
                 error: function (r) {
-                    alert("Error de Sistema");
+                    alert("Error System");
                 }
-             });
+            });
 
-            }
+        });
 
-            function setValues(idQueja) {
-                $.ajax({
-                    type: "GET",
-                    async:false,
-                    url: "DetalleQuejas.aspx/BQ_DetalleMensaje",
-                    data: $.param({ iIdQueja:idQueja }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (r) {
-                        Json = createJson(r);
-                        $('#<%= txtMsg.ClientID %>').val(Json[0].IdQueja); 
-                        $('#<%= txtTitulo.ClientID %>').val(Json[0].Titulo);
-                        $('#<%= txtGrupo.ClientID %>').val(Json[0].Grupo);
-                        $('#<%= txtEmpresa.ClientID %>').val(Json[0].Empresa);
-                        $('#<%= txtSitio.ClientID %>').val(Json[0].Sitio);
-                        $('#<%= txtTema.ClientID %>').val(Json[0].Tema);
-                        $('#<%= txtResumen.ClientID %>').val(Json[0].Resumen);
-                        $('#<%= txtMensaje.ClientID %>').val(Json[0].Mensaje);
-                        $('#<%= txtTema.ClientID %>').val(Json[0].Tema);
-                        $('#<%= txtSubtema.ClientID %>').val(Json[0].Subtema);
-                        $('#<%= txtDepartamento.ClientID %>').val(Json[0].Departamento);
-                    },
-                    error: function (r) {
-                        alert("Error System");
+        $('#btnEnviarVobo').click(function () {
+            $.ajax({
+                type: "GET",
+                /* async: false,*/
+                url: "DetalleQuejas.aspx/BQ_Workflow",
+                data: $.param({ sOpt: "'" + "Workflow" + "'", iIdQueja: idQueja }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    var url = window.location.origin + '/DashboardQuejas.aspx';
+                    window.location.replace(url);
+                },
+                error: function (r) {
+                    alert("Error System");
+                }
+            });
+
+        });
+
+        $('#btnEnviar').click(function () {
+            $.ajax({
+                type: "GET",
+                /* async: false,*/
+                url: "DetalleQuejas.aspx/BQ_Workflow",
+                data: $.param({ sOpt: "'" + "Enviar" + "'", iIdQueja: idQueja }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    var url = window.location.origin + '/DashboardQuejas.aspx';
+                    window.location.replace(url);
+                },
+                error: function (r) {
+                    alert("Error System");
+                }
+            });
+
+        });
+
+        $('#btnGuardar').click(function () {
+            var txtCon = $("#<%=txtConclusion.ClientID%>").val();
+
+            $.ajax({
+                type: "GET",
+                /* async: false,*/
+                url: "DetalleQuejas.aspx/BQ_Guardar",
+                data: $.param({ iIdQueja: idQueja, sConclusion: "'" + txtCon + "'", iIdUsr: idUsuario }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    if (idioma == "2") {
+                        $("#usrMsg").html("Information Saved");
                     }
-                });
+                    else {
+                        $("#usrMsg").html("Informacion Guardada Correctamente");
+                    }
+
+                    $("#usrMsg").css("visibility", "visible")
+                    setTimeout(function () { $("#usrMsg").css("visibility", "hidden") }, 1500);
+
+                            
+                },
+                error: function (r) {
+                    alert("Error System");
+                }
+            });
+
+        });
+
+
+        $('#btnSopVer').click(function () {
+                var verData = archivosData(idQueja,"Analisis")
+
+            $('#tblSoporte').html("");
+            if (idioma == 1) {
+                $("#tblSoporte").append("<tr><th>Archivo</th></tr>")
             }
-            function createJson(strJson) {
-                var strJson = JSON.stringify(strJson);
-                var iJsonLenght = strJson.length
-                strJson = strJson.substr(5, iJsonLenght);
-                strJson = strJson.slice(0, -1)
-                var Json = JSON.parse(strJson);
-                Json = JSON.parse(Json);
+            else {
+                $("#tblSoporte").append("<tr><th>File</th></tr>")
+            }
+            for (i = 0; i <= verData.length - 1; i++) {
+                $("#tblSoporte").append('<tr>' + '<td><a href="' + verData[i].Path +'" target="_blank">' + verData[i].Archivo + '</td>' + '</a></tr>');
+            }
+                  
+            $('#modalSoporte').modal('show');
+        });
+                
+        $('#btnSopInvVer').click(function () {
+            var verData = archivosData(idQueja, "Involucrados")
 
-                return Json;
-            }//End Function
-
-            function hideMenu() {
-                $("#menu_menuNavbar").hide();
-                $("#menu_menuLine").hide();
-                $("#collapseOne").removeClass("show");
-                $("#collapseTwo").addClass("show");
-                $("#contenido_Div1").hide();
-                //alert(tipoLectura);
+            $('#tblSoporte').html("");
+            if (idioma == 1) {
+                $("#tblSoporte").append("<tr><th>Archivo</th></tr>")
+            }
+            else {
+                $("#tblSoporte").append("<tr><th>File</th></tr>")
+            }
+            for (i = 0; i <= verData.length - 1; i++) {
+                $("#tblSoporte").append('<tr>' + '<td><a href="' + verData[i].Path + '" target="_blank">' + verData[i].Archivo + '</td>' + '</a></tr>');
             }
 
-          $("#<%=fechaIngreso.ClientID%>").datepicker({dateFormat:"yyyy-MM-dd"});
-          $("#<%=fechaCom.ClientID%>").datepicker({dateFormat:"yyyy-MM-dd"});
+            $('#modalSoporte').modal('show');
 
-        </script>
+        });
+
+
+    }); //Document
+
+    function configRoles(idRol,idBQ,idioma) {
+        if (idRol == 1) {
+            $("#plusInv").css("visibility", "hidden");
+            $("#minusInv").css("visibility", "hidden");
+            $("#plusAnalisis").css("visibility", "hidden");
+            $("#minusAnalisis").css("visibility", "hidden");
+            $("#divGuardar").hide();
+            $("#divEnviar").hide();
+            $("#divDelegar").hide();
+            $("#divComentario").hide();
+            $("#divRevision").hide();
+            $("#plusEntrevistados").css("visibility", "hidden");
+            $("#<%=txtConclusion.ClientID%>").prop('disabled', true);
+
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: "DetalleQuejas.aspx/BQ_configVal",
+                data: $.param({ iIdBQ: idBQ }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    var result = createJson(r);
+                    Json = result;
+                    if (Json.length == 0) {
+                        if (idioma == 2) {
+                            $("#btnEnviarVobo").html("Close Complaint");
+                        }
+                        else {
+                            $("#btnEnviarVobo").html("Cerrar Queja");
+                        }
+                    }
+                },
+                error: function (r) {
+                    alert("Error System");
+                }
+            });
+
+        }
+
+        if (idRol == 3) {
+            $("#divEnviarVobo").hide();
+            $("#divRevision").hide();
+        }
+
+        if (idRol == 4) {
+            $("#plusInv").css("visibility", "hidden");
+            $("#minusInv").css("visibility", "hidden");
+            $("#plusAnalisis").css("visibility", "hidden");
+            $("#minusAnalisis").css("visibility", "hidden");
+            $("#divGuardar").hide();
+            $("#divEnviar").hide();
+            $("#divDelegar").hide();
+            $("#divComentario").hide();
+            $("#plusEntrevistados").css("visibility", "hidden");
+            $("#<%=txtConclusion.ClientID%>").prop('disabled', true);
+            $("#divEnviarVobo").hide();
+
+        }
+
+    }
+
+    function archivosData(idQueja, idForm) {
+        var Json = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "DetalleQuejas.aspx/BQ_ArchivosAnalisis",
+            data: $.param({ iIdQueja: idQueja, sForm: "'" + idForm + "'" }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+
+                var result = createJson(r);
+                Json = result;
+            },
+            error: function (r) {
+                alert("Error System");
+            }
+        });
+        return Json;
+    }//End Function
+
+    function setLanguage(Idioma) {
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "DetalleQuejas.aspx/BQ_Etiquetas",
+            data: $.param({ iId: 4, iIdioma: Idioma }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+
+                Json = createJson(r);
+            for (i = 0; i <= Json.length - 1; i++) {
+                    if (Json[i].Id == 1) { $("#lbl1").html(Json[i].Texto) }
+                    if (Json[i].Id == 2) { $("#lbl2").html(Json[i].Texto) }
+                    if (Json[i].Id == 3) { $("#lbl3").html(Json[i].Texto) }
+                    if (Json[i].Id == 4) { $("#lbl4").html(Json[i].Texto);}
+                    if (Json[i].Id == 5) { $("#lbl5").html(Json[i].Texto) }
+                    if (Json[i].Id == 6) { $("#lbl6").html(Json[i].Texto) }
+                    if (Json[i].Id == 7) { $("#lbl7").html(Json[i].Texto) }
+                    if (Json[i].Id == 8) { $("#lbl8").html(Json[i].Texto) }
+                    if (Json[i].Id == 9) { $("#lbl9").html(Json[i].Texto) }
+                    if (Json[i].Id == 10) { $("#lbl10").html(Json[i].Texto) }
+                    if (Json[i].Id == 11) { $("#lbl11").html(Json[i].Texto) }
+                    if (Json[i].Id == 12) { $("#lbl12").html(Json[i].Texto) }
+                    if (Json[i].Id == 13) { $("#lbl13").html(Json[i].Texto) }
+                    if (Json[i].Id == 14) { $("#lbl14").html(Json[i].Texto) }
+                    if (Json[i].Id == 15) { $("#lbl15").html(Json[i].Texto) }
+                    if (Json[i].Id == 16) { $("#<%=btnDelegar.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 17) { $("#lbl17").html(Json[i].Texto) }
+                    if (Json[i].Id == 18) { $("#lbl18").html(Json[i].Texto) }
+                    if (Json[i].Id == 19) { $("#lbl19").html(Json[i].Texto) }
+                    if (Json[i].Id == 20) { $("#lbl20").html(Json[i].Texto) }
+                    if (Json[i].Id == 21) { $("#lbl21").html(Json[i].Texto) }
+
+                    <%--if (Json[i].Id == 21) { $("#<%=btnCom.ClientID%>").val(Json[i].Texto); }--%>
+                    if (Json[i].Id == 35) { $("#lbl22").html(Json[i].Texto); }
+                    if (Json[i].Id == 23) { $("#lbl23").html(Json[i].Texto); }
+                    if (Json[i].Id == 24) { $("#lbl24").html(Json[i].Texto); }
+                    if (Json[i].Id == 36) { $("#lbl25").html(Json[i].Texto); }
+                    if (Json[i].Id == 25) { $("#lbl26").html(Json[i].Texto); }
+                    if (Json[i].Id == 26) { $("#lbl27").html(Json[i].Texto); }
+                    if (Json[i].Id == 27) { $("#lbl28").html(Json[i].Texto); }
+                    if (Json[i].Id == 28) { $("#lbl29").html(Json[i].Texto); }
+                    if (Json[i].Id == 29) { $("#lbl30").html(Json[i].Texto); }
+                    if (Json[i].Id == 30) { $("#lbl31").html(Json[i].Texto); }
+                    if (Json[i].Id == 31) { $("#btnAddSoporteModal").html(Json[i].Texto); }
+                    if (Json[i].Id == 32) { $("#btnMSop").html(Json[i].Texto); }
+                    if (Json[i].Id == 33) { $("#<%=btnTemaGuardar.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 34) { $("#<%=btnTemaCancelar.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 36) { $("#lbl32").html(Json[i].Texto); }
+                    if (Json[i].Id == 37) { $("#lbl33").html(Json[i].Texto); }
+                    if (Json[i].Id == 38) { $("#lbl34").html(Json[i].Texto); }
+                    if (Json[i].Id == 39) { $("#lbl35").html(Json[i].Texto); }
+                    if (Json[i].Id == 40) { $("#lbl36").html(Json[i].Texto); }
+                    if (Json[i].Id == 41) { $("#lbl37").html(Json[i].Texto); }
+                    if (Json[i].Id == 33) { $("#<%=btnInvGuardar.ClientID%>").val(Json[i].Texto); }
+                    if (Json[i].Id == 34) { $("#<%=btnInvCan.ClientID%>").val(Json[i].Texto); }
+
+
+            }
+
+        },
+        error: function (r) {
+            alert("Error de Sistema");
+        }
+        });
+
+    }
+
+    function setValues(idQueja) {
+        $.ajax({
+            type: "GET",
+            async:false,
+            url: "DetalleQuejas.aspx/BQ_DetalleMensaje",
+            data: $.param({ iIdQueja:idQueja }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                Json = createJson(r);
+                $('#<%= txtQueja.ClientID %>').val(Json[0].IdQueja); 
+                $('#<%= txtTitulo.ClientID %>').val(Json[0].Titulo);
+                $('#<%= txtGrupo.ClientID %>').val(Json[0].Grupo);
+                $('#<%= txtEmpresa.ClientID %>').val(Json[0].Empresa);
+                $('#<%= txtSitio.ClientID %>').val(Json[0].Sitio);
+                $('#<%= txtTema.ClientID %>').val(Json[0].Tema);
+                $('#<%= txtResumen.ClientID %>').val(Json[0].Resumen);
+                $('#<%= txtMensaje.ClientID %>').val(Json[0].Mensaje);
+                $('#<%= txtTema.ClientID %>').val(Json[0].Tema);
+                $('#<%= txtSubtema.ClientID %>').val(Json[0].Subtema);
+                $('#<%= txtDepartamento.ClientID %>').val(Json[0].Departamento);
+                $('#<%= txtConclusion.ClientID %>').val(Json[0].Conclusion);
+                configQuejaEstatus(Json[0].Estatus);
+            },
+            error: function (r) {
+                alert("Error System");
+            }
+        });
+    }
+
+    function configQuejaEstatus(idEstatus) {
+        if (idEstatus == 3) {
+            $("#btnGuardar").prop('disabled', true);
+            $("#btnEnviar").prop('disabled', true);
+        }
+    }
+
+
+    function createJson(strJson) {
+        var strJson = JSON.stringify(strJson);
+        var iJsonLenght = strJson.length
+        strJson = strJson.substr(5, iJsonLenght);
+        strJson = strJson.slice(0, -1)
+        var Json = JSON.parse(strJson);
+        Json = JSON.parse(Json);
+
+        return Json;
+    }//End Function
+
+    function hideMenu() {
+        $("#menu_menuNavbar").hide();
+        $("#menu_menuLine").hide();
+        $("#collapseOne").removeClass("show");
+        $("#collapseTwo").addClass("show");
+        $("#contenido_Div1").hide();
+        //alert(tipoLectura);
+    }
+
+    $("#<%=fechaIngreso.ClientID%>").datepicker({dateFormat:"yyyy-MM-dd"});
+    $("#<%=fechaCom.ClientID%>").datepicker({dateFormat:"yyyy-MM-dd"});
+
+</script>
         
         <div class="container">
              <input type="hidden" id="tagsJS" runat="server" />
@@ -237,9 +402,9 @@
                             <form>
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
-                                        <label id="lbl2" for="inputFolio">Id Mensaje</label>
+                                        <label id="lbl2" for="inputFolio">Id FOLIO</label>
 
-                                        <asp:TextBox runat="server" ReadOnly="true" CssClass="form-control" ID="txtMsg" />
+                                        <asp:TextBox runat="server" ReadOnly="true" CssClass="form-control" ID="txtQueja" />
                                     </div>
 
                                     <div class="form-group col-md-10">
@@ -344,7 +509,7 @@
                     </div>                    
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"> <%--data-parent="#accordionExample"--%>
                         <div class="card-body">
-                            <div class="form-row">
+                            <div id="divDelegar" class="form-row">
                                  <div class="form-group col-md-4">
                                     <label for="inputFolio" id="lbl14">Responsable</label>
                                     <asp:TextBox runat="server" ReadOnly="true" CssClass="form-control" ID="txtResponsable" />
@@ -377,8 +542,8 @@
                                     <div id="collapseTema" class="collapse" aria-labelledby="headingTema">
                                         <div class="card-body" >
                                             <div id="tableTema" class="table-editable">
-                                                <span class="float-right mb-3 mr-2 card-add "><asp:Button runat="server" OnClick="delTemas_Click"  ID="delTema" style="font-size:30px; font-weight:bold; text-decoration:none;  border: none; background:none;" CssClass="text-danger openModal" Text="-" /></span>
-                                                <span class="float-right mb-3 mr-2 card-add " data-target="#modalTemas"><a id="addTemaPlus" title="Añadir un Nuevo Tema" data-toggle="modal" style="font-size:30px; font-weight:bold; text-decoration:none;"  data-target="#modalTemas" class="text-success openModal">+</a></span>                                                  
+                                                <span id="plusAnalisis" class="float-right mb-3 mr-2 card-add "><asp:Button runat="server" OnClick="delTemas_Click"  ID="delTema" style="font-size:30px; font-weight:bold; text-decoration:none;  border: none; background:none;" CssClass="text-danger openModal" Text="-" /></span>
+                                                <span id="minusAnalisis" class="float-right mb-3 mr-2 card-add " data-target="#modalTemas"><a id="addTemaPlus" title="Añadir un Nuevo Tema" data-toggle="modal" style="font-size:30px; font-weight:bold; text-decoration:none;"  data-target="#modalTemas" class="text-success openModal">+</a></span>                                                  
                                                 <asp:GridView runat="server" ID="gvTemas" CssClass="table table-bordered table-responsive-md table-striped text-center tblinvolucrados">
                                                         <Columns>
                                                         <asp:TemplateField>  
@@ -412,8 +577,8 @@
                                     <div id="collapseInv" class="collapse" aria-labelledby="headingInv2" >
                                         <div class="card-body">
                                             <div id="tableInv2" class="table-editable">
-                                                <span class="float-right mb-3 mr-2 card-add "><asp:Button runat="server" OnClick="delInv_Click"  ID="delInv" style="font-size:30px; font-weight:bold; text-decoration:none;  border: none; background:none;" CssClass="text-danger openModal" Text="-" /></span>  
-                                                <span class="float-right mb-3 mr-2 card-add " data-target="#modalInv"><a id="addInvPlus" title="Añadir un Nuevo Tema" data-toggle="modal" style="font-size:30px; font-weight:bold; text-decoration:none;"  data-target="#modalInv" class="text-success openModal">+</a></span>
+                                                <span id="plusInv" class="float-right mb-3 mr-2 card-add "><asp:Button runat="server" OnClick="delInv_Click"  ID="delInv" style="font-size:30px; font-weight:bold; text-decoration:none;  border: none; background:none;" CssClass="text-danger openModal" Text="-" /></span>  
+                                                <span id="minusInv" class="float-right mb-3 mr-2 card-add " data-target="#modalInv"><a id="addInvPlus" title="Añadir un Nuevo Tema" data-toggle="modal" style="font-size:30px; font-weight:bold; text-decoration:none;"  data-target="#modalInv" class="text-success openModal">+</a></span>
                                                     <asp:GridView  runat="server" ID="gvInv" CssClass="table table-bordered table-responsive-md table-striped text-center tblinvolucrados">
                                                         <Columns>
                                                         <asp:TemplateField>  
@@ -447,7 +612,7 @@
                                     <div id="collapseEnt" class="collapse" aria-labelledby="headingEnt">
                                         <div class="card-body">
                                             <div id="tableEnt" class="table-editable">
-                                                <span class="table-addEnt float-right mb-3 mr-2 card-add"><a href="#!" id="addEntrevistadoPlus" title="Añadir un nuevo Entrevistado"  style="font-size:30px; font-weight:bold; text-decoration:none;" class="text-success">+</a></span>
+                                                <span id="plusEntrevistados" class="table-addEnt float-right mb-3 mr-2 card-add"><a href="#!" id="addEntrevistadoPlus" title="Añadir un nuevo Entrevistado"  style="font-size:30px; font-weight:bold; text-decoration:none;" class="text-success">+</a></span>
                                                 <table class="table table-bordered table-responsive-md table-striped text-center tblinvolucrados">
                                                     <thead>
                                                         <tr>
@@ -477,7 +642,7 @@
                                 <label id="lbl21" for="inputResumen">Comentarios</label>
                                 <asp:TextBox runat="server" CssClass="form-control" ID="txtDisplayComentario" textMode="MultiLine" Rows="5" ReadOnly="true"/>
                                 
-                                <div class="form-row" style="margin-top:5px;">
+                                <div id="divComentario" class="form-row" style="margin-top:5px;">
                                     <div class="form-group col-md-10" >
                                         <asp:TextBox runat="server" AutoPostBack="false" CssClass="form-control" onkeydown = "return (event.keyCode!=13);" ID="txtComentarioQueja" Placeholder="Escribe un comentario/Write a comment..."/>
                                         
@@ -489,22 +654,22 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-2 ml-auto" id="Div1" runat="server" >
-                                    <button id="btnRegresar" type="button" class="btn btn-secondary" onclick="location.href='Dashboard.aspx';">Regresar</button>
+                                <div id="divRegresar" class="form-group col-md-2 ml-auto">
+                                    <button id="btnRegresar" type="button" class="btn btn-secondary" onclick="location.href='DashboardQuejas.aspx';">Regresar</button>
                                 </div>
-                                <div class="form-group col-md-2" id="btnGuardar" visible="false" runat="server" >
-                                    <button type="button" class="btn btn-primary" onclick="return saveConclusion()">Guardar</button>
+                                <div id="divGuardar" class="form-group col-md-2" >
+                                    <button id="btnGuardar" type="button" class="btn btn-primary">Guardar</button>
                                 </div>
-                                <div class="form-group col-md-2 " id="btnVoBo" visible="false" runat="server" >
-                                    <button type="button" class="btn btn-success" onclick="return sendVoBo()">Enviar a VoBo</button>
+                                <div id="divEnviarVobo" class="form-group col-md-2 ">
+                                    <button id="btnEnviarVobo" type="button" class="btn btn-success">Enviar a VoBo</button>
                                 </div>
-                                <div class="form-group col-md-2 " id="btnRevision" visible="false" runat="server">
-                                    <button type="button" class="btn btn-success" onclick="return sendRevision()">Enviar a Revisión</button>
+                                <div class="form-group col-md-2 " id="divRevision">
+                                    <button id="btnEnviarRev" type="button" class="btn btn-success">Enviar a Vobo</button>
                                 </div>
-                                <div class="form-group col-md-2 " id="btnAuditoria" visible="false" runat="server">
-                                    <button type="button" class="btn btn-success" onclick="return sendAuditoria()">Enviar a Auditoría</button>
+                                <div id="divEnviar" class="form-group col-md-2 ">
+                                    <button id="btnEnviar" type="button" class="btn btn-success">Enviar</button>
                                 </div>
-                                <div class="form-group col-md-2 " id="btnAceptarOBT" visible="false" runat="server" >
+                            <%--    <div class="form-group col-md-2 " id="btnAceptarOBT" visible="false" runat="server" >
                                     <button type="button" class="btn btn-primary" onclick="sendGerente()" data-toggle="modal">Aceptar</button>
                                 </div>
                                 <div class="form-group col-md-2 " id="btnAceptar" visible="false" runat="server" >
@@ -512,14 +677,18 @@
                                 </div>
                                 <div class="form-group col-md-2 " id="btnRechazo" visible="false" runat="server" >
                                     <button type="button" class="btn btn-danger" data-target=".bd-example-modal-xl" onclick="return cargarModalRechazo(0);" data-toggle="modal" data-target=".bd-example-modal-xl">Rechazar</button>
-                                </div>
+                                </div>--%>
 
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+          
+	        <div id="usrMsg" class="alert alert-success" style="text-align:center; visibility:hidden" >
+	            Message
+	        </div>
+    
 
             <%--Modal Analisis--%>
             <div id="modalTemas" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" style="display:none"> 

@@ -768,7 +768,7 @@ namespace Portal_Investigadores
                             //1 Mensaje
 
                             string sUsr = Session["idUsuario"].ToString();
-                            string sOutput = DBHelper.postInvolucrados("NEW", 0, id, row["Nombre"].ToString(), row["Apellido"].ToString(), row["Puesto"].ToString(), row["Posicion"].ToString(), sUsr);
+                            DBHelper.postInvolucrados("NEW", 0, id, row["Nombre"].ToString(), row["Apellido"].ToString(), row["Puesto"].ToString(), row["Posicion"].ToString(), sUsr);
 
                         }
 
@@ -779,7 +779,7 @@ namespace Portal_Investigadores
 
                             int iIdBQ = Convert.ToInt32(Session["idBq"].ToString());
                             string sUsr = Session["nomUsuario"].ToString();
-                            string sOutput = DBHelper.postMensajesInt("NEW", iIdBQ, id, sUsr, row["Comentario"].ToString(), row["IP"].ToString());
+                            DBHelper.postMensajesInt("NEW", iIdBQ, id, sUsr, row["Comentario"].ToString(), row["IP"].ToString());
                         }
 
                         Response.Redirect(string.Format("~/AltaMensaje.aspx?idMensaje={0}",

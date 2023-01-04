@@ -28,7 +28,8 @@ $(document).ready(function () {
         dataType: "json",
         success: function (r) {
             var Json = createJson(r);
-            idRol=Json[0].IdRol
+            idRol = Json[0].IdRol
+            sessionStorage.setItem("usrRol", Json[0].IdRol);
         }
     });
 
@@ -102,10 +103,10 @@ function configPage(idIdioma,idRol) {
 
                 $('#tbl').html("")
                 if (idioma == 1) {
-                    $("#tbl").append("<tr><th>Id Mensaje</th><th>Titulo</th><th>Empresa</th><th>Sitio</th></tr>")
+                    $("#tbl").append("<tr><th>Id Mensaje</th><th>Titulo</th><th>Empresa</th><th>Sitio</th><th>Fecha Creacion</th></tr>")
                 }
                 else {
-                    $("#tbl").append("<tr><th>Message Id</th><th>Title</th><th>Company</th><th>Site</th></tr>")
+                    $("#tbl").append("<tr><th>Message Id</th><th>Title</th><th>Company</th><th>Site</th><th>Create Date</th></tr>")
                 }
                 for (i = 0; i <= msgData.length - 1; i++) {
                     $('#tbl').append('<tr>' + '<td>' + msgData[i].IdMensaje + '</td>' + '<td>' + msgData[i].Titulo + '</td>' + '<td>' + msgData[i].Empresa + '</td>' + '<td>' + msgData[i].Sitio + '</td>' + '<td>' + msgData[i].FechaRecep + '</td>' + '<td><button type="button" onclick="changeUrl(1,' + msgData[i].IdMensaje + ')" class="btn btn-primary">Detalle</button></td>' + '</tr>');
@@ -214,7 +215,7 @@ function configPage(idIdioma,idRol) {
 
                 $("#tbl").html("")
                 if (idioma == 1) {
-                    $("#tbl").append("<tr><th>IdQueja</th><th>Titulo</th><th>Empresa</th><th>Sitio</th></tr>")
+                    $("#tbl").append("<tr><th>IdQueja</th><th>Titulo</th><th>Empresa</th><th>Sitio</th><th>Sitio</th></tr>")
                 }
                 else {
                     $("#tbl").append("<tr><th>Complain Id</th><th>Title</th><th>Company</th><th>Site</th></tr>")
@@ -309,7 +310,60 @@ function configPage(idIdioma,idRol) {
 
     }//Vobo
 
-    if ( idRol == 4 || idRol == 5) { //Cierre - Comite
+    if (idRol == 4) { //Revisor
+        $("#btn1").hide();
+        $("#btn2").hide();
+        $("#btn3").hide();
+        
+
+        $.ajax({
+            type: "GET",
+            url: "DashboardQuejas.aspx/BQ_Etiquetas",
+            data: $.param({ iId: 3, iIdioma: idIdioma }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+
+                Json = createJson(r);
+                for (i = 0; i <= Json.length - 1; i++) {
+                    if (Json[i].Id == 1) {
+                        $("#lbl1").html(Json[i].Texto);
+                    }
+                    if (Json[i].Id == 6) {
+                        $("#lbl5").html(Json[i].Texto); $('#img4').attr('src', 'img/Revision.svg');
+                        var msgData = dashboardData("Quejas-Rev", idBQ);
+                        $("#num4").html(msgData.length.toString());
+                    }
+                }
+            },
+            error: function (r) {
+                alert("Error System");
+            }
+        });
+
+        $("#btn4").click(
+            function () {
+                $("#lbl6").html(Json[5].Texto)
+                var msgData = dashboardData("Quejas-Rev", idBQ);
+
+                $("#tbl").html("")
+                if (idioma == 1) {
+                    $("#tbl").append("<tr><th>IdQueja</th><th>Titulo</th><th>Empresa</th><th>Fecha Asignacion</th></tr>")
+                }
+                else {
+                    $("#tbl").append("<tr><th>Complain Id</th><th>Title</th><th>Company</th><th>Assigned Date</th></tr>")
+                }
+                for (i = 0; i <= msgData.length - 1; i++) {
+                    $("#tbl").append('<tr>' + '<td>' + msgData[i].IdQueja + '</td>' + '<td>' + msgData[i].Titulo + '</td>' + '<td>' + msgData[i].Empresa + '</td>' + '<td>' + msgData[i].FechaAsignacion + '</td>' + '<td><button type="button" onclick="changeUrl(2,' + msgData[i].IdQueja + ')" class="btn btn-primary">Detalle</button></td></tr>');
+                }
+            }
+        );
+
+    }//Revisor
+
+
+
+    if ( idRol == 5 || idRol == 6) { //Cierre - Comite
         $.ajax({
             type: "GET",
             url: "DashboardQuejas.aspx/BQ_Etiquetas",
