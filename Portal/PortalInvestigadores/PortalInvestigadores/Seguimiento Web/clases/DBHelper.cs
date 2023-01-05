@@ -3825,7 +3825,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
-        public string postInvolucrados(string sOpt, int iIdInv, int iIdMensaje,string sNombre,string sApellido,string sPuesto,string sPosicion,string sUsr) //Saul Sanchez
+        public void postInvolucrados(string sOpt, int iIdInv, int iIdMensaje,string sNombre,string sApellido,string sPuesto,string sPosicion,string sUsr) //Saul Sanchez
         {
             try
             {
@@ -3847,7 +3847,7 @@ namespace Portal_Investigadores.clases
                         cmd.ExecuteNonQuery();
                         con.Close();
                         con.Dispose();
-                        return "Ok";
+
                     }
 
 
@@ -3890,7 +3890,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
-        public string postMensajesInt(string sOpt, int iIdBQ, int iIdMensaje, string sUsr, string sCom, string sIP) //Saul Sanchez
+        public void postMensajesInt(string sOpt, int iIdBQ, int iIdMensaje, string sUsr, string sCom, string sIP) //Saul Sanchez
         {
             try
             {
@@ -3911,7 +3911,7 @@ namespace Portal_Investigadores.clases
                         cmd.ExecuteNonQuery();
                         con.Close();
                         con.Dispose();
-                        return "Ok";
+
                     }
 
 
@@ -4184,7 +4184,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public string postBQInvTema(string sOpt,int iIdQueja,string sTema,string sAsunto,string sActividades,string sDetalle,string sPlan,string sCon,int iRes,int iBen, int iUsr,int iIdBQ,int iIdioma, int iIdTema) //Saul Sanchez
+        public void postBQInvTema(string sOpt,int iIdQueja,string sTema,string sAsunto,string sActividades,string sDetalle,string sPlan,string sCon,int iRes,int iBen, int iUsr,int iIdBQ,int iIdioma, int iIdTema) //Saul Sanchez
         {
             try
             {
@@ -4212,7 +4212,6 @@ namespace Portal_Investigadores.clases
                         con.Close();
                         con.Dispose();
 
-                        return "Ok";
                     }
                 }
             }
@@ -4222,7 +4221,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public string postBQInvConclusion(int iIdQueja, string sCon) //Saul Sanchez
+        public void postBQInvConclusion(int iIdQueja, string sCon, int iIdUsr) //Saul Sanchez
         {
             try
             {
@@ -4233,12 +4232,12 @@ namespace Portal_Investigadores.clases
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
                         cmd.Parameters.Add("@P_Con", SqlDbType.VarChar).Value = sCon;
+                        cmd.Parameters.Add("@P_Usr", SqlDbType.Int).Value = iIdUsr;
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
                         con.Dispose();
 
-                        return "Ok";
                     }
                 }
             }
@@ -4248,7 +4247,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public string postBQInvInvolucrados(string sOpt,int iIdQueja, string sNombre , string sPuesto, int iTipo, DateTime dtFechaIng,DateTime dtFechaCom,int iUsr,int iIdBQ,int iInv  ) //Saul Sanchez
+        public void postBQInvInvolucrados(string sOpt,int iIdQueja, string sNombre , string sPuesto, int iTipo, DateTime dtFechaIng,DateTime dtFechaCom,int iUsr,int iIdBQ,int iInv  ) //Saul Sanchez
         {
             try
             {
@@ -4272,7 +4271,6 @@ namespace Portal_Investigadores.clases
                         con.Close();
                         con.Dispose();
 
-                        return "Ok";
                     }
                 }
             }
@@ -4317,6 +4315,117 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
+
+        public void postBQInvArchivos(int iIdQueja, string sForm,string sName ,string sExt , string sPath) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_InvArchivos", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = "INS";
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
+                        cmd.Parameters.Add("@P_Form", SqlDbType.VarChar).Value =sForm;
+                        cmd.Parameters.Add("@P_Name", SqlDbType.VarChar).Value = sName;
+                        cmd.Parameters.Add("@P_Ext", SqlDbType.VarChar).Value = sExt;
+                        cmd.Parameters.Add("@P_Path", SqlDbType.VarChar).Value = sPath;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getBQInvArchivos(int iIdQueja,string sForm) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_InvArchivos", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = "SEL";
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
+                        cmd.Parameters.Add("@P_Form", SqlDbType.VarChar).Value = sForm;
+                        cmd.Parameters.Add("@P_Name", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Ext", SqlDbType.VarChar).Value = "";
+                        cmd.Parameters.Add("@P_Path", SqlDbType.VarChar).Value = "";
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public void postBQWorkflow(string sOpt,int iIdQueja) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Workflow", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = sOpt;
+                        cmd.Parameters.Add("@P_IdQueja", SqlDbType.Int).Value = iIdQueja;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        con.Dispose();
+
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getBQValConfig(int iIdBQ) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_ConfigVal", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value =iIdBQ;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
         public string saveForma(int idConducto, string forma, string descripcion, bool activo, string usuarioCreacion, int idBQ)
         {
@@ -4893,9 +5002,8 @@ namespace Portal_Investigadores.clases
                         cmd.Parameters.Add("@idMensaje", SqlDbType.Int).Value = idMensaje;
                         cmd.Parameters.Add("@p_ip", SqlDbType.VarChar).Value = ip;
                         cmd.Parameters.Add("@usuario", SqlDbType.VarChar).Value = user;
-
                         con.Open();
-                        
+
                         int id = int.Parse(cmd.ExecuteScalar().ToString());
                         return id;
                     }
