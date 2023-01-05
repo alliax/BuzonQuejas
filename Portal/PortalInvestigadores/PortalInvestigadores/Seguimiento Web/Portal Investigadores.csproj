@@ -129,6 +129,7 @@
     <Content Include="DetalleQuejas.aspx" />
     <Content Include="GestionBuzones.aspx" />
     <Content Include="img\msg.png" />
+    <Content Include="DocumentosAntecedentes.aspx" />
     <Content Include="UsuarioBuzon.aspx" />
     <Content Include="CambiarContrasena.aspx" />
     <Content Include="CargarArchivo.asmx" />
@@ -3245,6 +3246,13 @@
     </Compile>
     <Compile Include="Site1.Master.designer.cs">
       <DependentUpon>Site1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentosAntecedentes.aspx.cs">
+      <DependentUpon>DocumentosAntecedentes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DocumentosAntecedentes.aspx.designer.cs">
+      <DependentUpon>DocumentosAntecedentes.aspx</DependentUpon>
     </Compile>
     <Compile Include="UsuarioBuzon.aspx.cs">
       <DependentUpon>UsuarioBuzon.aspx</DependentUpon>
