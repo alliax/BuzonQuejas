@@ -29,7 +29,7 @@ namespace Seguimiento_Web
                 txtResponsable.Text = Session["nomUsuario"].ToString();
 
                 int idBQ = int.Parse(Session["idBq"].ToString());
-                CargarComentariosBQ(iIdQueja);
+                //CargarComentariosBQ(iIdQueja);
 
                 //Quejas Asociadas
                 DataTable dtAsociados = DBHelper.getQuejasAsociadas(iIdQueja);
@@ -118,7 +118,6 @@ namespace Seguimiento_Web
                 ddlTipo.DataValueField = "IdTipo";
                 ddlTipo.DataBind();
 
-
                 // Investigacion Analisis
                 Cargar_InvestigacionTemas(iIdQueja, Convert.ToInt32(sIdioma));
                 //Investigacion Involucrados
@@ -128,13 +127,6 @@ namespace Seguimiento_Web
 
 
             }
-        }
-        protected void btnCom_Click(object sender, EventArgs e)
-        {
-            int iIdQueja = int.Parse(Request.QueryString["idQueja"]);
-            string sConclusion = txtConclusion.Text;
-            DBHelper.postBQInvConclusion(iIdQueja, sConclusion);
-
         }
         protected void btnDelegar_Click(object sender, EventArgs e)
         {
@@ -220,6 +212,42 @@ namespace Seguimiento_Web
 
             Cargar_InvestigacionInv(iIdQueja, iIdioma);
         }
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_configVal(int iIdBQ)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dt = DBHelper.getBQValConfig(iIdBQ);
+            string str = JsonConvert.SerializeObject(dt);
+            return (str);
+        }
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_Guardar(int iIdQueja, string sConclusion, int iIdUsr)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DBHelper.postBQInvConclusion(iIdQueja, sConclusion, iIdUsr);
+            return "Ok";
+        }
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_Workflow(string sOpt,int iIdQueja)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DBHelper.postBQWorkflow(sOpt,iIdQueja);
+            return "Ok";
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_ArchivosAnalisis(int iIdQueja,string sForm)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dt = DBHelper.getBQInvArchivos(iIdQueja,sForm);
+            string str = JsonConvert.SerializeObject(dt);
+            return (str);
+
+        }
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true)]
@@ -229,6 +257,14 @@ namespace Seguimiento_Web
             DataTable dt = DBHelper.getDetalleMensaje(iIdQueja);
             string str = JsonConvert.SerializeObject(dt);
             return (str);
+
+        }
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public void BQ_InvArchivos(int iIdQueja,string sForm,string sName,string sExt, string sPath)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DBHelper.postBQInvArchivos(iIdQueja,sForm,sName,sExt,sPath);
 
         }
 
@@ -343,6 +379,7 @@ namespace Seguimiento_Web
                     GridViewRow header = gvTemas.HeaderRow;
                     header.Cells[0].Text = "Select";
                     header.Cells[1].Text = "Topic Id";
+                    header.Cells[1].Visible = false;
                     header.Cells[2].Text = "Investigation Topic";
                     header.Cells[3].Text = "Investigation Case";
                     header.Cells[4].Text = "Investigation Activities";
@@ -356,6 +393,7 @@ namespace Seguimiento_Web
                     GridViewRow header = gvTemas.HeaderRow;
                     header.Cells[0].Text = "Seleccionar";
                     header.Cells[1].Text = "Id Tema";
+                    header.Cells[1].Visible= false;
                     header.Cells[2].Text = "Tema Investigacion";
                     header.Cells[3].Text = "Asunto Investigacion";
                     header.Cells[4].Text = "Actividades Investigacion";
@@ -363,8 +401,15 @@ namespace Seguimiento_Web
                     header.Cells[6].Text = "Conclusiones";
                     header.Cells[7].Text = "Beneficio";
                     header.Cells[8].Text = "Resultado";
+                    
+                    for (int i=0; i<= dtAnalisis.Rows.Count -1; i++)
+                    {
+                        gvTemas.Rows[i].Cells[1].Visible = false;
+                    }
+
                 }
             }
+           
         }
         public void Cargar_InvestigacionInv(int iIdQueja, int iIdioma)
         {
@@ -378,6 +423,7 @@ namespace Seguimiento_Web
                     GridViewRow header = gvInv.HeaderRow;
                     header.Cells[0].Text = "Select";
                     header.Cells[1].Text = "Involved Id";
+                    header.Cells[1].Visible = false;
                     header.Cells[2].Text = "Name";
                     header.Cells[3].Text = "Position";
                     header.Cells[4].Text = "Type";
@@ -389,11 +435,17 @@ namespace Seguimiento_Web
                     GridViewRow header = gvInv.HeaderRow;
                     header.Cells[0].Text = "Seleccionar";
                     header.Cells[1].Text = "Id Involucrado";
+                    header.Cells[1].Visible = false;
                     header.Cells[2].Text = "Nombre";
                     header.Cells[3].Text = "Puesto";
                     header.Cells[4].Text = "Tipo";
                     header.Cells[5].Text = "Fecha Registro";
                     header.Cells[6].Text = "Fecha Compromiso";
+                }
+
+                for (int i = 0; i <= dtInvolucrados.Rows.Count - 1; i++)
+                {
+                    gvInv.Rows[i].Cells[1].Visible = false;
                 }
             }
 

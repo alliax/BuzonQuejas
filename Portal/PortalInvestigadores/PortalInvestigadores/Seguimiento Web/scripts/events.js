@@ -939,7 +939,7 @@ function addEntrevistadosBQ() {
         var nombre;
         var puesto;
         var entrevistado;
-        var idQueja = $("#contenido_txtMsg").val();
+        var idQueja = $("#contenido_txtQueja").val();
 
         $(this).parents('tr').each(function () {
             idEntrevistado = $(this).find("td:first").html();
@@ -1019,7 +1019,7 @@ function addEntrevistados() {
 
 function cargarEntrevistadosBQ() {
 
-    var idQueja = $('#contenido_txtMsg').val();
+    var idQueja = $('#contenido_txtQueja').val();
 
     var readOnlyActivado = validarReadOnly();
 
@@ -1850,8 +1850,8 @@ function deleteSoporteBD(idSoporte) {
 }
 
 function saveComentarioBQ() {
-    var queja = $('#contenido_txtMsg').val();
-    var comentario = $('#contenido_txtComentario').val();
+    var queja = $('#contenido_txtQueja').val();
+    var comentario = $('#contenido_txtComentarioQueja').val();
     var usuarioAlta = idUsuario;
 
     if (comentario.length > 0) {
