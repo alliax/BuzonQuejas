@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 using Portal_Investigadores.clases;
+using System.Text.RegularExpressions;
 
 
 namespace Portal_Investigadores
@@ -31,7 +32,7 @@ namespace Portal_Investigadores
                 CargarGrupos(grupo);
                 CargarEmpresas(grupo, empresa);
                 CargarBuzones(empresa, grupo);
-                CargarUsuariosBuzones(id);
+                CargarUsuariosBuzones(id);                
 
             }
         }
@@ -83,6 +84,8 @@ namespace Portal_Investigadores
             ddlBuzon.DataTextField = buzones.Columns["descripcion"].ToString();
             ddlBuzon.DataValueField = buzones.Columns["idBQ"].ToString();
             ddlBuzon.DataBind();
+
+            ddlBuzon.SelectedValue = 0.ToString();
         }
 
         protected void CargarUsuariosBuzones(int idUsuario)
@@ -120,6 +123,7 @@ namespace Portal_Investigadores
         {
             DataTable dt = (DataTable)ViewState["usuariosDt"];
             string buzon = ddlBuzon.SelectedItem.Text;
+            int idUsuario = int.Parse(Session["idUsuario"].ToString());
             foreach (DataRow dr in dt.Rows)
             {
                 if (dr["descripcion"].ToString() == buzon)
@@ -131,12 +135,67 @@ namespace Portal_Investigadores
                     chbkRevisor.Checked = bool.Parse(dr["EsRevisor"].ToString());
                     chbkEnterado.Checked = bool.Parse(dr["EsEnterado"].ToString());
                     chbkAdmin.Checked = bool.Parse(dr["AdminQuejas"].ToString());
+                    cargarDelegadosCatalogo(int.Parse(dr["idBQ"].ToString()), idUsuario);
+                    cargarRevisadosCatalogo(int.Parse(dr["idBQ"].ToString()), idUsuario);
+                    cargarEnteradosCatalogo(int.Parse(dr["idBQ"].ToString()), idUsuario);
 
                 }
             }
             
         }
 
+        protected void cargarDelegadosCatalogo(int idBQ, int idUsuario)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable delegados = DBHelper.getDelegadosCatalogoBQ(idBQ, idUsuario);
+
+            DataRow dr = delegados.NewRow();
+            dr["idUsuario"] = "0";
+            dr["nombre"] = "Selecciona un Delegado";
+            delegados.Rows.Add(dr);
+
+            ddlDelegados.DataSource = delegados;
+            ddlDelegados.DataTextField = delegados.Columns["nombre"].ToString();
+            ddlDelegados.DataValueField = delegados.Columns["idUsuario"].ToString();
+            ddlDelegados.DataBind();
+
+            ddlDelegados.SelectedValue = "0";
+        }
+
+        protected void cargarRevisadosCatalogo(int idBQ, int idUsuario)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable revisados = DBHelper.getRevisadosCatalogoBQ(idBQ, idUsuario);
+
+            DataRow dr = revisados.NewRow();
+            dr["idUsuario"] = "0";
+            dr["nombre"] = "Selecciona a quien Revisa";
+            revisados.Rows.Add(dr);
+
+            ddlRevisados.DataSource = revisados;
+            ddlRevisados.DataTextField = revisados.Columns["nombre"].ToString();
+            ddlRevisados.DataValueField = revisados.Columns["idUsuario"].ToString();
+            ddlRevisados.DataBind();
+
+            ddlRevisados.SelectedValue = "0";
+        }
+        protected void cargarEnteradosCatalogo(int idBQ, int idUsuario)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable enterados = DBHelper.getEnteradoCatalogoBQ(idBQ, idUsuario);
+
+            DataRow dr = enterados.NewRow();
+            dr["idUsuario"] = "0";
+            dr["nombre"] = "Selecciona de quien es Enterado";
+            enterados.Rows.Add(dr);
+
+            ddlEnterados.DataSource = enterados;
+            ddlEnterados.DataTextField = enterados.Columns["nombre"].ToString();
+            ddlEnterados.DataValueField = enterados.Columns["idUsuario"].ToString();
+            ddlEnterados.DataBind();
+
+            ddlEnterados.SelectedValue = "0";
+        }
         protected void editarUsuarioBuzon(object sender, EventArgs e)
         {
             DataTable dt = (DataTable)ViewState["usuariosDt"];
@@ -158,6 +217,82 @@ namespace Portal_Investigadores
                     }
                 }
             }
+        }
+        [WebMethod]
+        public static string AgregarDelegadoBQ(int idResponsable, int idDelegado, int usuarioAlta, int idBQ)
+        {
+            DBHelper DBHelper = new DBHelper();
+
+            string resp = DBHelper.agregarDelegadoBQ(idResponsable, idDelegado, usuarioAlta, idBQ);
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(resp);
+
+        }
+        [WebMethod]
+        public static string CargarDelegadosAsignadosBQ(int idResponsable, int idBQ)
+        {
+            DBHelper DBHelper = new DBHelper();
+
+            DataTable delegados = DBHelper.getDelegadosAsignadosBQ(idResponsable, idBQ);
+
+            DataSet ds = new DataSet();
+            ds.Tables.Add(delegados);
+
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            foreach (DataTable dt in ds.Tables)
+            {
+                object[] arr = new object[dt.Rows.Count + 1];
+
+                for (int i = 0; i <= dt.Rows.Count - 1; i++)
+                {
+                    arr[i] = dt.Rows[i].ItemArray;
+                }
+
+                dict.Add(dt.TableName, arr);
+            }
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(dict);
+
+        }
+        [WebMethod]
+        public static string AgregarRevisadoBQ(int idResponsable, int idRevisado, int usuarioAlta, int idBQ)
+        {
+            DBHelper DBHelper = new DBHelper();
+
+            string resp = DBHelper.agregarRevisadoBQ(idResponsable, idRevisado, usuarioAlta, idBQ);
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(resp);
+
+        }
+        [WebMethod]
+        public static string CargarRevisadosAsignadosBQ(int idResponsable, int idBQ)
+        {
+            DBHelper DBHelper = new DBHelper();
+
+            DataTable revisados = DBHelper.getRevisadosAsignadosBQ(idResponsable, idBQ);
+
+            DataSet ds = new DataSet();
+            ds.Tables.Add(revisados);
+
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            foreach (DataTable dt in ds.Tables)
+            {
+                object[] arr = new object[dt.Rows.Count + 1];
+
+                for (int i = 0; i <= dt.Rows.Count - 1; i++)
+                {
+                    arr[i] = dt.Rows[i].ItemArray;
+                }
+
+                dict.Add(dt.TableName, arr);
+            }
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(dict);
+
         }
     }
 }

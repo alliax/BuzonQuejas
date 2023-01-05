@@ -5132,7 +5132,7 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
-        public DataTable getQuejasAsociadasMensaje(string sitio, int idBQ)
+        public DataTable getQuejasAsociadasMensaje(string sitio, int idBQ, int tema)
         {
             try
             {
@@ -5144,6 +5144,7 @@ namespace Portal_Investigadores.clases
 
                         cmd.Parameters.Add("@Sitio", SqlDbType.VarChar).Value = sitio;
                         cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+                        cmd.Parameters.Add("@tema", SqlDbType.Int).Value = tema;
                         
                         con.Open();
 
@@ -5420,6 +5421,196 @@ namespace Portal_Investigadores.clases
                     using (SqlCommand cmd = new SqlCommand("SP_BQ_GetInvestigadores", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getDelegadosCatalogoBQ(int idBQ, int idUsuario)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GetDelegadosCatalogo", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getRevisadosCatalogoBQ(int idBQ, int idUsuario)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GetRevisadosCatalogo", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public DataTable getEnteradoCatalogoBQ(int idBQ, int idUsuario)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_GetEnteradoCatalogo", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string agregarDelegadoBQ(int idResponsable, int idDelegado, int usuarioAlta,int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_AgregarDelegado", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;                        
+                        cmd.Parameters.Add("@idResponsable", SqlDbType.Int).Value = idResponsable;
+                        cmd.Parameters.Add("@idDelegado", SqlDbType.Int).Value = idDelegado;
+                        cmd.Parameters.Add("@usuarioAlta", SqlDbType.VarChar).Value = usuarioAlta;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "exito";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
+                throw;
+            }
+        }
+        public DataTable getDelegadosAsignadosBQ(int idResponsable, int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Get_DelegadosAsignados", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idResponsable", SqlDbType.Int).Value = idResponsable;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public string agregarRevisadoBQ(int idResponsable, int idRevisado, int usuarioAlta, int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_AgregarRevisado", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        // cmd.Parameters.Add("@idIssue", SqlDbType.Int).Value = null;
+                        cmd.Parameters.Add("@idResponsable", SqlDbType.Int).Value = idResponsable;
+                        cmd.Parameters.Add("@idRevisado", SqlDbType.Int).Value = idRevisado;
+                        cmd.Parameters.Add("@usuarioAlta", SqlDbType.Int).Value = usuarioAlta;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "exito";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
+                throw;
+            }
+        }
+        public DataTable getRevisadosAsignadosBQ(int idResponsable, int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Get_RevisadosAsignados", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idResponsable", SqlDbType.Int).Value = idResponsable;
                         cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
 
                         con.Open();

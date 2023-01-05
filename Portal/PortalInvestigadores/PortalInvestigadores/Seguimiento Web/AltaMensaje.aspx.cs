@@ -95,7 +95,7 @@ namespace Portal_Investigadores
                     txtMensaje2.Text = row["mensaje"].ToString();
                     txtDetalle.Text = row["descripcion"].ToString();
                     txtResumen.Text = row["resumen"].ToString();
-                    bindGridAsociadas();
+                    bindGridAsociadas(row["sitio"].ToString(), idBQ, int.Parse(row["tema"].ToString()));
                     cargarSubtemas(int.Parse(row["idBQ"].ToString()), int.Parse(row["area"].ToString()), int.Parse(row["tema"].ToString()));
                     cargarFormas(int.Parse(row["idBQ"].ToString()), 
                         getIdConducto(int.Parse(row["idBQ"].ToString()),row["conducto"].ToString()), row["forma"].ToString());
@@ -796,9 +796,9 @@ namespace Portal_Investigadores
             }
             
         }
-        protected void bindGridAsociadas()
+        protected void bindGridAsociadas(string sitio, int idBQ, int tema)
         {
-            DataTable asociadas = DBHelper.getQuejasAsociadasMensaje("Proveedora de Alimentos de Cancún (PACSA)", 1 );
+            DataTable asociadas = DBHelper.getQuejasAsociadasMensaje(sitio, idBQ, tema );
             ViewState["asociadas"] = asociadas;
             asociadasGV.DataSource = asociadas;
             asociadasGV.DataBind();
