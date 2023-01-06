@@ -5655,5 +5655,90 @@ namespace Portal_Investigadores.clases
                 throw;
             }
         }
+        public string subirDocumentosBQ(int idMensaje, string documento, string path, int usuarioAlta, int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_DocumentosMensajes", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        
+                        cmd.Parameters.Add("@idMensaje", SqlDbType.Int).Value = idMensaje;
+                        cmd.Parameters.Add("@documento", SqlDbType.VarChar).Value = documento;
+                        cmd.Parameters.Add("@path", SqlDbType.VarChar).Value = path;
+                        cmd.Parameters.Add("@usuarioAlta", SqlDbType.Int).Value = usuarioAlta;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "exito";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
+                throw;
+            }
+        }
+        public string agregarEnteradoBQ(int idResponsable, int idEnterado, int usuarioAlta, int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_AgregarEnterado", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        
+                        cmd.Parameters.Add("@idResponsable", SqlDbType.Int).Value = idResponsable;
+                        cmd.Parameters.Add("@idEnterado", SqlDbType.Int).Value = idEnterado;
+                        cmd.Parameters.Add("@usuarioAlta", SqlDbType.Int).Value = usuarioAlta;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return "exito";
+                    }
+                }
+            }
+            catch
+            {
+                return "Ocurrio un error al intentar guardar";
+                throw;
+            }
+        }
+        public DataTable getEnteradosAsignadosBQ(int idResponsable, int idBQ)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_Get_EnteradosAsignados", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idResponsable", SqlDbType.Int).Value = idResponsable;
+                        cmd.Parameters.Add("@idBQ", SqlDbType.Int).Value = idBQ;
+
+
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
