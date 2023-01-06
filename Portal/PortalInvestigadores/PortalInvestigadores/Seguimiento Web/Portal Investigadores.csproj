@@ -3131,6 +3131,7 @@
     <Content Include="SimpleUpload.aspx" />
     <Content Include="Manual\Manualdeusuario-PortaldeResponsables.pdf" />
     <Content Include="HandlerInvestigador.ashx" />
+    <Content Include="HandlerFiles.ashx" />
     <None Include="Properties\PublishProfiles\seguimiento.pubxml" />
     <Content Include="scripts\ai.1.0.0-build00159.js" />
     <Content Include="scripts\ai.1.0.0-build00159.min.js" />
@@ -3247,6 +3248,9 @@
     </Compile>
     <Compile Include="GestionBuzones.aspx.designer.cs">
       <DependentUpon>GestionBuzones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HandlerFiles.ashx.cs">
+      <DependentUpon>HandlerFiles.ashx</DependentUpon>
     </Compile>
     <Compile Include="HandlerInvestigador.ashx.cs">
       <DependentUpon>HandlerInvestigador.ashx</DependentUpon>

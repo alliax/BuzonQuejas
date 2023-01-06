@@ -54,22 +54,22 @@ function configPage(idIdioma,idRol) {
                     if (Json[i].Id == 1) { $("#lbl1").html(Json[i].Texto); }
                     if (Json[i].Id == 2) {
                         $("#lbl2").html(Json[i].Texto); $('#img1').attr('src', 'img/msg.png');
-                        var msgData = dashboardData("Mensajes-C", idBQ);
+                        var msgData = dashboardData("Mensajes-C", idBQ, usr);
                         $("#num1").html(msgData.length.toString());
                     }
                     if (Json[i].Id == 3) {
                         $("#lbl3").html(Json[i].Texto); $('#img2').attr('src', 'img/Vobo.svg');
-                        var msgData = dashboardData("Mensajes-Vobo", idBQ);
+                        var msgData = dashboardData("Mensajes-Vobo", idBQ, usr);
                         $("#num2").html(msgData.length.toString());
                     }
                     if (Json[i].Id == 7) {
                         $("#lbl4").html(Json[i].Texto); $('#img3').attr('src', 'img/Vobo.svg');
-                        var msgData = dashboardData("Quejas-Vobo", idBQ);
+                        var msgData = dashboardData("Quejas-Vobo", idBQ, usr);
                         $("#num3").html(msgData.length.toString());
                     }
                     if (Json[i].Id == 8) {
                         $("#lbl5").html(Json[i].Texto); $('#img4').attr('src', 'img/Vobo.svg');
-                        var msgData = dashboardData("Quejas-CC", idBQ);
+                        var msgData = dashboardData("Quejas-CC", idBQ, usr);
                         $("#num4").html(msgData.length.toString());
                     }
                 }
@@ -82,7 +82,7 @@ function configPage(idIdioma,idRol) {
         $("#btn1").click(
             function () {
                 $("#lbl6").html(Json[1].Texto);
-                var msgData = dashboardData("Mensajes-C", idBQ);
+                var msgData = dashboardData("Mensajes-C", idBQ, usr);
 
                 $('#tbl').html("");
                 if (idioma == 1) {
@@ -99,7 +99,7 @@ function configPage(idIdioma,idRol) {
         $("#btn2").click(
             function () {
                 $("#lbl6").html(Json[2].Texto);
-                var msgData = dashboardData("Mensajes-Vobo", idBQ);
+                var msgData = dashboardData("Mensajes-Vobo", idBQ, usr);
 
                 $('#tbl').html("")
                 if (idioma == 1) {
@@ -116,7 +116,7 @@ function configPage(idIdioma,idRol) {
         $("#btn3").click(
             function () {
                 $("#lbl6").html(Json[6].Texto);
-                var msgData = dashboardData("Quejas-Vobo", idBQ);
+                var msgData = dashboardData("Quejas-Vobo", idBQ, usr);
 
                 $('#tbl').html("")
                 if (idioma == 1) {
@@ -133,7 +133,7 @@ function configPage(idIdioma,idRol) {
         $("#btn4").click(
             function () {
                 $("#lbl6").html(Json[7].Texto);
-                var msgData = dashboardData("Quejas-CC", idBQ);
+                var msgData = dashboardData("Quejas-CC", idBQ, usr);
 
                 $('#tbl').html("")
                 if (idioma == 1) {
@@ -166,22 +166,22 @@ function configPage(idIdioma,idRol) {
                     }
                     if (Json[i].Id == 4) {
                         $("#lbl2").html(Json[i].Texto); $('#img1').attr('src', 'img/Asignadas.svg');
-                        var msgData = dashboardData("Quejas-Asi", idBQ);
+                        var msgData = dashboardData("Quejas-Asi", idBQ, usr);
                         $("#num1").html(msgData.length.toString());
                     }
                     if (Json[i].Id == 5) {
                         $("#lbl3").html(Json[i].Texto); $('#img2').attr('src', 'img/Delegadas.svg');
-                        var msgData = dashboardData("", idBQ);
+                        var msgData = dashboardData("", idBQ, usr);
                         $("#num2").html(msgData.length.toString());
                     }
                     if (Json[i].Id == 9) {
                         $("#lbl4").html(Json[i].Texto); $('#img3').attr('src', 'img/Vobo.svg');
-                        var msgData = dashboardData("Quejas-Vobo", idBQ);
+                        var msgData = dashboardData("Quejas-Vobo", idBQ, usr);
                         $("#num3").html(msgData.length.toString());
                     }
                     if (Json[i].Id == 6) {
                         $("#lbl5").html(Json[i].Texto); $('#img4').attr('src', 'img/Revision.svg');
-                        var msgData = dashboardData("Quejas-Rev", idBQ);
+                        var msgData = dashboardData("Quejas-Rev", idBQ, usr);
                         $("#num4").html(msgData.length.toString());
                     }
                 }
@@ -194,7 +194,7 @@ function configPage(idIdioma,idRol) {
         $("#btn1").click(
             function () {
                 $("#lbl6").html(Json[3].Texto)
-                var msgData = dashboardData("Quejas-Asi", idBQ);
+                var msgData = dashboardData("Quejas-Asi", idBQ, usr);
 
                 $('#tbl').html("")
                 if (idioma == 1) {
@@ -211,7 +211,7 @@ function configPage(idIdioma,idRol) {
         $("#btn2").click(
             function () {
                 $("#lbl6").html(Json[4].Texto)
-                var msgData = dashboardData("", idBQ);
+                var msgData = dashboardData("", idBQ, usr);
 
                 $("#tbl").html("")
                 if (idioma == 1) {
@@ -228,7 +228,7 @@ function configPage(idIdioma,idRol) {
         $("#btn3").click(
             function () {
                 $("#lbl6").html(Json[8].Texto)
-                var msgData = dashboardData("Quejas-Vobo", idBQ);
+                var msgData = dashboardData("Quejas-Vobo", idBQ, usr);
 
                 $("#tbl").html("")
                 if (idioma == 1) {
@@ -245,7 +245,7 @@ function configPage(idIdioma,idRol) {
         $("#btn4").click(
             function () {
                 $("#lbl6").html(Json[5].Texto)
-                var msgData = dashboardData("Quejas-Rev", idBQ);
+                var msgData = dashboardData("Quejas-Rev", idBQ, usr);
 
                 $("#tbl").html("")
                 if (idioma == 1) {
@@ -276,7 +276,7 @@ function configPage(idIdioma,idRol) {
                     if (Json[i].Id == 1) { $("#lbl1").html(Json[i].Texto); }
                     if (Json[i].Id == 9) {
                         $("#lbl2").html(Json[i].Texto); $('#img1').attr('src', 'img/Vobo.svg');
-                        var msgData = dashboardData("Mensajes-Vobo", idBQ);
+                        var msgData = dashboardData("Mensajes-Vobo", idBQ, usr);
                         $("#num1").html(msgData.length.toString());
                     }
                 }
@@ -292,7 +292,7 @@ function configPage(idIdioma,idRol) {
         $("#btn1").click(
             function () {
                 $("#lbl6").html(Json[8].Texto)
-                var msgData = dashboardData("Mensajes-Vobo", idBQ);
+                var msgData = dashboardData("Mensajes-Vobo", idBQ, usr);
 
                 $("#tbl").html("")
                 if (idioma == 1) {
@@ -331,7 +331,7 @@ function configPage(idIdioma,idRol) {
                     }
                     if (Json[i].Id == 6) {
                         $("#lbl5").html(Json[i].Texto); $('#img4').attr('src', 'img/Revision.svg');
-                        var msgData = dashboardData("Quejas-Rev", idBQ);
+                        var msgData = dashboardData("Quejas-Rev", idBQ, usr);
                         $("#num4").html(msgData.length.toString());
                     }
                 }
@@ -344,7 +344,7 @@ function configPage(idIdioma,idRol) {
         $("#btn4").click(
             function () {
                 $("#lbl6").html(Json[5].Texto)
-                var msgData = dashboardData("Quejas-Rev", idBQ);
+                var msgData = dashboardData("Quejas-Rev", idBQ, usr);
 
                 $("#tbl").html("")
                 if (idioma == 1) {
@@ -377,7 +377,7 @@ function configPage(idIdioma,idRol) {
                     if (Json[i].Id == 1) { $("#lbl1").html(Json[i].Texto); }
                     if (Json[i].Id == 9) {
                         $("#lbl2").html(Json[i].Texto); $('#img1').attr('src', 'img/Vobo.svg');
-                        var msgData = dashboardData("Quejas-Vobo", idBQ);
+                        var msgData = dashboardData("Workflow", idBQ, usr);
                         $("#num1").html(msgData.length.toString());
                     }
                 }
@@ -393,7 +393,7 @@ function configPage(idIdioma,idRol) {
         $("#btn1").click(
             function () {
                 $("#lbl6").html(Json[8].Texto)
-                var msgData = dashboardData("Quejas-Vobo", idBQ);
+                var msgData = dashboardData("Workflow", idBQ, usr);
 
                 $("#tbl").html("")
                 if (idioma == 1) {
@@ -423,13 +423,13 @@ function createJson(strJson) {
 
         return Json;
 }//End Function
-function dashboardData(Opt, idBQ) {
+function dashboardData(Opt, idBQ,idUsr) {
     var Json = [];
     $.ajax({
         type: "GET",
         async: false,
         url: "DashboardQuejas.aspx/BQ_Dashboard",
-        data: $.param({ sOpt:"'"+Opt+"'", iIdBQ: idBQ }),
+        data: $.param({ sOpt: "'" + Opt + "'", iIdBQ: idBQ, iIdUsr: idUsr }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (r) {

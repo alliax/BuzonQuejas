@@ -46,10 +46,10 @@ namespace Seguimiento_Web
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true)]
-        public static string BQ_Dashboard(string sOpt ,int iIdBQ)
+        public static string BQ_Dashboard(string sOpt ,int iIdBQ,int iIdUsr)
         {
             DBHelper DBHelper = new DBHelper();
-            DataTable dt = DBHelper.getDashboardBQ(sOpt,iIdBQ);
+            DataTable dt = DBHelper.getDashboardBQ(sOpt,iIdBQ,iIdUsr);
             string str = JsonConvert.SerializeObject(dt);
             return (str);
 

@@ -215,6 +215,22 @@
 
         }
 
+        if (idRol == 5 || idRol==6) {
+            $("#plusInv").css("visibility", "hidden");
+            $("#minusInv").css("visibility", "hidden");
+            $("#plusAnalisis").css("visibility", "hidden");
+            $("#minusAnalisis").css("visibility", "hidden");
+            $("#divGuardar").hide();
+            $("#divEnviar").hide();
+            $("#divDelegar").hide();
+            $("#divComentario").hide();
+            $("#plusEntrevistados").css("visibility", "hidden");
+            $("#<%=txtConclusion.ClientID%>").prop('disabled', true);
+            $("#divEnviarVobo").hide();
+            $("#divRevision").hide();
+
+        }
+
     }
 
     function archivosData(idQueja, idForm) {
@@ -341,6 +357,14 @@
         if (idEstatus == 3) {
             $("#btnGuardar").prop('disabled', true);
             $("#btnEnviar").prop('disabled', true);
+        }
+
+        if (idEstatus == 4) {
+            $("#btnEnviarRev").prop('disabled', true);
+        }
+
+        if (idEstatus == 5 || idEstatus == 6) {
+            $("#btnEnviarVobo").prop('disabled', true);
         }
     }
 
@@ -669,6 +693,10 @@
                                 <div id="divEnviar" class="form-group col-md-2 ">
                                     <button id="btnEnviar" type="button" class="btn btn-success">Enviar</button>
                                 </div>
+                                <div id="divEnviarCC" class="form-group col-md-2 ">
+                                    <button id="btnEnviarCC" type="button" class="btn btn-success">Aprobar</button>
+                                </div>
+
                             <%--    <div class="form-group col-md-2 " id="btnAceptarOBT" visible="false" runat="server" >
                                     <button type="button" class="btn btn-primary" onclick="sendGerente()" data-toggle="modal">Aceptar</button>
                                 </div>
