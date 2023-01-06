@@ -17,7 +17,7 @@
         <%--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.semanticui.min.css"/>--%>
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
-        
+        <script src="scripts/events.js"></script>
 
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"></script>
@@ -369,12 +369,12 @@ function createJson(strJson) {
                                     <label id="lbl34" for="selSubtema">Subtema</label>
                                     <asp:DropDownList runat="server" CssClass="form-control" ID="ddlSubtema" />                                
                                 </div>
-<%--                                <div class="form-group col-md-4" >
+                                <div class="form-group col-md-4" >
                                     <label id="lbl35">Documentos</label>
-                                    <button type="button" class="btnFile btn-primary">
-                                        <span class="glyphicon glyphicon-file" aria-hidden="true">Subir documentos</span>
+                                    <button type="button" class="btnFile btn-primary" onclick="event.preventDefault(); popUp('DocumentosAntecedentes.aspx', 2, 0 ); ">
+                                        <span class="glyphicon glyphicon-file" aria-hidden="true">Documentos Antecedentes</span>
                                     </button>
-                                </div>--%>
+                                </div>
                             </div>
                         </div>
                     </div>
