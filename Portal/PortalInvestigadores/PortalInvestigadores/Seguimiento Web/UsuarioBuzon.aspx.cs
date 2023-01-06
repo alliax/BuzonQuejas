@@ -294,5 +294,43 @@ namespace Portal_Investigadores
             return json.Serialize(dict);
 
         }
+        [WebMethod]
+        public static string AgregarEnteradoBQ(int idResponsable, int idEnterado, int usuarioAlta, int idBQ)
+        {
+            DBHelper DBHelper = new DBHelper();
+
+            string resp = DBHelper.agregarEnteradoBQ(idResponsable, idEnterado, usuarioAlta, idBQ);
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(resp);
+
+        }
+        [WebMethod]
+        public static string CargarEnteradosAsignadosBQ(int idResponsable, int idBQ)
+        {
+            DBHelper DBHelper = new DBHelper();
+
+            DataTable enterados = DBHelper.getEnteradosAsignadosBQ(idResponsable, idBQ);
+
+            DataSet ds = new DataSet();
+            ds.Tables.Add(enterados);
+
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            foreach (DataTable dt in ds.Tables)
+            {
+                object[] arr = new object[dt.Rows.Count + 1];
+
+                for (int i = 0; i <= dt.Rows.Count - 1; i++)
+                {
+                    arr[i] = dt.Rows[i].ItemArray;
+                }
+
+                dict.Add(dt.TableName, arr);
+            }
+
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            return json.Serialize(dict);
+
+        }
     }
 }

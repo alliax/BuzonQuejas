@@ -32,6 +32,7 @@
                     $("#contenido_divRelaciones").show();
                     $("#divSelEnterados").show();
                     $("#tableEnterados").show();
+                    cargarEnterados();
                 }
             });
 
@@ -110,6 +111,42 @@
 
             }
 
+            function addEnterado() {                
+
+                var idResponsable = $("#contenido_txtIdUsuario").val();
+                var idEnterado = $("#contenido_ddlEnterados").val();
+                var idBQ = $("#contenido_ddlBuzon").val();
+
+                if (idEnterado > 0) {
+
+                    var usuarioAlta = idUsuario;
+
+                    $.ajax({
+                        type: "POST",
+                        beforeSend: function () {
+                            $('.ajax-loader').css("visibility", "visible");
+                        },
+                        url: 'UsuarioBuzon.aspx/AgregarEnteradoBQ',
+                        data: JSON.stringify({ 'idResponsable': idResponsable, 'idEnterado': idEnterado, 'usuarioAlta': usuarioAlta, 'idBQ': idBQ }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {                            
+                            console.log(data);
+                            cargarEnterados();
+                        },
+                        complete: function () {
+                            $('.ajax-loader').css("visibility", "hidden");
+
+                            $(".ajax-save").show();
+                            setTimeout(function () { $(".ajax-save").hide(); }, 500);
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                }
+
+            }
 
             function cargarRevisados() {
 
@@ -211,6 +248,59 @@
                             $('#tableDelegados tbody').append('<td><p style="margin-top: 10px;font-size: 19px; margin-left:45px;"> No se han añadido Delegados</p></td><td></td>');
                         }
 
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+
+            }
+
+            function cargarEnterados() {
+
+                var idResponsable = $("#contenido_txtIdUsuario").val();
+                var idBQ = $("#contenido_ddlBuzon").val();
+                $.ajax({
+                    type: "POST",
+                    url: 'UsuarioBuzon.aspx/CargarEnteradosAsignadosBQ',
+                    // data: {'idDenuncia: ' + idDenuncia },
+                    data: JSON.stringify({ 'idResponsable': idResponsable, 'idBQ': idBQ }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {                        
+                        var objdata = $.parseJSON(data.d);
+                        
+
+                        if (objdata.Table1.length > 1) {
+                            $('#tableEnterados table tbody').empty();
+
+                            for (i = 0; i < objdata.Table1.length - 1; i++) {
+
+                                var idEnterado = objdata.Table1[i]["0"];
+                                var nombreEnterados = objdata.Table1[i]["1"];
+
+                                const newTr = `<tr>
+                                        <td class="pt-3-half" contenteditable="true" style="display:none;">` + idEnterado + `</td>
+                                        <td class="pt-3-half" contenteditable="false" >` + nombreEnterados + `</td>
+                                        <td style="min-width: 84px;">
+                                            <span>
+                                                <button type="button" style="width:30px;"class="btn btn-danger btn-rounded btn-sm my-0 table-remove"> -</button>
+                                            </span>
+                                        </td>
+                                    </tr>`;
+
+                                var $tableID = "";
+
+                                $tableID = $('#tableEnterados');
+
+                                if ($tableID.find('tbody').length > 0) {
+                                    $('#tableEnterados tbody').append(newTr);
+                                }
+                            }
+
+                        } else {                            
+                            $('#tableEnterados tbody').append('<td><p style="margin-top: 10px;font-size: 19px; margin-left:45px;"> No se han añadido Enterados</p></td><td></td>');
+                        }
                     },
                     error: function (e) {
                         console.log(e);

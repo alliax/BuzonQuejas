@@ -14,20 +14,12 @@
 </head>
 
 <script>
+    var idUsuario = '<%= Session["idUsuario"] %>';
+    var idBQ = '<%= Session["idBQ"] %>';
  
-   window.onunload = refreshParent;
-    function refreshParent() {
-        //window.opener.location.reload();
-        if ($("#txtTipo").val() == 1) {
-            window.opener.cargarInvolucradosInvestigacion();
-        } else {
-            window.opener.guardarTema();
-            window.opener.cargarModalTema($("#txtId").val());
-        }
-    }
+    window.onunload = refreshParent;
 
-
-    $().ready(function () {
+    $(document).ready(function () {
         $('#file').change(function () {
             sendFile(this.files[0]);
         });
@@ -48,21 +40,19 @@
         var formData = new FormData(); //var formData = new FormData($('form')[0]);
 
         var file = $('#file')[0].files[0];
-        var nombreArchivo = file.name;
-        var tipo = $("#txtTipo").val();
-        var id = $("#txtId").val();
-        var usuarioAlta = $("#txtusuarioAlta").val();
+        var idMensaje = sessionStorage.getItem('idMensaje');
 
-        //console.log(usuarioAlta);
         
-        ///get the file and append it to the FormData object
-        formData.append('file', $('#file')[0].files[0]);
 
+        formData.append('file', $('#file')[0].files[0]);
+        formData.append('idMensaje', idMensaje);
+        formData.append('idBQ', idBQ);
+        formData.append('idUsuario', idUsuario);
         ///AJAX request
         $.ajax(
             {
-                ///server script to process data
-                url: "FileUploadHandler.ashx", //web service
+                url: "GenericHandler1.ashx", //web service
+                data: formData,
                 type: 'POST',
                 xhr: function () {
                     var xhr = $.ajaxSettings.xhr();
@@ -72,93 +62,41 @@
                     };
                     return xhr;
                 },
-                complete: function () {
-                    //on complete event    
-                    //alert("se subio correctamente");
+                beforeSend: function (XMLHttpRequest) {
+                    $(".progress").show();
+                },
+                success: function (e) {
+                    alert('succes');
 
+                },
+                complete: function () {
+                    $(".progress-bar").width(0);
                     var xhr = $.ajaxSettings.xhr();
                     xhr.upload.onprogress = function (e) {
                         console.log(Math.floor(e.loaded / e.total * 100) + '%');
                     };
                     return xhr;
 
-
-                },
-                progress: function (evt) {
-                    //$(".progress").show();
-                    //console.log(evt +"progress");
-                    //$(".progress-bar").width(evt);
-                },
-                ///Ajax events
-                beforeSend: function (XMLHttpRequest) {
-                    $(".progress").show();
-
-                    //var xhr = $.ajaxSettings.xhr();
-                    //xhr.upload.onprogress = function (e) {
-                    //    console.log(Math.floor(e.loaded / e.total * 100) + '%');
-                    //};
-                    //return xhr;
-                },
-                success: function (e) {
-                    //$(".progress-bar").width(75);
-                    //console.log(e);
-
-                    $.ajax({
-                        type: "POST",
-                        url: 'UploadFile.aspx/SaveArchivo',
-                        // data: {'idDenuncia: ' + idDenuncia },
-                        data: JSON.stringify({ 'tipo': tipo, 'id': id, 'nombreOriginal': nombreArchivo, 'nombre': e, 'usuarioAlta': usuarioAlta }),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-                            console.log(data);
-                            alert("El archivo se subio correctamente/The file was uploaded successfully");
-                            //location.reload();
-                            //window.location.href = "v_detalle.aspx?id=" + denuncia;
-                            $("#save").prop('disabled', false);
-                            $("#save").show();
-
-                            //$(".progress-bar").width(100);
-                        },
-                        error: function (e) {
-                            //console.log(e);
-                        }
-                    });
-
                 },
                 error: function (e) {
-                    //errorHandler
+                    alert("Error al subir archivos")
                 },
-                ///Form data
-                data: formData,
-                ///Options to tell JQuery not to process data or worry about content-type
                 cache: false,
                 contentType: false,
                 processData: false
             });
-        ///end AJAX request
+
     }
 
-    $(function () {
-        var allitems = "";
-        for (var i = 0; i < localStorage.length; i++) {
-            allitems += localStorage.key(i) + ":" + localStorage.getItem(localStorage.key(i)) + ";<br/>"
-            if (localStorage.key(i) == "tipo") {
-                $("#txtTipo").val(localStorage.getItem(localStorage.key(i)));
-            }
-
-            if (localStorage.key(i) == "id") {
-                $("#txtId").val(localStorage.getItem(localStorage.key(i)));
-            }
-
-            if (localStorage.key(i) == "usuarioAlta") {
-                $("#txtusuarioAlta").val(localStorage.getItem(localStorage.key(i)));
-            }
-
+    function refreshParent() {
+        //window.opener.location.reload();
+        if ($("#txtTipo").val() == 1) {
+            window.opener.cargarInvolucradosInvestigacion();
+        } else {
+            window.opener.guardarTema();
+            window.opener.cargarModalTema($("#txtId").val());
         }
-
-        //$("#result").append(allitems);
-    })
+    }
 </script>
 <body>
 
@@ -184,23 +122,7 @@
             </div>
         </div>
                      
-       <%-- <h2>Sube un Archivo</h2>
-        <br />
-       --%>
 
-        <%--<div id="result">
-        </div>--%>
-
-
-        <%--<div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-            </div>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-            </div>
-        </div>--%>
 
 
     </div>
