@@ -3950,7 +3950,7 @@ namespace Portal_Investigadores.clases
             }
         }
 
-        public DataTable getDashboardBQ(string sOpt, int iIdBQ) //Saul Sanchez
+        public DataTable getDashboardBQ(string sOpt, int iIdBQ , int iIdUsr) //Saul Sanchez
         {
             try
             {
@@ -3961,6 +3961,7 @@ namespace Portal_Investigadores.clases
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@P_Opt", SqlDbType.VarChar).Value = sOpt;
                         cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
+                        cmd.Parameters.Add("@P_IdUsr", SqlDbType.Int).Value = iIdUsr;
                         con.Open();
 
                         DataTable dt = new DataTable();
@@ -4426,6 +4427,32 @@ namespace Portal_Investigadores.clases
             }
         }
 
+        public DataTable getBQWorkflowFn(int iIdBQ) //Saul Sanchez
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_BQ_ConfigVal", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@P_IdBQ", SqlDbType.Int).Value = iIdBQ;
+                        con.Open();
+
+                        DataTable dt = new DataTable();
+
+                        dt.Load(cmd.ExecuteReader());
+                        con.Close();
+                        con.Dispose();
+                        return dt;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         public string saveForma(int idConducto, string forma, string descripcion, bool activo, string usuarioCreacion, int idBQ)
         {
