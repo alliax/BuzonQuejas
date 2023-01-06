@@ -4,18 +4,6 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
            
 
-        <%--Referencias para Data Tables--%>
-        <%--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"/>--%>
-        
-        <%--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"/>--%>
-        <%--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>--%>
-
-        <%--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css"/>
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.foundation.min.css"/>--%>
-
-        <%--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css"/>--%>
-        <%--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.semanticui.min.css"/>--%>
-
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
         <script src="scripts/events.js"></script>
 
@@ -32,9 +20,13 @@
         }
     </style>
 <script type="text/javascript">
-
+    var idUsuario = '<%= Session["idUsuario"] %>';
+    var idBQ = '<%= Session["idBQ"] %>';
+    
+    
     $(document).ready(function () {
-
+        var folio = $('#contenido_folio').text();    
+        sessionStorage.setItem("idMensaje", folio);
         $('#contenido_asociadasGV').DataTable({
             info: false,
             "language": {

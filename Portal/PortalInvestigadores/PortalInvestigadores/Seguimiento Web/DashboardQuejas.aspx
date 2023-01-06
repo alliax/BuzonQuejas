@@ -447,6 +447,7 @@ function dashboardData(Opt, idBQ) {
         if (Opt == 1) {
             var url = window.location.origin + '/AltaMensaje.aspx?idMensaje='+Id;
             window.location.replace(url);
+            sessionStorage.setItem("idMensaje", Id);
 
         }
         if (Opt == 2) {
