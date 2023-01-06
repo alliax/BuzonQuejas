@@ -3,90 +3,14 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="contenido" runat="server">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<style>
+    .hidden-field
+    {
+        display: none;
+    }
+</style>
 <script type="text/javascript">
-
 $(document).ready(function () {
-   <%-- $('#btnEliminarInv').click(function () {
-        var table = $("#gvInv");
-        var arrayId = [];
-        var selIdBQ = $('#<%= dlBuzon.ClientID %>').val();
-        var selIdUsr = $('#<%= dlInvestigador.ClientID %>').val();
-        var sUsr = '<%=HttpContext.Current.Session["idUsuario"]%>';
-
-        $('input:checkbox:checked', table).each(function () {
-            arrayId.push($(this).closest('tr').find('td:last').text());
-        }).get();
-
-        var x = arrayId.length;
-
-        for (i = 0; i <= arrayId.length - 1; i++) {
-            $.ajax({
-                type: "GET",
-                url: "GestionBuzones.aspx/delUsrInv",
-                data: $.param({ iBQUsr: arrayId[i], sUsr: sUsr }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json"
-            });          
-        }
-
-        $.ajax({
-            type: "GET",
-            url: "GestionBuzones.aspx/selUsrInv",
-            data: $.param({ iIdBQ: selIdBQ }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (r) {
-
-                Json = createJson(r);
-
-                var table = $("#gvInv");
-                var strHtml = "";
-                $("table tr").remove();
-                var x = Json[0].Secuencia
-                for (var i = 0; i < Json.length; i++) {
-                    strHtml += "<tr><td><input type='checkbox' id='cbx" + i + "'> </td><td>" + Json[i].Nombre + "</td><td style='display:none;'>" + Json[i].IdUsuarioBQ + "</td></tr>";
-                }
-                table.append(strHtml);
-
-            },
-            error: function (r) {
-                alert(r.d);
-            }
-        });
-
-
-    });
-
-    $('#btnAgregarInv').click(function () {
-        var selIdBQ = $('#<%= dlBuzon.ClientID %>').val();
-        var selIdUsr = $('#<%= dlInvestigador.ClientID %>').val();
-        var sUsr = '<%=HttpContext.Current.Session["idUsuario"]%>';
-
-            $.ajax({
-                type: "GET",
-                url: "GestionBuzones.aspx/addUsrInv",
-                data: $.param({ iIdBQ: selIdBQ, iBQUsr: selIdUsr, sUsr: sUsr }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (r) {
-
-                Json = createJson(r);
-
-                var table = $("#gvInv");
-                var strHtml = "";
-                $("table tr").remove();
-                for (var i = 0; i < Json.length; i++) {
-                    strHtml += "<tr><td><input type='checkbox' id='cbx" + i + "'> </td><td>" + Json[i].Nombre + "</td><td style='display:none;'>" + Json[i].IdUsuarioBQ + "</td></tr>";
-                }
-                table.append(strHtml);
-
-                },
-                error: function (r) {
-                    alert(r.d);
-                }
-            });
-
-        });--%>
     var Idioma = '<%=HttpContext.Current.Session["idioma"]%>'
     $.ajax({
         type: "GET",
@@ -306,7 +230,7 @@ function createJson(strJson) {
                                         <asp:BoundField DataField="IdUsuarioBQ" HeaderText="Id"  ItemStyle-CssClass="hidden-field" HeaderStyle-CssClass="hidden-field"/>
                                         <asp:BoundField DataField="Secuencia" HeaderText="Secuencia"  ItemStyle-CssClass="hidden-field" HeaderStyle-CssClass="hidden-field"/>
                                         <asp:BoundField DataField="Nombre" HeaderText="Nombre" />     
-                                        <asp:CheckBoxField DataField="Activo" HeaderText="Activo" ItemStyle-CssClass="hidden-field" HeaderStyle-CssClass="hidden-field" />   
+                                        <asp:CheckBoxField DataField="Activo" HeaderText="Activo" ItemStyle-CssClass="hidden-field" HeaderStyle-CssClass="hidden-field" /> 
                                     </Columns>                          
                                    </asp:GridView>
                                 </div>
@@ -367,7 +291,7 @@ function createJson(strJson) {
                                         <asp:BoundField DataField="IdUsuarioBQ" HeaderText="Id"  ReadOnly="true"   ItemStyle-CssClass="hidden-field" HeaderStyle-CssClass="hidden-field"/>
                                         <asp:BoundField DataField="Secuencia" HeaderText="Secuencia" />
                                         <asp:BoundField DataField="Nombre" HeaderText="Nombre"  ReadOnly="true"  />     
-                                        <asp:CheckBoxField DataField="Activo" HeaderText="Activo"  ReadOnly="true"  ItemStyle-CssClass="hidden-field" HeaderStyle-CssClass="hidden-field" />   
+                                       <asp:CheckBoxField DataField="Activo" HeaderText="Activo"  ReadOnly="true"  ItemStyle-CssClass="hidden-field" HeaderStyle-CssClass="hidden-field" />
                                     </Columns>                          
                                    </asp:GridView>
                                 </div>

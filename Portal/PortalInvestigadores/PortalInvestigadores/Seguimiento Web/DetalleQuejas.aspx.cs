@@ -214,6 +214,15 @@ namespace Seguimiento_Web
         }
         [WebMethod]
         [ScriptMethod(UseHttpGet = true)]
+        public static string BQ_Workflow_Fn(int iIdQueja, int iIdUsr)
+        {
+            DBHelper DBHelper = new DBHelper();
+            DataTable dt = DBHelper.getBQWorkflowFn(iIdQueja,iIdUsr);
+            string str = JsonConvert.SerializeObject(dt);
+            return (str);
+        }
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
         public static string BQ_configVal(int iIdBQ)
         {
             DBHelper DBHelper = new DBHelper();

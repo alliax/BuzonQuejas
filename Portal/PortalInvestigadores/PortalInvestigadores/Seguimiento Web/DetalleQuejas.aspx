@@ -29,6 +29,48 @@
         addEntrevistadosBQ();
 
 
+        $('#btnEnviarCC').click(function () {
+
+                $.ajax({
+                type: "GET",
+                /* async: false,*/
+                url: "DetalleQuejas.aspx/BQ_Workflow_Fn",
+                data: $.param({ iIdQueja: idQueja , iIdUsr:idUsuario }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+
+                var Json = createJson(r);
+                   
+                        if (Json[0].WFOutput== 1){
+
+                            var url = window.location.origin + '/DashboardQuejas.aspx';
+                            window.location.replace(url);
+                        }
+                       else{
+                   
+                            if (idioma == "2") {
+                                $("#usrMsg").html("There is another authorization pending");
+                            }
+                            else {
+                                $("#usrMsg").html("Existe una autorizacion pendiente por autorizar");
+                            }
+                          
+                           $("#usrMsg").removeClass("alert alert-success").addClass("alert alert-danger")
+                           $("#usrMsg").css("visibility", "visible")
+                            setTimeout(function () { $("#usrMsg").css("visibility", "hidden") }, 1500);
+                       }
+                },
+                error: function (r) {
+                    alert("Error System");
+                }
+            });
+     
+
+        });
+
+
+
         $('#btnEnviarRev').click(function () {
             $.ajax({
                 type: "GET",
@@ -168,6 +210,7 @@
             $("#divRevision").hide();
             $("#plusEntrevistados").css("visibility", "hidden");
             $("#<%=txtConclusion.ClientID%>").prop('disabled', true);
+            $("#divEnviarCC").hide();
 
             $.ajax({
                 type: "GET",
@@ -198,6 +241,7 @@
         if (idRol == 3) {
             $("#divEnviarVobo").hide();
             $("#divRevision").hide();
+            $("#divEnviarCC").hide();
         }
 
         if (idRol == 4) {
@@ -212,6 +256,7 @@
             $("#plusEntrevistados").css("visibility", "hidden");
             $("#<%=txtConclusion.ClientID%>").prop('disabled', true);
             $("#divEnviarVobo").hide();
+            $("#divEnviarCC").hide();
 
         }
 
